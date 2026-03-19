@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+<title>Written Exam — Rahat Math Care</title>
+<link rel="icon" href="icon.png">
+<!--<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">-->
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="config.js"></script>
+<style>
+:root{
+  --bg:#0a0f1e;--surf:#0f1628;--surf2:#151d35;--bord:#1e2d52;
+  --acc:#2563eb;--acc2:#f59e0b;--acc3:#10b981;
+  --txt:#e8edf8;--muted:#7890c0;
+}
+*{margin:0;padding:0;box-sizing:border-box;}html{overflow-x:hidden;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 50% at 10% 5%,rgba(37,99,235,.12) 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 90% 90%,rgba(245,158,11,.07) 0%,transparent 60%);z-index:0;}
+nav{padding:0;border-bottom:1px solid var(--bord);background:#0c1220;position:sticky;top:0;z-index:999;}
+.nav-inner{max-width:1280px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;height:64px;}
+.logo-link{display:flex;align-items:center;gap:10px;text-decoration:none;}.logo-img{width:34px;height:34px;object-fit:contain;}.logo-text{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;color:var(--txt);white-space:nowrap;}.logo-text span{color:var(--acc2);}
+.back{color:var(--muted);text-decoration:none;font-size:.88rem;transition:color .2s;display:inline-flex;align-items:center;gap:6px;}
+.back:hover{color:var(--txt);}
+
+/* Written Exam Badge - Blue */
+.mode-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:4px 13px;
+  border-radius:50px;
+  font-size:.74rem;
+  font-weight:700;
+  letter-spacing:.4px;
+  text-transform:uppercase;
+}
+.mode-badge.written{
+  background:rgba(37,99,235,.14);
+  color:#2563eb;
+  border:1px solid rgba(37,99,235,.3);
+}
+
+#timerbar{display:none;background:var(--surf);border-bottom:1px solid var(--bord);padding:8px 0;position:sticky;top:64px;z-index:40;}
+.tb-inner{max-width:1280px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;}
+@media(max-width:580px){
+  .tb-inner{padding:0 16px;}
+  .tb-meta{text-align:left;width:100%;font-size:.75rem;}
+}
+.timer{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;color:var(--acc2);font-variant-numeric:tabular-nums;}
+.timer.red{color:var(--acc2);animation:blink 1s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
+.tb-meta{font-size:.8rem;color:var(--muted);text-align:right;line-height:1.4;}
+.tb-meta strong{color:var(--txt);}
+.prog-wrap{height:3px;background:var(--bord);}
+.prog{height:100%;background:linear-gradient(90deg,var(--acc),var(--acc2));transition:width 1s linear;}
+.wrap{max-width:1280px;margin:0 auto;padding:16px 24px 24px;}
+@media(max-width:580px){.wrap{padding:12px 16px;}}
+.step{display:none;}.step.active{display:block;}
+.page-h{margin-bottom:20px;}
+.page-h h1{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;letter-spacing:-.5px;margin-bottom:4px;}
+@media(max-width:480px){.page-h h1{font-size:1.4rem;}}
+.page-h p{color:var(--muted);font-size:.9rem;}
+.card{background:var(--surf);border:1px solid var(--bord);border-radius:18px;padding:24px;max-width:620px;width:100%;}
+@media(max-width:480px){.card{padding:16px;}}
+.card-t{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:14px;}
+.fg{margin-bottom:12px;}
+.fl{display:block;font-size:.8rem;color:var(--muted);font-weight:500;margin-bottom:4px;}
+.fi{width:100%;background:var(--surf2);border:1.5px solid var(--bord);border-radius:10px;padding:10px 12px;color:var(--txt);font-size:.9rem;font-family:'Inter',sans-serif;outline:none;transition:border-color .2s;}
+.fi:focus{border-color:var(--acc);}
+select.fi option{background:var(--surf2);}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:520px){.frow{grid-template-columns:1fr;}}
+#exam-preview{display:none;background:var(--surf2);border-radius:10px;padding:10px;margin-bottom:12px;border:1px solid var(--bord);font-size:.85rem;}
+
+/* OPTIMIZED: Mobile-first layout with MAXIMUM PDF space */
+.exam-grid{display:grid;grid-template-columns:1fr 380px;gap:20px;align-items:start;}
+@media(max-width:960px){
+  .exam-grid{grid-template-columns:1fr;gap:12px;}
+  .exam-grid > *:first-child {order: 2;}
+  .exam-grid > *:last-child {order: 1;}
+}
+
+.pdf-card{background:var(--surf);border:1px solid var(--bord);border-radius:16px;overflow:hidden;position:sticky;top:110px;}
+@media(max-width:960px){
+  .pdf-card{position:static;margin-bottom:0;}
+}
+.pdf-head{padding:10px 14px;border-bottom:1px solid var(--bord);display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.pdf-title-txt{font-weight:600;font-size:.85rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:70%;}
+.pdf-open{font-size:.75rem;color:var(--acc2);text-decoration:none;white-space:nowrap;}
+#pdf-area iframe{width:100%;height:78vh;border:none;background:#1a1a24;display:block;}
+@media(max-width:960px){
+  #pdf-area iframe{height:75vh;min-height:500px;}
+}
+@media(max-width:580px){
+  #pdf-area iframe{height:72vh;min-height:450px;}
+}
+@media(max-width:480px){
+  #pdf-area iframe{height:68vh;min-height:400px;}
+}
+.pdf-placeholder{padding:40px;text-align:center;color:var(--muted);font-size:.85rem;}
+
+/* COMPACT upload panel */
+.upload-panel{display:flex;flex-direction:column;gap:12px;}
+.ucard{background:var(--surf);border:1px solid var(--bord);border-radius:16px;padding:18px;}
+@media(max-width:480px){.ucard{padding:14px;}}
+.ucard-t{font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:12px;}
+.instructions{background:rgba(37,99,235,.09);border:1px solid rgba(37,99,235,.28);border-radius:8px;padding:10px;font-size:.8rem;color:var(--muted);line-height:1.6;margin-bottom:10px;}
+.instructions strong{color:var(--acc);}
+
+/* COMPACT dropzone */
+.dropzone{border:2px dashed var(--bord);border-radius:12px;padding:16px 12px;text-align:center;position:relative;cursor:pointer;transition:all .3s;min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+@media(max-width:480px){
+  .dropzone{padding:12px;min-height:110px;}
+}
+.dropzone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:10;}
+.dz-icon{font-size:2rem;margin-bottom:6px;}
+@media(max-width:480px){.dz-icon{font-size:1.8rem;}}
+.dz-title{font-weight:600;margin-bottom:3px;font-size:.95rem;}
+.dz-sub{color:var(--muted);font-size:.75rem;}
+#finfo{margin-top:6px;font-size:.8rem;color:var(--acc3);font-weight:600;}
+#thumbs{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
+#thumbs img{width:60px;height:60px;object-fit:cover;border-radius:6px;border:1px solid var(--bord);}
+@media(max-width:480px){#thumbs img{width:50px;height:50px;}}
+
+/* COMPACT progress */
+#pdf-progress{display:none;margin-top:10px;background:var(--surf2);border-radius:8px;padding:10px;}
+.pbar-label{font-size:.8rem;color:var(--muted);margin-bottom:5px;display:flex;justify-content:space-between;}
+.pbar-track{height:5px;background:var(--bord);border-radius:50px;overflow:hidden;}
+.pbar-fill{height:100%;background:linear-gradient(90deg,var(--acc),var(--acc3));border-radius:50px;width:0%;transition:width .4s ease;}
+
+/* COMPACT button */
+.btn{border:none;padding:12px 20px;border-radius:10px;font-size:.9rem;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:all .3s;display:flex;align-items:center;gap:6px;width:100%;justify-content:center;margin-top:0;}
+@media(max-width:480px){
+  .btn{padding:14px 16px;font-size:.95rem;}
+}
+.btn-p{background:linear-gradient(135deg,var(--acc),#1d4ed8);color:#fff;}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(37,99,235,.4);}
+.btn-g{background:linear-gradient(135deg,var(--acc2),#f97316);color:#000;}
+.btn-g:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(245,158,11,.4);}
+.btn-ghost{background:var(--surf2);color:var(--txt);border:1px solid var(--bord);}
+
+/* COMPACT info box */
+.info-box{font-size:.8rem;color:var(--muted);line-height:1.6;}
+.info-box strong{color:var(--txt);}
+
+/* Success page */
+.success{text-align:center;padding:40px 16px;}
+.success-icon{font-size:4rem;margin-bottom:16px;}
+.success h2{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;margin-bottom:8px;color:var(--acc2);}
+.success p{color:var(--muted);line-height:1.6;max-width:340px;margin:0 auto 20px;font-size:.9rem;}
+
+/* ORIGINAL warning style - kept exactly as you had it */
+#alertmod{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:998;align-items:center;justify-content:center;padding:24px;}
+.al-card{background:var(--surf);border:2px solid #ffd700;border-radius:18px;padding:32px;max-width:400px;text-align:center;animation:shake .5s ease;}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.al-card h3{font-family:'Syne',sans-serif;color:#ffd700;font-size:1.4rem;font-weight:800;margin-bottom:8px;}
+.al-card p{color:var(--muted);margin-bottom:18px;font-size:.9rem;}
+.al-card .btn-ghost{background:var(--surf2);color:var(--txt);border:1px solid var(--bord);padding:9px 22px;font-size:.88rem;}
+
+/* ORIGINAL timeup style */
+#timeup{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:999;align-items:center;justify-content:center;padding:24px;}
+.tu-card{background:var(--surf);border:2px solid var(--acc2);border-radius:22px;padding:44px;max-width:460px;text-align:center;}
+@media(max-width:480px){.tu-card{padding:30px 20px;}}
+.tu-icon{font-size:3.8rem;margin-bottom:18px;}
+.tu-title{font-family:'Syne',sans-serif;font-size:1.9rem;font-weight:800;color:var(--acc2);margin-bottom:10px;}
+@media(max-width:480px){.tu-title{font-size:1.5rem;}}
+.tu-sub{color:var(--muted);line-height:1.7;margin-bottom:22px;}
+.tu-card .btn-ghost{background:var(--surf2);color:var(--txt);border:1px solid var(--bord);}
+
+/* Toast */
+.toast{position:fixed;bottom:20px;right:20px;background:var(--surf2);border:1px solid var(--bord);border-radius:11px;padding:10px 14px;font-size:.8rem;z-index:9999;transform:translateY(18px);opacity:0;transition:all .3s;max-width:260px;}
+.toast.show{transform:translateY(0);opacity:1;}
+.ts{border-color:var(--acc3);color:var(--acc3);}
+.te{border-color:var(--acc2);color:var(--acc2);}
+</style>
+</head>
+<body>
+
+<div id="timeup">
+  <div class="tu-card">
+    <div class="tu-icon">⏰</div>
+    <div class="tu-title">Time's Up!</div>
+    <p class="tu-sub">Your exam time has expired. Please upload your answer sheet now if you haven't already.</p>
+    <button class="btn btn-ghost" style="width:auto;margin:0;" onclick="document.getElementById('timeup').style.display='none'">Upload Now</button>
+  </div>
+</div>
+
+<div id="alertmod">
+  <div class="al-card">
+    <h3>⚠️ Time Warning!</h3>
+    <p id="al-msg">You are running low on time!</p>
+    <button class="btn btn-ghost" style="width:auto;margin:0;" onclick="document.getElementById('alertmod').style.display='none'">OK, got it</button>
+  </div>
+</div>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo-link" href="index.html">
+      <img class="logo-img" src="logo.png" alt="Rahat Math Care">
+      <span class="logo-text">Rahat Math <span>Care</span></span>
+    </a>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span class="mode-badge written">W.E</span>
+      <!--<a href="exam-portal.html" class="back">← Exam Portal</a>-->
+      <a href="exam-portal.html" class="back"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M400-240 160-480l240-240 56 58-142 142h486v80H314l142 142-56 58Z"/></svg></a>
+    </div>
+  </div>
+</nav>
+
+<div id="timerbar">
+  <div class="tb-inner">
+    <div>
+      <div style="font-size:.7rem;color:var(--muted);margin-bottom:2px;">Time Remaining</div>
+      <div class="timer" id="timer">00:00</div>
+    </div>
+    <div class="tb-meta" id="tb-meta"></div>
+  </div>
+  <div class="prog-wrap"><div class="prog" id="prog" style="width:100%"></div></div>
+</div>
+
+<div class="wrap">
+
+  <!-- STEP 1: Select Exam -->
+  <div class="step active" id="s1">
+    <div class="page-h">
+      <h1>Written Examination</h1>
+      <p>Select your exam and enter details</p>
+    </div>
+    <div class="card">
+      <div class="card-t">📋 Select Exam</div>
+      <div class="fg">
+        <label class="fl">Exam</label>
+        <select class="fi" id="exam-sel" onchange="onExamSel()">
+          <option value="">— Select exam —</option>
+        </select>
+      </div>
+      <div id="exam-preview"></div>
+      <div class="card-t" style="margin-top:12px;">👤 Your Details</div>
+      <div class="frow">
+        <div class="fg"><label class="fl">Your Full Name With College</label><input class="fi" id="sname" placeholder="Your name(College)"></div>
+        <div class="fg"><label class="fl">Roll No</label><input class="fi" id="sroll" placeholder="e.g. 01"></div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label class="fl">Class</label><input class="fi" id="scls" placeholder="e.g. Class 10"></div>
+        <div class="fg"><label class="fl">Phone (opt)</label><input class="fi" id="sphone" type="tel" placeholder="+880..."></div>
+      </div>
+      <!--<button class="btn btn-p" style="width:auto;margin-top:16px;padding:12px 28px;" onclick="startExam()">Start Exam →</button>-->
+      <button class="btn btn-p" style="width:auto;margin-top:16px;padding:12px 28px;" onclick="startExam()">Start Exam <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m560-240-56-58 142-142H160v-80h486L504-662l56-58 240 240-240 240Z"/></svg></button>
+    </div>
+  </div>
+
+  <!-- STEP 2: Exam - OPTIMIZED for MAXIMUM PDF space -->
+  <div class="step" id="s2">
+    <div class="exam-grid">
+      <!-- PDF Panel - Takes MOST of the space on mobile -->
+      <div class="pdf-card">
+        <div class="pdf-head">
+          <div class="pdf-title-txt" id="pdf-title">Question Paper</div>
+          <a id="pdf-open-link" href="#" target="_blank" class="pdf-open">Open ↗</a>
+        </div>
+        <div id="pdf-area"><div class="pdf-placeholder">📄 Loading question paper…</div></div>
+      </div>
+
+      <!-- Upload Panel - COMPACT version -->
+      <div class="upload-panel">
+        <div class="ucard">
+          <div class="ucard-t">📤 Submit Answer Sheet</div>
+          <div class="instructions">
+            <strong>Quick steps:</strong> Write your anwser on paper → Take Photos of your answer sheet → Select photos → Submit
+          </div>
+          <div class="dropzone">
+            <input type="file" id="afile" accept="image/*" capture="environment" multiple onchange="onFiles(event)">
+            <div class="dz-icon">📸</div>
+            <div class="dz-title">Take Photos</div>
+            <p class="dz-sub">Camera or gallery · Multiple</p>
+            <div id="finfo"></div>
+          </div>
+          <div id="thumbs"></div>
+
+          <div id="pdf-progress">
+            <div class="pbar-label">
+              <span id="pbar-label">Processing…</span>
+              <span id="pbar-pct">0%</span>
+            </div>
+            <div class="pbar-track"><div class="pbar-fill" id="pbar-fill"></div></div>
+          </div>
+
+          <button class="btn btn-g" id="sub-btn" onclick="submitAnswers()" style="margin-top:8px;">
+            ✅ Submit
+          </button>
+        </div>
+
+        <div class="ucard" style="padding:12px;">
+          <div class="info-box" id="info-box" style="font-size:.75rem;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: Success -->
+  <div class="step" id="s3">
+    <div class="success">
+      <div class="success-icon">🎉</div>
+      <h2>Submitted!</h2>
+      <p>Your answer sheet has been sent to your teacher.</p>
+      <a href="index.html" class="btn btn-ghost" style="width:auto;padding:10px 24px;">Return</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const { jsPDF } = window.jspdf;
+let sb, exam=null, student={}, timerInt=null, totalSec=0, remSec=0, alertFired=false, selFiles=[];
+
+(function(){
+  const cfg = window.EXAM_CONFIG;
+  if(!cfg || cfg.supabaseUrl==='YOUR_SUPABASE_URL') return;
+  sb = supabase.createClient(cfg.supabaseUrl, cfg.supabaseKey);
+  loadExams();
+})();
+
+async function loadExams(){
+  const {data} = await sb.from('written_exams').select('*').order('created_at',{ascending:false});
+  const sel = document.getElementById('exam-sel');
+  (data||[]).forEach(e=>{
+    const o = document.createElement('option');
+    o.value = e.id;
+    o.textContent = `${e.title} (${e.class_name})`;
+    o.dataset.e = JSON.stringify(e);
+    sel.appendChild(o);
+  });
+}
+
+function onExamSel(){
+  const opt = document.getElementById('exam-sel').selectedOptions[0];
+  const prev = document.getElementById('exam-preview');
+  if(!opt?.dataset?.e){ prev.style.display='none'; exam=null; return; }
+  exam = JSON.parse(opt.dataset.e);
+  prev.style.display = 'block';
+  prev.innerHTML = `<strong>${exam.title}</strong> | ${exam.class_name}<br>
+    <span style="color:var(--muted);font-size:.8rem;">${exam.duration} min${exam.alert_time>0?' · Warning at '+exam.alert_time+' min':''}</span>`;
+  document.getElementById('scls').value = exam.class_name;
+}
+
+function startExam(){
+  const name=g('sname'), roll=g('sroll'), cls=g('scls'), phone=g('sphone');
+  if(!exam){ toast('Select an exam','e'); return; }
+  if(!name||!roll){ toast('Enter name and roll number','e'); return; }
+  student = {name, roll, cls, phone};
+
+  document.getElementById('tb-meta').innerHTML = `<strong>${name}</strong> | ${roll}`;
+  document.getElementById('pdf-title').textContent = exam.title;
+  document.getElementById('info-box').innerHTML =
+    `<strong>${name}</strong> · ${roll} · ${cls}<br>${exam.title}`;
+
+  const embedUrl = driveEmbed(exam.drive_link);
+  const area = document.getElementById('pdf-area');
+  if(embedUrl){
+    document.getElementById('pdf-open-link').href = exam.drive_link;
+    area.innerHTML = `<iframe src="${embedUrl}" allowfullscreen></iframe>`;
+  } else {
+    area.innerHTML = `<div class="pdf-placeholder">No question paper link.</div>`;
+  }
+
+  showStep('s2');
+  document.getElementById('timerbar').style.display = 'block';
+  startTimer(exam.duration);
+}
+
+// ORIGINAL timer function - unchanged
+function startTimer(mins){
+  totalSec = mins*60; remSec = totalSec;
+  drawTimer();
+  timerInt = setInterval(()=>{
+    remSec--;
+    drawTimer();
+    if(exam.alert_time>0 && !alertFired){
+      const warnAtSec = (exam.duration - exam.alert_time) * 60;
+      if(remSec <= warnAtSec && warnAtSec > 0){
+        alertFired = true;
+        const m = Math.ceil(remSec/60);
+        document.getElementById('al-msg').textContent = `Only ${m} minute${m!==1?'s':''} remaining!`;
+        document.getElementById('alertmod').style.display = 'flex';
+        beep();
+      }
+    }
+    if(remSec<=0){ clearInterval(timerInt); document.getElementById('timeup').style.display='flex'; }
+  }, 1000);
+}
+
+function drawTimer(){
+  const m=Math.floor(remSec/60), s=remSec%60;
+  const el=document.getElementById('timer');
+  el.textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  el.classList.toggle('red', remSec<=300);
+  document.getElementById('prog').style.width = (remSec/totalSec)*100+'%';
+  if(remSec<=300) document.getElementById('prog').style.background='linear-gradient(90deg,#ef4444,#dc2626)';
+}
+
+function beep(){
+  try{
+    const a=new AudioContext(),o=a.createOscillator(),gn=a.createGain();
+    o.connect(gn);gn.connect(a.destination);
+    o.frequency.value=880;
+    gn.gain.setValueAtTime(.3,a.currentTime);
+    gn.gain.exponentialRampToValueAtTime(.001,a.currentTime+.6);
+    o.start();o.stop(a.currentTime+.6);
+  }catch(e){}
+}
+
+function onFiles(e){
+  selFiles = Array.from(e.target.files);
+  document.getElementById('finfo').textContent =
+    selFiles.length ? `✅ ${selFiles.length} photo${selFiles.length>1?'s':''}` : '';
+  const thumbs = document.getElementById('thumbs');
+  thumbs.innerHTML = '';
+  selFiles.forEach(f=>{
+    const r=new FileReader();
+    r.onload=ev=>{ thumbs.innerHTML+=`<img src="${ev.target.result}" alt="">`; };
+    r.readAsDataURL(f);
+  });
+}
+
+// FIXED: submitAnswers function with proper try/catch for Supabase
+async function submitAnswers(){
+  if(!selFiles.length){ toast('Select photos first','e'); return; }
+
+  const btn = document.getElementById('sub-btn');
+  btn.disabled = true;
+
+  const progressEl = document.getElementById('pdf-progress');
+  progressEl.style.display = 'block';
+
+  function setProgress(pct, label){
+    document.getElementById('pbar-fill').style.width = pct+'%';
+    document.getElementById('pbar-pct').textContent = pct+'%';
+    document.getElementById('pbar-label').textContent = label;
+    btn.textContent = label;
+  }
+
+  try {
+    setProgress(10, 'Loading…');
+    const images = await Promise.all(selFiles.map(f => loadImage(f)));
+
+    setProgress(30, 'Creating PDF…');
+    const doc = new jsPDF({ unit:'mm', format:'a4', orientation:'portrait' });
+    const PW = doc.internal.pageSize.getWidth();
+    const PH = doc.internal.pageSize.getHeight();
+
+    images.forEach((img, idx) => {
+      if(idx > 0) doc.addPage();
+      const ratio = Math.min(PW / img.naturalWidth, PH / img.naturalHeight);
+      const drawW = img.naturalWidth * ratio;
+      const drawH = img.naturalHeight * ratio;
+      const x = (PW - drawW) / 2;
+      const y = (PH - drawH) / 2;
+      doc.addImage(img, 'JPEG', x, y, drawW, drawH, `img${idx}`, 'FAST');
+      doc.setFontSize(6);
+      doc.setTextColor(160);
+      doc.text(`${idx+1}/${images.length}`, PW/2, PH-1, {align:'center'});
+      setProgress(30 + Math.round((idx+1)/images.length * 30), `${idx+1}/${images.length}`);
+    });
+
+    setProgress(62, 'Sending…');
+    const pdfBlob = doc.output('blob');
+    const safeName = `${exam.title}_${student.name}_${student.roll}`.replace(/[^a-zA-Z0-9_\-]/g,'_');
+    const fileName = `${safeName}_${Date.now()}.pdf`;
+    const cfg = window.EXAM_CONFIG;
+
+    const caption = 
+      `📝 *${exam.title}*\n👤 ${student.name} | ${student.roll} | ${student.cls}\n📄 ${images.length} page${images.length>1?'s':''}`;
+
+    const fd = new FormData();
+    fd.append('chat_id', cfg.telegramChatId);
+    fd.append('document', pdfBlob, fileName);
+    fd.append('caption', caption);
+    fd.append('parse_mode', 'Markdown');
+
+    const res = await fetch(`https://api.telegram.org/bot${cfg.telegramToken}/sendDocument`, { method:'POST', body: fd });
+    const json = await res.json();
+    if(!json.ok) throw new Error('Telegram error');
+
+    setProgress(92, 'Saving…');
+    
+    // FIXED: Save to Supabase with try/catch instead of .catch()
+    if(sb){
+      try{
+        await sb.from('written_results').insert({
+          student_name: student.name, roll_no: student.roll, class_name: student.cls,
+          phone: student.phone||null, exam_id: exam.id, exam_title: exam.title,
+          photo_url: 'sent_via_telegram', submitted_at: new Date().toISOString()
+        });
+      } catch(err) {
+        console.warn('Failed to save to Supabase:', err);
+        // Don't show error to user - Telegram already succeeded
+      }
+    }
+
+    setProgress(100, 'Done!');
+    clearInterval(timerInt);
+    setTimeout(() => showStep('s3'), 500);
+
+  } catch(err) {
+    toast('Error: ' + err.message, 'e');
+    btn.textContent = '✅ Submit';
+    btn.disabled = false;
+    document.getElementById('pdf-progress').style.display = 'none';
+  }
+}
+
+function loadImage(file){
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+      img.src = ev.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+function driveEmbed(url){
+  if(!url) return null;
+  const m = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+  if(m) return `https://drive.google.com/file/d/${m[1]}/preview`;
+  const m2 = url.match(/document\/d\/([a-zA-Z0-9_-]+)/);
+  if(m2) return `https://docs.google.com/document/d/${m2[1]}/preview`;
+  return url;
+}
+
+function showStep(id){
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+function g(id){ return document.getElementById(id)?.value?.trim()||''; }
+function toast(msg,type='s'){
+  const t=document.createElement('div');
+  t.className=`toast t${type}`;t.textContent=msg;
+  document.body.appendChild(t);
+  setTimeout(()=>t.classList.add('show'),10);
+  setTimeout(()=>{t.classList.remove('show');setTimeout(()=>t.remove(),400);},3000);
+}
+</script>
+</body>
+</html>

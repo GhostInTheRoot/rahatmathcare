@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallery — Rahat Math Care</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<!--<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">-->
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<style>
+:root{--bg:#0a0f1e;--surf:#0f1628;--surf2:#151d35;--bord:#1e2d52;--acc:#2563eb;--acc2:#f59e0b;--acc3:#10b981;--txt:#e8edf8;--muted:#7890c0;}
+*{margin:0;padding:0;box-sizing:border-box;}html{overflow-x:hidden;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 50% at 10% 5%,rgba(37,99,235,.12) 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 90% 90%,rgba(245,158,11,.07) 0%,transparent 60%);z-index:0;}
+.wrap{max-width:1120px;margin:0 auto;padding:0 28px;}@media(max-width:480px){.wrap{padding:0 16px;}}@media(max-width:360px){.wrap{padding:0 12px;}}
+nav{border-bottom:1px solid var(--bord);background:#0c1220;position:sticky;top:0;z-index:999;}
+.nav-inner{max-width:1120px;margin:0 auto;padding:0 20px;display:flex;justify-content:space-between;align-items:center;height:64px;}@media(max-width:360px){.nav-inner{padding:0 12px;}}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.logo img{width:38px;height:38px;object-fit:contain;}@media(max-width:360px){.logo img{width:30px;height:30px;}}
+.logo-text{font-family:'Syne',sans-serif;font-weight:800;font-size:1.28rem;color:var(--txt);letter-spacing:-.3px;white-space:nowrap;}@media(max-width:360px){.logo-text{font-size:1.05rem;}}
+.logo-text span{color:var(--acc2);}
+.nav-links{display:flex;align-items:center;gap:4px;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.875rem;font-weight:500;padding:8px 13px;border-radius:8px;transition:all .2s;}
+.nav-links a:hover{color:var(--txt);background:rgba(255,255,255,.06);}
+.nav-links a.active{color:var(--txt);background:rgba(37,99,235,.15);border:1px solid rgba(37,99,235,.25);}
+.nav-exam-btn{display:inline-flex;align-items:center;gap:6px;background:var(--acc);color:#fff!important;text-decoration:none;padding:9px 20px;border-radius:50px;font-size:.85rem;font-weight:600;transition:all .3s;box-shadow:0 4px 18px rgba(37,99,235,.35);margin-left:8px;}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:10px;border:none;background:none;min-width:44px;min-height:44px;align-items:center;justify-content:center;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+.hamburger span{width:22px;height:2px;background:var(--txt);border-radius:2px;}
+.mobile-menu{display:none;position:fixed;left:0;right:0;top:64px;bottom:0;background:#0a0f1e;z-index:99999;padding:24px 20px;flex-direction:column;gap:8px;overflow-y:auto;}
+.mobile-menu a{color:var(--txt);text-decoration:none;font-size:1.05rem;font-weight:600;padding:15px 18px;border-radius:12px;border:1px solid var(--bord);display:block;min-height:52px;display:flex;align-items:center;-webkit-tap-highlight-color:transparent;}
+.mobile-menu.open{display:flex;}
+@media(max-width:820px){.nav-links{display:none;}.hamburger{display:flex;}}
+.grad{background:linear-gradient(135deg,#60a5fa 0%,#3b82f6 35%,#f59e0b 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.sec-tag{display:inline-block;background:rgba(37,99,235,.1);border:1px solid rgba(37,99,235,.25);border-radius:50px;padding:6px 16px;font-size:.72rem;color:#60a5fa;font-weight:700;letter-spacing:.8px;text-transform:uppercase;margin-bottom:16px;}
+.page-hero{padding:70px 0 60px;text-align:center;position:relative;}@media(max-width:480px){.page-hero{padding:48px 0 36px;}}
+.page-hero h1{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,5vw,3.8rem);font-weight:800;letter-spacing:-1px;margin-bottom:16px;}@media(max-width:480px){.page-hero h1{letter-spacing:-.3px;}}
+.page-hero p{color:var(--muted);font-size:1.05rem;max-width:480px;margin:0 auto;line-height:1.8;}
+
+/* GALLERY */
+.gallery-section{padding:0 0 80px;position:relative;}
+.filter-bar{display:flex;gap:8px;margin-bottom:28px;flex-wrap:wrap;}@media(max-width:480px){.filter-bar{gap:6px;}.filter-btn{padding:7px 14px;font-size:.8rem;}}
+.filter-btn{background:var(--surf);border:1px solid var(--bord);border-radius:50px;padding:8px 18px;font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;color:var(--muted);font-family:'Plus Jakarta Sans',sans-serif;}
+.filter-btn.active{background:var(--acc);color:#fff;border-color:var(--acc);}
+
+.gallery-grid{columns:3;gap:16px;}
+@media(max-width:700px){.gallery-grid{columns:2;}}
+@media(max-width:420px){.gallery-grid{columns:1;}}
+.g-item{break-inside:avoid;margin-bottom:16px;border-radius:16px;overflow:hidden;background:var(--surf);border:1px solid var(--bord);cursor:pointer;transition:transform .3s;position:relative;}
+.g-item:hover{transform:scale(1.02);}
+.g-item:hover .g-overlay{opacity:1;}
+.g-item img{width:100%;height:auto;display:block;object-fit:cover;min-height:150px;background:var(--surf2);}
+.g-overlay{position:absolute;inset:0;background:rgba(37,99,235,.5);display:flex;align-items:center;justify-content:center;opacity:0;transition:.3s;border-radius:16px;}
+.g-overlay span{font-size:2rem;}
+.g-caption{padding:14px 16px;font-size:.82rem;color:var(--muted);}
+.g-caption strong{display:block;color:var(--txt);font-size:.88rem;margin-bottom:2px;}
+
+/* Lightbox */
+.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:9999;align-items:center;justify-content:center;padding:20px;}
+.lightbox.open{display:flex;}
+.lb-content{background:var(--surf);border:1px solid var(--bord);border-radius:24px;max-width:800px;width:100%;max-height:90vh;display:flex;flex-direction:column;position:relative;}
+.lb-close{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.1);border:none;color:var(--txt);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;z-index:10;}
+.lb-close:hover{background:rgba(255,255,255,.2);}
+.lb-img{width:100%;height:300px;background:var(--surf2);display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:24px 24px 0 0;}@media(min-width:600px){.lb-img{height:400px;}}
+.lb-img img{width:100%;height:100%;object-fit:contain;}
+.lb-text{padding:24px;text-align:center;}
+.lb-title{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:700;margin-bottom:8px;color:var(--txt);}
+.lb-desc{color:var(--muted);font-size:.95rem;line-height:1.6;}
+
+/* Loading */
+.loading{text-align:center;padding:60px;color:var(--muted);}
+.loading .spinner{width:40px;height:40px;border:3px solid var(--bord);border-top-color:var(--acc);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 16px;}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+footer{border-top:1px solid var(--bord);padding:48px 0 28px;}@media(max-width:480px){footer{padding:36px 0 20px;}}
+.footer-inner{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:40px;margin-bottom:36px;}@media(max-width:480px){.footer-inner{gap:28px;margin-bottom:24px;}}
+@media(max-width:700px){.footer-inner{grid-template-columns:1fr;}}
+.footer-brand p{color:var(--muted);font-size:.85rem;line-height:1.7;max-width:260px;}
+.footer-col h4{font-family:'Syne',sans-serif;font-size:.85rem;font-weight:700;margin-bottom:14px;color:var(--txt);}
+.footer-col a{display:block;color:var(--muted);text-decoration:none;font-size:.84rem;padding:4px 0;transition:color .2s;}
+.footer-col a:hover{color:var(--txt);}
+.contact-item{display:flex;align-items:flex-start;gap:8px;color:var(--muted);font-size:.84rem;margin-bottom:8px;}
+.footer-bottom{border-top:1px solid var(--bord);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.footer-bottom p{color:var(--muted);font-size:.8rem;}
+.footer-bottom a{color:var(--acc2);text-decoration:none;}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="index.html">
+      <img src="logo.png" alt="Rahat Math Care">
+      <span class="logo-text">Rahat Math <span>Care</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="programs.html">Programs</a>
+      <a href="schedule.html">Schedule</a>
+      <a href="gallery.html" class="active">Gallery</a>
+      <a href="contact.html">Contact</a>
+      <a href="exam-portal.html" class="nav-exam-btn">Exam Portal</a>
+    </div>
+    <button class="hamburger" onclick="document.getElementById('mob').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mob">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="programs.html">Programs</a>
+    <a href="schedule.html">Schedule</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="contact.html">Contact</a>
+    <a href="exam-portal.html">Exam Portal</a>
+    <!--<a href="admin-login.html">🔐 Admin</a>-->
+  </div>
+
+<div class="wrap">
+  <div class="page-hero">
+    <div class="sec-tag">Gallery</div>
+    <h1>Life at <span class="grad">Rahat Math Care</span></h1>
+    <p>Moments from our classrooms, exam sessions, and celebrations of student achievements.</p>
+  </div>
+
+  <div class="gallery-section">
+    <div class="filter-bar" id="filter-bar">
+      <button class="filter-btn active" onclick="filterGallery('all', this)">All</button>
+      <button class="filter-btn" onclick="filterGallery('Classes', this)">Classes</button>
+      <button class="filter-btn" onclick="filterGallery('Exams', this)">Exams</button>
+      <button class="filter-btn" onclick="filterGallery('Results', this)">Results</button>
+      <button class="filter-btn" onclick="filterGallery('Events', this)">Events</button>
+    </div>
+
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+      <p>Loading gallery...</p>
+    </div>
+
+    <div class="gallery-grid" id="gallery-container"></div>
+
+    <div class="upload-note" id="empty-message" style="display:none;">
+      <p><strong>No photos yet.</strong> Photos will appear here once added through the admin panel.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLB(event)">
+  <div class="lb-content" onclick="event.stopPropagation()">
+    <button class="lb-close" onclick="closeLB()">✕</button>
+    <div class="lb-img" id="lbImgContainer">
+      <img id="lbImg" src="" alt="" style="display:none;">
+    </div>
+    <div class="lb-text">
+      <div class="lb-title" id="lbTitle"></div>
+      <div class="lb-desc" id="lbDesc"></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a class="logo" href="index.html" style="margin-bottom:14px;">
+          <img src="logo.png" alt="Rahat Math Care" style="width:32px;height:32px;">
+          <span class="logo-text">Rahat Math <span>Care</span></span>
+        </a>
+        <p>Excellence in mathematics education since 2023. Engineers are born here.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <a href="about.html">About Us</a>
+        <a href="programs.html">Programs</a>
+        <a href="schedule.html">Batch Schedule</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="exam-portal.html">Exam Portal</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <div class="contact-item">📞 <span>+8801884570279</span></div>
+        <div class="contact-item">📞 <span>+8801572938979</span></div>
+        <div class="contact-item">✉️ <span>rahatmathcare@gmail.com</span></div>
+        <div class="contact-item">📍 <span>Jor Pukur Par,Joydebpur Road,Gazipur-1700</span></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Rahat Math Care. All rights reserved.</p>
+      <p>Developed by <a href="#">Sinan</a></p>
+    </div>
+  </div>
+</footer>
+
+<script>
+let sb;
+let allPhotos = [];
+
+(function(){
+  const cfg = window.EXAM_CONFIG;
+  if(!cfg || cfg.supabaseUrl==='YOUR_SUPABASE_URL') {
+    document.getElementById('loading').innerHTML = '<p style="color:var(--red)">❌ Database not configured.</p>';
+    return;
+  }
+  sb = supabase.createClient(cfg.supabaseUrl, cfg.supabaseKey);
+  loadGallery();
+})();
+
+async function loadGallery() {
+  try {
+    const { data, error } = await sb.from('site_gallery').select('*').order('created_at', { ascending: false });
+    
+    document.getElementById('loading').style.display = 'none';
+    
+    if (error || !data || data.length === 0) {
+      document.getElementById('empty-message').style.display = 'block';
+      return;
+    }
+    
+    allPhotos = data;
+    displayGallery(data);
+    
+  } catch (err) {
+    console.error('Error loading gallery:', err);
+    document.getElementById('loading').innerHTML = '<p style="color:var(--red)">❌ Failed to load gallery.</p>';
+  }
+}
+
+function displayGallery(photos) {
+  const container = document.getElementById('gallery-container');
+  
+  if (photos.length === 0) {
+    document.getElementById('empty-message').style.display = 'block';
+    container.innerHTML = '';
+    return;
+  }
+  
+  document.getElementById('empty-message').style.display = 'none';
+  
+  container.innerHTML = photos.map(photo => {
+    const imageSrc = photo.image_data || photo.image_url || '';
+    const hasImage = imageSrc && imageSrc.startsWith('data:image');
+    const icon = getCategoryIcon(photo.category);
+    
+    return `<div class="g-item" data-category="${escapeHtml(photo.category || 'Classes')}" onclick="openLB('${escapeHtml(photo.title)}', '${escapeHtml(photo.description || '')}', '${escapeHtml(imageSrc)}', '${icon}')">
+      ${hasImage 
+        ? `<img src="${escapeHtml(imageSrc)}" alt="${escapeHtml(photo.title)}" loading="lazy">` 
+        : `<div style="height:200px; display:flex; align-items:center; justify-content:center; font-size:4rem; background:var(--surf2);">${icon}</div>`
+      }
+      <div class="g-overlay"><span>🔍</span></div>
+      <div class="g-caption"><strong>${escapeHtml(photo.title)}</strong></div>
+    </div>`;
+  }).join('');
+}
+
+function getCategoryIcon(category) {
+  const icons = { 'Classes': '📚', 'Exams': '📝', 'Results': '🏆', 'Events': '🎉' };
+  return icons[category] || '📸';
+}
+
+function filterGallery(category, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  
+  if (category === 'all') {
+    displayGallery(allPhotos);
+  } else {
+    const filtered = allPhotos.filter(p => p.category === category);
+    displayGallery(filtered);
+  }
+}
+
+function openLB(title, desc, imgSrc, icon) {
+  const lbImg = document.getElementById('lbImg');
+  const lbTitle = document.getElementById('lbTitle');
+  const lbDesc = document.getElementById('lbDesc');
+  
+  if (imgSrc && imgSrc.startsWith('data:image')) {
+    lbImg.src = imgSrc;
+    lbImg.style.display = 'block';
+  } else {
+    lbImg.style.display = 'none';
+  }
+  
+  lbTitle.textContent = title;
+  lbDesc.textContent = desc || 'No description available.';
+  document.getElementById('lightbox').classList.add('open');
+}
+
+function closeLB(e) {
+  if (!e || e.target.id === 'lightbox' || e.target.classList.contains('lb-close')) {
+    document.getElementById('lightbox').classList.remove('open');
+    document.getElementById('lbImg').src = '';
+  }
+}
+
+function escapeHtml(unsafe) {
+  if (!unsafe) return '';
+  return String(unsafe)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+// Mobile menu handlers
+document.querySelectorAll('.mobile-menu a').forEach(a => {
+  a.addEventListener('click', () => document.getElementById('mob')?.classList.remove('open'));
+});
+</script>
+</body>
+</html>

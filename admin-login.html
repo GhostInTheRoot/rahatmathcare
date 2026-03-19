@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login — Rahat Math Care</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<!--<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">-->
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="config.js"></script>
+<style>
+:root{--bg:#0a0f1e;--surf:#0f1628;--surf2:#151d35;--bord:#1e2d52;--acc:#2563eb;--acc2:#f59e0b;--acc3:#10b981;--txt:#e8edf8;--muted:#7890c0;}
+*{margin:0;padding:0;box-sizing:border-box;}html{overflow-x:hidden;}html{overflow-x:hidden;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 80% 50% at 10% 5%,rgba(37,99,235,.14) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 40% at 90% 90%,rgba(245,158,11,.08) 0%,transparent 60%);z-index:0;}
+
+nav{border-bottom:1px solid var(--bord);background:#0c1220;position:sticky;top:0;z-index:999;}
+.nav-inner{max-width:1120px;margin:0 auto;padding:0 20px;display:flex;justify-content:space-between;align-items:center;height:64px;}@media(max-width:360px){.nav-inner{padding:0 12px;}}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.logo img{width:38px;height:38px;object-fit:contain;}@media(max-width:360px){.logo img{width:30px;height:30px;}}@media(max-width:360px){.logo img{width:30px;height:30px;}}
+.logo-text{font-family:'Syne',sans-serif;font-weight:800;font-size:1.28rem;color:var(--txt);white-space:nowrap;}@media(max-width:360px){.logo-text{font-size:1.05rem;}}
+.logo-text span{color:var(--acc2);}
+.back-link{display:inline-flex;align-items:center;gap:6px;color:var(--muted);text-decoration:none;font-size:.87rem;transition:color .2s;}
+.back-link:hover{color:var(--txt);}
+
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 24px;position:relative;}
+.login-wrap{width:100%;max-width:440px;}
+.login-card{background:var(--surf);border:1px solid var(--bord);border-radius:28px;padding:48px 40px;position:relative;overflow:hidden;}
+.login-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--acc),var(--acc2));}
+.login-header{text-align:center;margin-bottom:36px;}
+.login-logo{width:70px;height:70px;border-radius:20px;background:rgba(37,99,235,.12);border:1px solid rgba(37,99,235,.25);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;}
+.login-logo img{width:44px;height:44px;object-fit:contain;}
+.login-header h1{font-family:'Syne',sans-serif;font-size:1.9rem;font-weight:800;margin-bottom:6px;letter-spacing:-.5px;}
+.login-header p{color:var(--muted);font-size:.9rem;}
+
+.form-group{margin-bottom:18px;}
+.form-group label{display:block;font-size:.82rem;color:var(--muted);font-weight:600;margin-bottom:8px;letter-spacing:.3px;text-transform:uppercase;}
+.input-wrap{position:relative;}
+.input-wrap input{width:100%;background:var(--surf2);border:1.5px solid var(--bord);border-radius:12px;padding:14px 16px 14px 46px;color:var(--txt);font-size:.95rem;font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:border-color .2s;}
+.input-wrap input:focus{border-color:var(--acc);}
+.input-icon{position:absolute;left:15px;top:50%;transform:translateY(-50%);font-size:1.1rem;pointer-events:none;}
+.toggle-pass{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;font-size:1rem;padding:4px;}
+
+.login-btn{width:100%;background:var(--acc);color:#fff;border:none;padding:15px;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .3s;box-shadow:0 6px 24px rgba(37,99,235,.35);margin-top:8px;display:flex;align-items:center;justify-content:center;gap:8px;}
+.login-btn:hover{box-shadow:0 12px 36px rgba(37,99,235,.5);transform:translateY(-1px);}
+.login-btn:disabled{opacity:.6;transform:none;cursor:not-allowed;}
+.login-btn .spinner{width:18px;height:18px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:none;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.login-btn.loading .btn-text{display:none;}
+.login-btn.loading .spinner{display:block;}
+
+.error-msg{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:10px;padding:12px 16px;color:#f87171;font-size:.87rem;display:none;margin-top:14px;text-align:center;}
+.error-msg.show{display:block;}
+
+.divider{border:none;border-top:1px solid var(--bord);margin:28px 0;}
+.back-to-site{display:block;text-align:center;color:var(--muted);text-decoration:none;font-size:.85rem;transition:color .2s;}
+.back-to-site:hover{color:var(--txt);}
+.back-to-site span{color:var(--acc2);}
+
+.info-strip{display:flex;gap:12px;margin-top:20px;}
+.info-item{flex:1;background:var(--surf2);border:1px solid var(--bord);border-radius:10px;padding:12px;text-align:center;font-size:.75rem;}
+.info-item .ii{font-size:1.2rem;margin-bottom:4px;}
+.info-item p{color:var(--muted);}
+
+footer{border-top:1px solid var(--bord);padding:20px 28px;text-align:center;}
+footer p{color:var(--muted);font-size:.8rem;}
+footer a{color:var(--acc2);text-decoration:none;}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="index.html">
+      <img src="logo.png" alt="Rahat Math Care">
+      <span class="logo-text">Rahat Math <span>Care</span></span>
+    </a>
+    <!--<a class="back-link" href="index.html">← Back to Site</a>-->
+    <a class="back-link" href="index.html"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M400-240 160-480l240-240 56 58-142 142h486v80H314l142 142-56 58Z"/></svg> Back to Site</a>
+  </div>
+</nav>
+
+<main>
+  <div class="login-wrap">
+    <div class="login-card">
+      <div class="login-header">
+        <div class="login-logo">
+          <img src="logo.png" alt="Rahat Math Care">
+        </div>
+        <h1>Admin Panel</h1>
+        <p>Enter your password to access the exam management system.</p>
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <div class="input-wrap">
+          <span class="input-icon">🔑</span>
+          <input type="password" id="passwordInput" placeholder="Enter admin password" onkeydown="if(event.key==='Enter') doLogin()">
+          <button class="toggle-pass" onclick="togglePass()" id="toggleBtn">👁</button>
+        </div>
+      </div>
+
+      <button class="login-btn" id="loginBtn" onclick="doLogin()">
+        <span class="btn-text">🔐 Login to Admin Panel</span>
+        <div class="spinner"></div>
+      </button>
+      <div class="error-msg" id="errorMsg">Incorrect password. Please try again.</div>
+
+      <hr class="divider">
+      <a class="back-to-site" href="exam-portal.html">📝 Go to <span>Exam Portal</span> instead</a>
+
+      <div class="info-strip">
+        <div class="info-item"><div class="ii">📝</div><p>Manage Exams</p></div>
+        <div class="info-item"><div class="ii">📊</div><p>View Results</p></div>
+        <div class="info-item"><div class="ii">📋</div><p>See Submissions</p></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>© 2026 Rahat Math Care · <a href="index.html">Return to website</a></p>
+</footer>
+
+<script>
+function togglePass(){
+  const inp = document.getElementById('passwordInput');
+  const btn = document.getElementById('toggleBtn');
+  if(inp.type==='password'){inp.type='text';btn.textContent='🙈';}
+  else{inp.type='password';btn.textContent='👁';}
+}
+function doLogin(){
+  const pw = document.getElementById('passwordInput').value;
+  const btn = document.getElementById('loginBtn');
+  const err = document.getElementById('errorMsg');
+  if(!pw){err.textContent='Please enter a password.';err.classList.add('show');return;}
+  btn.classList.add('loading');btn.disabled=true;err.classList.remove('show');
+  // Get password from config
+  const correctPw = (window.EXAM_CONFIG && window.EXAM_CONFIG.adminPassword) ? window.EXAM_CONFIG.adminPassword : 'admin2024';
+  setTimeout(()=>{
+    if(pw===correctPw){
+      sessionStorage.setItem('rmc_admin_auth', btoa(pw));
+      window.location.href='admin.html';
+    } else {
+      btn.classList.remove('loading');btn.disabled=false;
+      err.textContent='Incorrect password. Please try again.';
+      err.classList.add('show');
+      document.getElementById('passwordInput').value='';
+      document.getElementById('passwordInput').focus();
+    }
+  },800);
+}
+</script>
+
+<script>
+// ── Mobile nav: close menu when a link is tapped ──
+document.querySelectorAll('.mobile-menu a').forEach(function(a){
+  a.addEventListener('click', function(){
+    var m = document.getElementById('mob');
+    if(m) m.classList.remove('open');
+  });
+});
+// ── Close menu when tapping outside ──
+document.addEventListener('click', function(e){
+  var menu = document.getElementById('mob');
+  var btn = document.querySelector('.hamburger');
+  if(menu && menu.classList.contains('open')){
+    if(!menu.contains(e.target) && e.target !== btn && !btn.contains(e.target)){
+      menu.classList.remove('open');
+    }
+  }
+});
+</script>
+</body>
+</html>
