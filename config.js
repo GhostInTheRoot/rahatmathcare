@@ -10,16 +10,16 @@ window.EXAM_CONFIG = {
 
   // ── Supabase ───────────────────────────────────────────────
   // supabase.com → your project → Settings → API
-  supabaseUrl: "YOUR_SUPABASE_URL",        // https://xxxx.supabase.co
+  supabaseUrl: "https://yeheumjetdngncntvnoc.supabase.co",        // https://xxxx.supabase.co
   supabaseKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InllaGV1bWpldGRuZ25jbnR2bm9jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4OTk0NTAsImV4cCI6MjA4OTQ3NTQ1MH0.uV5qEgVB3s2WwBpuxezngtBkA6orFQAoysw_oZMkzKM",   // eyJhbGci...
 
   // ── Telegram Bot ───────────────────────────────────────────
   // @BotFather → /newbot → copy token
   // @userinfobot → copy your chat ID
-  telegramToken: "YOUR_BOT_TOKEN",
-  telegramChatId: "YOUR_CHAT_ID",
+  telegramToken: "8381416497:AAFOOM-7Z4JiluE1AKyest7yekwNpkjojOA",
+  telegramChatId: "6925760990",
 
   // ── Admin Password ─────────────────────────────────────────
-  adminPassword: "admin2024"
+  adminPassword: "p@ssword@2004@Sinan"
 
 };
