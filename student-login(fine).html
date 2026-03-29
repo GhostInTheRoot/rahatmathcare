@@ -153,7 +153,7 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:999999;w
 #dash{padding-top:80px;padding-bottom:40px;}
 }
 
-.dw{max-width:1120px;margin:0 auto;padding:0 20px;}
+.dw{max-width:1120px;margin:0 auto;padding:0 28px;}
 @media(max-width:480px){
 .dw{padding:0 12px;}
 .dash-hdr{flex-direction:column;align-items:flex-start;gap:12px;}
@@ -161,7 +161,6 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:999999;w
 .dash-acts{width:100%;}
 .dash-acts .dbtn{flex:1;text-align:center;justify-content:center;}
 .dg{gap:16px;}
-.dash-hdr{padding:16px 18px;border-radius:16px;}
 .pcard,.pcard-body{padding:24px 18px;position:static;}
 .srow{grid-template-columns:1fr;gap:10px;}
 .sc{padding:24px 18px;}
@@ -200,7 +199,7 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:999999;w
 .ab-txt strong{display:block;font-size:.88rem;margin-bottom:2px;}
 .exit-btn{background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.25);border-radius:8px;padding:6px 12px;color:#d97706;font-size:.74rem;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap;flex-shrink:0;transition:all .2s;}
 .exit-btn:hover{background:rgba(245,158,11,.2);transform:translateY(-1px);}
-.dash-hdr{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:16px;background:linear-gradient(135deg,rgba(37,99,235,.03),rgba(6,182,212,.02));border-radius:20px;padding:24px 28px;margin:0 0 24px 0;}
+.dash-hdr{display:flex;align-items:flex-start;justify-content:space-between;padding:28px 0 0;margin-bottom:28px;flex-wrap:wrap;gap:16px;background:linear-gradient(135deg,rgba(37,99,235,.03),rgba(6,182,212,.02));border-radius:20px;padding:28px;margin:0 0 24px 0;}
 .dash-hdr h1{font-family:'Syne',sans-serif;font-size:1.75rem;font-weight:800;letter-spacing:-.5px;display:flex;align-items:center;gap:10px;}
 .dash-hdr h1 .dash-name{background:var(--gradient-primary);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 .dash-hdr h1 .wave-icon{font-size:1.5rem;animation:wave 1.5s ease-in-out infinite;display:inline-block;}
@@ -215,8 +214,7 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:999999;w
 .dbtn.y:hover{background:linear-gradient(135deg,rgba(245,158,11,.2),rgba(245,158,11,.15));transform:translateY(-2px);box-shadow:0 6px 20px rgba(245,158,11,.25);}
 .dbtn.r{background:linear-gradient(135deg,rgba(239,68,68,.1),rgba(239,68,68,.05));border-color:rgba(239,68,68,.25);color:#ef4444;}
 .dbtn.r:hover{background:linear-gradient(135deg,rgba(239,68,68,.18),rgba(239,68,68,.12));transform:translateY(-2px);box-shadow:0 6px 20px rgba(239,68,68,.2);}
-.dg{display:grid;grid-template-columns:268px 1fr;gap:18px;width:100%;min-width:0;}
-.dg>div{min-width:0;}
+.dg{display:grid;grid-template-columns:268px 1fr;gap:18px;width:100%;}
 @media(max-width:900px){.dg{grid-template-columns:1fr;gap:16px;}}
 @media(max-width:600px){
 .dash-acts{gap:6px;}
@@ -224,7 +222,6 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:999999;w
 .dg{grid-template-columns:1fr;gap:16px;width:100%;}
 .pcard{position:static;width:100%;max-width:100%;margin-left:0;margin-right:0;}
 }
-.dg>aside{min-width:0;width:100%;}
 .pcard{background:var(--surf);border:1px solid var(--bord);border-radius:24px;position:sticky;top:84px;height:fit-content;box-shadow:0 8px 30px rgba(0,0,0,.08);overflow:hidden;animation:fadeInUp .5s ease forwards;}
 .pcard-header{background:linear-gradient(135deg,rgba(37,99,235,.1),rgba(6,182,212,.06));padding:22px 24px 18px;border-bottom:1px solid var(--bord);position:relative;}
 .pcard-header::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gradient-primary);}
@@ -690,7 +687,7 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:999999;w
           <div class="tabs">
             <button class="tb active" onclick="switchTab('mcq',this)"><span class="tb-icon">&#9989;</span> MCQ <span class="tb-count" id="mcq-count">0</span></button>
             <button class="tb" onclick="switchTab('wr',this)"><span class="tb-icon">&#128221;</span> Written <span class="tb-count" id="wr-count">0</span></button>
-            <button class="tb" onclick="switchTab('compare',this)"><span class="tb-icon">&#128202;</span> Similar <span class="tb-count" id="compare-count">0</span></button>
+            <button class="tb" onclick="switchTab('compare',this)"><span class="tb-icon">&#128202;</span> Compare <span class="tb-count" id="compare-count">0</span></button>
           </div>
           <div class="results-body">
             <div class="tc active" id="tc-mcq"><div id="mcqList"><div class="empty">Loading&#8230;</div></div></div>
