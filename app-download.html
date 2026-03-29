@@ -50,8 +50,9 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:999999;w
 @media(max-width:820px){.hamburger{padding:10px;min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center;border:0 !important;}}
 
 .mobile-backdrop{position:fixed;inset:0;background:rgba(15,23,42,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:99998;opacity:0;visibility:hidden;transition:all .4s cubic-bezier(0.4,0,0.2,1);}
-.mobile-backdrop.open{opacity:1;visibility:visible;}
-.mobile-menu{visibility:hidden;position:fixed;left:0;top:0;right:0;bottom:0;transform:translateY(-100%);opacity:0;width:100%;height:100%;background:linear-gradient(180deg,rgba(30,58,138,.98) 0%,rgba(15,23,42,1) 100%);z-index:99999;padding:80px 24px 40px;display:flex;flex-direction:column;gap:0;overflow-y:auto;transition:transform .5s cubic-bezier(0.4,0,0.2,1),opacity .4s cubic-bezier(0.4,0,0.2,1),visibility .4s;}
+.mobile-backdrop.open{opacity:1;visibility:visible;background:#0f172a;}
+.mobile-menu{visibility:hidden;position:fixed;left:0;top:0;right:0;bottom:0;transform:translateY(-100%);opacity:0;width:100%;height:100%;background:#0f172a;z-index:99999;padding:80px 24px 40px;display:flex;flex-direction:column;gap:0;overflow-y:auto;transition:transform .5s cubic-bezier(0.4,0,0.2,1),opacity .4s cubic-bezier(0.4,0,0.2,1),visibility .4s;}
+.mobile-menu::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(30,58,138,.98) 0%,rgba(15,23,42,1) 100%);z-index:-1;}
 .mobile-menu.open{visibility:visible;transform:translateY(0);opacity:1;}
 .mobile-menu-links{display:flex;flex-direction:column;gap:4px;margin-top:20px;}
 .mobile-menu a{color:#fff;text-decoration:none;font-size:1.1rem;font-weight:500;padding:16px 20px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:14px;-webkit-tap-highlight-color:transparent;transition:all .3s cubic-bezier(0.4,0,0.2,1);opacity:0;transform:translateX(-30px) scale(0.95);position:relative;overflow:hidden;}
