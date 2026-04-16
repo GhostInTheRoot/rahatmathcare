@@ -251,6 +251,13 @@ section{padding:80px 0;position:relative;background:#FFFFFF;}@media(max-width:60
 .why-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--acc),var(--acc2));transform:scaleX(0);transition:transform .35s;}
 .why-card:hover{border-color:rgba(59,130,246,.35);transform:translateY(-6px);box-shadow:var(--shadow-md);}
 .why-card:hover::after{transform:scaleX(1);}
+.why-card.blue{--card-color:#3B82F6;}
+.why-card.purple{--card-color:#8B5CF6;}
+.why-card.amber{--card-color:#F59E0B;}
+.why-card.green{--card-color:#34D399;}
+.why-card.pink{--card-color:#EC4899;}
+.why-card.cyan{--card-color:#06B6D4;}
+.why-card .wicon i{color:var(--card-color);}
 .wicon{font-size:2.2rem;margin-bottom:14px;display:inline-block;transition:transform .3s;}
 .why-card:hover .wicon{transform:scale(1.15);}
 .why-card h3{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:8px;}
@@ -412,32 +419,32 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
       <p>Discover what makes us the top mathematics coaching centre in Gazipur.</p>
     </div>
     <div class="why-grid stagger">
-      <div class="why-card">
+      <div class="why-card blue">
         <div class="wicon"><i class="fas fa-user-graduate"></i></div>
         <h3>Expert Instructor</h3>
         <p>Our faculty are BBAGC-educated and have over 3 years of experience teaching mathematics, along with a background in Mathematics.</p>
       </div>
-      <div class="why-card">
+      <div class="why-card purple">
         <div class="wicon"><i class="fas fa-book"></i></div>
         <h3>Proven Curriculum</h3>
         <p>Structured learning path with comprehensive study materials designed to cover all HSC math topics.</p>
       </div>
-      <div class="why-card">
+      <div class="why-card amber">
         <div class="wicon"><i class="fas fa-calendar-check"></i></div>
         <h3>Regular Exams</h3>
         <p>Weekly and monthly assessments to ensure continuous improvement and readiness for board exams.</p>
       </div>
-      <div class="why-card">
+      <div class="why-card green">
         <div class="wicon"><i class="fas fa-arrow-trend-up"></i></div>
         <h3>Progress Tracking</h3>
         <p>Detailed performance reports after every test so students and parents see real improvement.</p>
       </div>
-      <div class="why-card">
+      <div class="why-card pink">
         <div class="wicon"><i class="fas fa-laptop-code"></i></div>
         <h3>Online Exam Portal</h3>
         <p>Students can take exams anytime online — MCQ and written exam with instant grading and feedback</p>
       </div>
-      <div class="why-card">
+      <div class="why-card cyan">
         <div class="wicon"><i class="fas fa-bullseye"></i></div>
         <h3>Engineering Focus</h3>
         <p>Specially designed to build the mathematical foundation needed for university engineering admissions.</p>
