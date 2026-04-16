@@ -33,22 +33,54 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 a,button{-webkit-tap-highlight-color:transparent;}
 html{overflow-x:hidden;}body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden;transition:var(--transition);}
-#login-screen{position:fixed;inset:0;background:linear-gradient(135deg,#1E3A8A 0%,#3B82F6 50%,#06B6D4 100%);background-size:400% 400%;animation:gradientBG 15s ease infinite;display:flex;align-items:center;justify-content:center;z-index:1000;padding:24px;}
+#login-screen{position:fixed;inset:0;background:linear-gradient(135deg,#0F172A 0%,#1E3A8A 50%,#0F172A 100%);background-size:400% 400%;animation:gradientBG 15s ease infinite;overflow:hidden;z-index:1000;display:flex;align-items:center;justify-content:center;padding:24px;}
 @keyframes gradientBG{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-.login-box{background:rgba(255,255,255,.12);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.2);border-radius:var(--radius-xl);padding:48px 40px;width:100%;max-width:420px;text-align:center;box-shadow:0 25px 50px rgba(0,0,0,.25);transition:var(--transition);}
-.login-box:hover{box-shadow:0 30px 60px rgba(0,0,0,.3);}
-.login-logo{width:80px;height:80px;background:linear-gradient(135deg,#3B82F6,#10B981);border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;box-shadow:0 8px 30px rgba(59,130,246,.4);animation:pulse 2s ease-in-out infinite;}
-.login-logo img{width:50px;height:50px;object-fit:contain;border-radius:12px;}
-.login-box h2{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;margin-bottom:8px;color:#fff;}
-.login-box p{color:rgba(255,255,255,.7);margin-bottom:28px;font-size:.95rem;}
-.login-input{width:100%;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.2);border-radius:var(--radius-md);padding:14px 16px;color:#fff;font-size:1rem;font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:var(--transition);margin-bottom:14px;}
-.login-input::placeholder{color:rgba(255,255,255,.5);}
-.login-input:focus{border-color:#10B981;background:rgba(255,255,255,.15);}
-.login-btn{width:100%;background:linear-gradient(135deg,#3B82F6,#10B981);color:#fff;border:none;padding:14px;border-radius:var(--radius-md);font-size:1rem;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:var(--transition);box-shadow:0 4px 20px rgba(59,130,246,.4);}
-.login-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(59,130,246,.5);}
-.login-err{color:#f87171;font-size:.85rem;margin-top:12px;display:none;}
-.login-back{color:rgba(255,255,255,.7);text-decoration:none;font-size:.82rem;transition:var(--transition);}
+#login-screen::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 25% 25%,rgba(59,130,246,.15) 0%,transparent 50%),radial-gradient(circle at 75% 75%,rgba(16,185,129,.15) 0%,transparent 50%);}
+.login-particles{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
+.login-particle{position:absolute;border-radius:50%;opacity:.1;animation:float 20s infinite;}
+.login-particle:nth-child(1){width:300px;height:300px;background:linear-gradient(135deg,#3B82F6,#10B981);top:-100px;left:-50px;animation-delay:0s;}
+.login-particle:nth-child(2){width:200px;height:200px;background:linear-gradient(135deg,#10B981,#06B6D4);bottom:-50px;right:-50px;animation-delay:-5s;}
+.login-particle:nth-child(3){width:150px;height:150px;background:linear-gradient(135deg,#06B6D4,#3B82F6);top:50%;right:10%;animation-delay:-10s;}
+.login-particle:nth-child(4){width:100px;height:100px;background:#3B82F6;bottom:20%;left:10%;animation-delay:-15s;}
+@keyframes float{0%,100%{transform:translateY(0) rotate(0deg);}25%{transform:translateY(-30px) rotate(5deg);}50%{transform:translateY(0) rotate(0deg);}75%{transform:translateY(30px) rotate(-5deg);}}
+.login-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:50px 50px;pointer-events:none;}
+.login-box{background:rgba(15,23,42,.7);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border:1px solid rgba(59,130,246,.2);border-radius:24px;padding:48px 40px;width:100%;max-width:440px;text-align:center;box-shadow:0 25px 80px rgba(0,0,0,.5),0 0 40px rgba(59,130,246,.1),inset 0 1px 0 rgba(255,255,255,.1);transition:var(--transition);position:relative;overflow:hidden;animation:loginBoxIn .8s cubic-bezier(.23,1,.32,1) forwards;opacity:0;transform:translateY(30px);}
+@keyframes loginBoxIn{to{opacity:1;transform:translateY(0);}}
+.login-box::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(59,130,246,.5),transparent);}
+.login-box::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(59,130,246,.05) 0%,transparent 50%);pointer-events:none;}
+.login-logo-wrap{position:relative;margin-bottom:28px;display:inline-block;}
+.login-logo-ring{position:absolute;inset:-8px;border:2px solid rgba(59,130,246,.3);border-radius:24px;animation:ringPulse 3s ease-in-out infinite;}
+.login-logo-ring::before{content:'';position:absolute;inset:-4px;border:1px solid rgba(16,185,129,.2);border-radius:20px;}
+@keyframes ringPulse{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.05);opacity:.7;}}
+.login-logo{width:90px;height:90px;background:linear-gradient(135deg,#3B82F6,#10B981);border-radius:22px;display:flex;align-items:center;justify-content:center;margin:0 auto;box-shadow:0 8px 32px rgba(59,130,246,.4),0 0 60px rgba(16,185,129,.2);animation:logoFloat 4s ease-in-out infinite;position:relative;z-index:1;}
+.login-logo img{width:56px;height:56px;object-fit:contain;border-radius:14px;}
+@keyframes logoFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+.login-title{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;margin-bottom:6px;color:#fff;letter-spacing:-.5px;}
+.login-subtitle{color:rgba(255,255,255,.5);margin-bottom:32px;font-size:.95rem;}
+.login-form{text-align:left;}
+.login-field{position:relative;margin-bottom:20px;}
+.login-field-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,.4);font-size:1rem;z-index:1;transition:var(--transition);}
+.login-input{width:100%;background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.1);border-radius:14px;padding:16px 16px 16px 48px;color:#fff;font-size:1rem;font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:var(--transition);height:56px;}
+.login-input::placeholder{color:rgba(255,255,255,.3);}
+.login-input:focus{border-color:#10B981;background:rgba(255,255,255,.08);box-shadow:0 0 0 4px rgba(16,185,129,.1),0 0 20px rgba(16,185,129,.1);}
+.login-input:focus + .login-field-icon{color:#10B981;}
+.login-field-label{position:absolute;left:48px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,.4);font-size:.95rem;pointer-events:none;transition:var(--transition);background:rgba(15,23,42,.7);padding:0 4px;}
+.login-input:focus ~ .login-field-label,.login-input:not(:placeholder-shown) ~ .login-field-label{top:0;font-size:.75rem;color:#10B981;transform:translateY(-50%);}
+.login-btn{width:100%;background:linear-gradient(135deg,#3B82F6,#10B981);color:#fff;border:none;padding:18px;border-radius:14px;font-size:1.05rem;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:var(--transition);box-shadow:0 4px 24px rgba(59,130,246,.4),0 0 40px rgba(16,185,129,.2);display:flex;align-items:center;justify-content:center;gap:10px;margin-top:8px;position:relative;overflow:hidden;}
+.login-btn::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);transition:left .5s;}
+.login-btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(59,130,246,.5),0 0 60px rgba(16,185,129,.3);}
+.login-btn:hover::before{left:100%;}
+.login-btn:active{transform:translateY(0);}
+.login-btn.loading{pointer-events:none;opacity:.8;}
+.login-btn-spinner{display:none;width:20px;height:20px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;}
+.login-btn.loading .login-btn-spinner{display:block;}
+.login-btn.loading .login-btn-text{opacity:.7;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.login-err{color:#f87171;font-size:.85rem;margin-top:14px;display:none;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);border-radius:10px;padding:12px 16px;animation:shake .4s ease;}
+@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-5px);}75%{transform:translateX(5px);}}
+.login-back{color:rgba(255,255,255,.5);text-decoration:none;font-size:.85rem;transition:var(--transition);display:inline-flex;align-items:center;gap:6px;margin-top:24px;padding-top:20px;border-top:1px solid rgba(255,255,255,.1);width:100%;justify-content:center;}
 .login-back:hover{color:#fff;}
+.login-back i{margin-right:4px;}
 #setup-notice{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(20px);z-index:2000;align-items:center;justify-content:center;padding:24px;}
 .setup-card{background:var(--surf);border:1px solid var(--acc2);border-radius:var(--radius-xl);padding:40px;max-width:640px;width:100%;}
 .setup-card h2{color:var(--acc2);font-size:1.5rem;font-weight:800;margin-bottom:14px;}
@@ -280,18 +312,40 @@ textarea.fi{resize:vertical;min-height:80px;}
 </div>
 
 <div id="login-screen">
+  <div class="login-particles">
+    <div class="login-particle"></div>
+    <div class="login-particle"></div>
+    <div class="login-particle"></div>
+    <div class="login-particle"></div>
+  </div>
+  <div class="login-grid"></div>
+  
   <div class="login-box">
-    <div class="login-logo">
-      <img src="logo.png" alt="logo">
+    <div class="login-logo-wrap">
+      <div class="login-logo-ring"></div>
+      <div class="login-logo">
+        <img src="logo.png" alt="logo">
+      </div>
     </div>
-    <h2>Rahat Math Care</h2>
-    <p>Admin Panel — Enter password to continue</p>
-    <input type="password" id="lpwd" class="login-input" placeholder="Password" onkeydown="if(event.key==='Enter')doLogin()">
-    <button class="login-btn" onclick="doLogin()"><i class="fas fa-sign-in-alt"></i> Login</button>
-    <div class="login-err" id="lerr">Incorrect password.</div>
-    <div style="margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.2);">
-      <a href="index.html" class="login-back">← Back to website</a>
-    </div>
+    <h2 class="login-title">Rahat Math Care</h2>
+    <p class="login-subtitle">Admin Panel Access</p>
+    
+    <form class="login-form" onsubmit="event.preventDefault();doLogin()">
+      <div class="login-field">
+        <input type="password" id="lpwd" class="login-input" placeholder=" " required>
+        <i class="login-field-icon fas fa-lock"></i>
+        <label class="login-field-label" for="lpwd">Password</label>
+      </div>
+      
+      <button class="login-btn" id="loginBtn" onclick="doLogin()">
+        <span class="login-btn-text"><i class="fas fa-sign-in-alt"></i> Login to Dashboard</span>
+        <div class="login-btn-spinner"></div>
+      </button>
+    </form>
+    
+    <div class="login-err" id="lerr"><i class="fas fa-exclamation-circle"></i> Incorrect password. Please try again.</div>
+    
+    <a href="index.html" class="login-back"><i class="fas fa-arrow-left"></i> Back to website</a>
   </div>
 </div>
 
@@ -782,6 +836,10 @@ async function doLogin(){
   const pwd=document.getElementById('lpwd').value;
   if(!pwd){document.getElementById('lerr').style.display='block';return;}
   document.getElementById('lerr').style.display='none';
+  
+  const btn=document.getElementById('loginBtn');
+  if(btn){btn.classList.add('loading');}
+  
   try{
     const edgeUrl=(window.EXAM_CONFIG&&window.EXAM_CONFIG.edgeUrl)||'';
     const supabaseKey=(window.EXAM_CONFIG&&window.EXAM_CONFIG.supabaseKey)||'';
@@ -795,13 +853,21 @@ async function doLogin(){
       body:JSON.stringify({password:pwd})
     });
     const json=await resp.json();
-    if(!resp.ok||json.error){document.getElementById('lerr').style.display='block';return;}
+    if(!resp.ok||json.error){
+      if(btn){btn.classList.remove('loading');}
+      document.getElementById('lerr').style.display='block';
+      return;
+    }
     sessionStorage.setItem('adm','1');
     sessionStorage.setItem('rmc_admin_token',json.token);
     document.getElementById('login-screen').style.display='none';
     showMainUI();
     init();
-  }catch(e){document.getElementById('lerr').textContent='Error: '+e.message;document.getElementById('lerr').style.display='block';}
+  }catch(e){
+    if(btn){btn.classList.remove('loading');}
+    document.getElementById('lerr').textContent='Error: '+e.message;
+    document.getElementById('lerr').style.display='block';
+  }
 }
 function doLogout(){sessionStorage.removeItem('adm');sessionStorage.removeItem('rmc_admin_token');location.reload();}
 document.getElementById('lpwd').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
