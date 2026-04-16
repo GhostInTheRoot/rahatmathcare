@@ -62,6 +62,7 @@ html{overflow-x:hidden;}body{font-family:'Plus Jakarta Sans',sans-serif;backgrou
 .login-field-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,.4);font-size:1rem;z-index:1;transition:var(--transition);}
 .login-input{width:100%;background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.1);border-radius:14px;padding:16px 16px 16px 48px;color:#fff;font-size:1rem;font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:var(--transition);height:56px;}
 .login-input::placeholder{color:rgba(255,255,255,.3);}
+.login-input:-webkit-autofill,.login-input:-webkit-autofill:hover,.login-input:-webkit-autofill:focus{-webkit-box-shadow:0 0 0 1000px rgba(15,23,42,.9) inset!important;-webkit-text-fill-color:#fff!important;caret-color:#fff!important;}
 .login-input:focus{border-color:#10B981;background:rgba(255,255,255,.08);box-shadow:0 0 0 4px rgba(16,185,129,.1),0 0 20px rgba(16,185,129,.1);}
 .login-input:focus + .login-field-icon{color:#10B981;}
 .login-field-label{position:absolute;left:48px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,.4);font-size:.95rem;pointer-events:none;transition:var(--transition);background:rgba(15,23,42,.7);padding:0 4px;}
@@ -332,7 +333,7 @@ textarea.fi{resize:vertical;min-height:80px;}
     
     <form class="login-form" onsubmit="event.preventDefault();doLogin()">
       <div class="login-field">
-        <input type="password" id="lpwd" class="login-input" placeholder=" " required>
+        <input type="password" id="lpwd" class="login-input" placeholder=" " autocomplete="off" required>
         <i class="login-field-icon fas fa-lock"></i>
         <label class="login-field-label" for="lpwd">Password</label>
       </div>
