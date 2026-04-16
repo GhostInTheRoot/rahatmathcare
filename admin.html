@@ -1039,13 +1039,13 @@ async function loadSubs(){
         <input class="mark-inp" type="number" min="1" placeholder="Total" id="mt_${r.id}" value="${r.marks_total!=null?r.marks_total:''}">
         <span class="mark-lbl">Remarks:</span>
         <input class="mark-inp wide" type="text" placeholder="Optional note…" id="mr_${r.id}" value="${r.remarks?esc(r.remarks):''}">
-        <button class="mark-save-btn" onclick="saveMark('${r.id}')" id="msb_${r.id}">Save Marks</button>
+        <button class="btn btn-p" onclick="saveMark('${r.id}')" id="msb_${r.id}" style="margin-top:0;">Save Marks</button>
         <span class="mark-saved-badge" id="msd_${r.id}">✓ Saved</span>
       </div>
       <div class="mark-form" style="margin-top:10px;gap:8px;flex-wrap:wrap;">
         <span class="mark-lbl">Checked link:</span>
         <input class="mark-inp wide" type="text" placeholder="Paste Google Drive share link (or multiple links separated by commas)" id="ck_${r.id}" value="${checked.join(', ')}">
-        <button class="mark-save-btn" onclick="saveCheckedLink('${r.id}')" id="cks_${r.id}">Save Link</button>
+        <button class="btn btn-p" onclick="saveCheckedLink('${r.id}')" id="cks_${r.id}" style="margin-top:0;">Save Link</button>
       </div>
     </div>`;
   }).join('');
