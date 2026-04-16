@@ -8,265 +8,193 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Panel — Rahat Math Care</title>
 <link rel="icon" type="image/png" href="favicon.png">
+<!--<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">-->
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
 <style>
-:root{
-  --bg:#F8FAFC;--surf:#FFFFFF;--surf2:#F1F5F9;--bord:#E2E8F0;
-  --acc:#3B82F6;--acc-hover:#2563EB;--acc2:#10B981;--acc3:#06B6D4;--txt:#0F172A;--muted:#64748B;
-  --navy:#1E3A8A;--navy-light:#1E40AF;
-  --shadow-sm:0 2px 8px rgba(0,0,0,.06);--shadow-md:0 8px 24px rgba(0,0,0,.1);--shadow-lg:0 20px 40px rgba(0,0,0,.12);
-  --shadow-glow:0 0 40px rgba(59,130,246,.15);--shadow-glow-green:0 0 30px rgba(16,185,129,.3);
-  --radius-sm:8px;--radius-md:12px;--radius-lg:16px;--radius-xl:20px;
-  --transition:all .25s cubic-bezier(.4,0,.2,1);
-  --sidebar-width:260px;--sidebar-collapsed:72px;--topbar-height:64px;
-}
-[data-theme="dark"]{
-  --bg:#0F172A;--surf:#1E293B;--surf2:#334155;--bord:#475569;
-  --acc:#60A5FA;--acc-hover:#3B82F6;--acc2:#34D399;--acc3:#22D3EE;--txt:#F1F5F9;--muted:#94A3B8;
-  --navy:#1E3A8A;--navy-light:#1E40AF;
-  --shadow-sm:0 2px 8px rgba(0,0,0,.3);--shadow-md:0 8px 24px rgba(0,0,0,.4);--shadow-lg:0 20px 40px rgba(0,0,0,.5);
-  --shadow-glow:0 0 40px rgba(96,165,250,.2);--shadow-glow-green:0 0 30px rgba(52,211,153,.3);
-}
+:root{--bg:#FFFFFF;--surf:#FFFFFF;--surf2:#F8FAFC;--bord:#E5E7EB;--acc:#3B82F6;--acc2:#34D399;--acc3:#10b981;--txt:#111827;--muted:#6B7280;--shadow-sm:0 2px 8px rgba(0,0,0,.06);--shadow-md:0 8px 24px rgba(0,0,0,.1);--shadow-lg:0 20px 40px rgba(0,0,0,.12);}
 *{margin:0;padding:0;box-sizing:border-box;}
 a,button{-webkit-tap-highlight-color:transparent;}
-html{overflow-x:hidden;}body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden;transition:var(--transition);}
-#login-screen{position:fixed;inset:0;background:linear-gradient(135deg,#1E3A8A 0%,#3B82F6 50%,#06B6D4 100%);background-size:400% 400%;animation:gradientBG 15s ease infinite;display:flex;align-items:center;justify-content:center;z-index:1000;padding:24px;}
-@keyframes gradientBG{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-.login-box{background:rgba(255,255,255,.12);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.2);border-radius:var(--radius-xl);padding:48px 40px;width:100%;max-width:420px;text-align:center;box-shadow:0 25px 50px rgba(0,0,0,.25);transition:var(--transition);}
-.login-box:hover{box-shadow:0 30px 60px rgba(0,0,0,.3);}
-.login-logo{width:80px;height:80px;background:linear-gradient(135deg,#3B82F6,#10B981);border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;box-shadow:0 8px 30px rgba(59,130,246,.4);animation:pulse 2s ease-in-out infinite;}
-.login-logo img{width:50px;height:50px;object-fit:contain;border-radius:12px;}
-.login-box h2{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;margin-bottom:8px;color:#fff;}
-.login-box p{color:rgba(255,255,255,.7);margin-bottom:28px;font-size:.95rem;}
-.login-input{width:100%;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.2);border-radius:var(--radius-md);padding:14px 16px;color:#fff;font-size:1rem;font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:var(--transition);margin-bottom:14px;}
-.login-input::placeholder{color:rgba(255,255,255,.5);}
-.login-input:focus{border-color:#10B981;background:rgba(255,255,255,.15);}
-.login-btn{width:100%;background:linear-gradient(135deg,#3B82F6,#10B981);color:#fff;border:none;padding:14px;border-radius:var(--radius-md);font-size:1rem;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:var(--transition);box-shadow:0 4px 20px rgba(59,130,246,.4);}
-.login-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(59,130,246,.5);}
+html{overflow-x:hidden;}body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden;}
+#login-screen{position:fixed;inset:0;background:#FFFFFF;display:flex;align-items:center;justify-content:center;z-index:1000;padding:24px;}
+.login-box{background:var(--surf);border:1px solid var(--bord);border-radius:24px;padding:48px 40px;width:100%;max-width:400px;text-align:center;}@media(max-width:480px){.login-box{padding:32px 22px;border-radius:18px;}}
+.login-box h2{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;margin-bottom:8px;}
+.login-box p{color:var(--muted);margin-bottom:28px;font-size:.95rem;}
+.login-input{width:100%;background:var(--surf2);border:1.5px solid var(--bord);border-radius:12px;padding:14px 16px;color:var(--txt);font-size:1rem;font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:border-color .2s;margin-bottom:14px;}
+.login-input:focus{border-color:var(--acc);}
+.login-btn{width:100%;background:linear-gradient(135deg,var(--acc),#1d4ed8);color:#fff;border:none;padding:14px;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .3s;}
+.login-btn:hover{box-shadow:0 8px 28px rgba(37,99,235,.45);}
 .login-err{color:#f87171;font-size:.85rem;margin-top:12px;display:none;}
-.login-back{color:rgba(255,255,255,.7);text-decoration:none;font-size:.82rem;transition:var(--transition);}
-.login-back:hover{color:#fff;}
-#setup-notice{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(20px);z-index:2000;align-items:center;justify-content:center;padding:24px;}
-.setup-card{background:var(--surf);border:1px solid var(--acc2);border-radius:var(--radius-xl);padding:40px;max-width:640px;width:100%;}
-.setup-card h2{color:var(--acc2);font-size:1.5rem;font-weight:800;margin-bottom:14px;}
+#setup-notice{display:none;position:fixed;inset:0;background:rgba(255,255,255,.98);backdrop-filter:blur(20px);z-index:2000;align-items:center;justify-content:center;padding:24px;}
+.setup-card{background:var(--surf);border:1px solid var(--acc2);border-radius:20px;padding:40px;max-width:640px;width:100%;}
+.setup-card h2{font-family:'Syne',sans-serif;color:var(--acc2);font-size:1.5rem;font-weight:800;margin-bottom:14px;}
 .setup-card p{color:var(--muted);line-height:1.75;margin-bottom:10px;font-size:.93rem;}
-.setup-card code{background:var(--surf2);padding:2px 8px;border-radius:6px;color:var(--acc2);font-size:.85rem;}
+.setup-card code{background:var(--surf2);padding:2px 8px;border-radius:6px;color:var(--acc3);font-size:.85rem;}
 .setup-card a{color:var(--acc);}
-
-/* TOPBAR */
-.topbar{position:fixed;top:0;left:0;right:0;height:var(--topbar-height);background:var(--surf);border-bottom:1px solid var(--bord);z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 20px;transition:var(--transition);}
-.topbar-left{display:flex;align-items:center;gap:16px;}
-.topbar-hamburger{display:none;width:40px;height:40px;border:none;background:var(--surf2);border-radius:var(--radius-sm);cursor:pointer;color:var(--txt);font-size:1.2rem;transition:var(--transition);}
-.topbar-hamburger:hover{background:var(--bord);}
-.topbar-logo{display:flex;align-items:center;gap:10px;}
-.topbar-logo img{width:36px;height:36px;object-fit:contain;border-radius:10px;}
-.topbar-logo-text{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;color:var(--txt);}
-.topbar-logo-text span{color:var(--acc2);}
-.topbar-badge{background:linear-gradient(135deg,#3B82F6,#10B981);border-radius:50px;padding:3px 10px;font-size:.7rem;color:#fff;font-weight:700;margin-left:4px;}
-.topbar-right{display:flex;align-items:center;gap:12px;}
-.theme-toggle{width:40px;height:40px;border:none;background:var(--surf2);border-radius:var(--radius-sm);cursor:pointer;color:var(--txt);font-size:1.1rem;transition:var(--transition);display:flex;align-items:center;justify-content:center;}
-.theme-toggle:hover{background:var(--bord);}
-.topbar-logout{width:40px;height:40px;border:none;background:var(--surf2);border-radius:var(--radius-sm);cursor:pointer;color:var(--muted);font-size:1.1rem;transition:var(--transition);display:flex;align-items:center;justify-content:center;}
-.topbar-logout:hover{background:#fee2e2;color:#ef4444;}
-
-/* SIDEBAR */
-.sidebar{position:fixed;top:var(--topbar-height);left:0;bottom:0;width:var(--sidebar-width);background:var(--surf);border-right:1px solid var(--bord);z-index:90;overflow-y:auto;overflow-x:hidden;transition:var(--transition);padding:16px 0;}
-.sidebar.collapsed{width:var(--sidebar-collapsed);}
-.sidebar::-webkit-scrollbar{width:4px;}
-.sidebar::-webkit-scrollbar-thumb{background:var(--bord);border-radius:2px;}
-.sidenav{display:flex;flex-direction:column;gap:4px;padding:0 8px;}
-.sidebar-label{padding:16px 16px 8px;font-size:.68rem;color:var(--muted);font-weight:700;letter-spacing:.8px;text-transform:uppercase;white-space:nowrap;overflow:hidden;transition:var(--transition);}
-.sidebar.collapsed .sidebar-label{opacity:0;height:0;padding:0;overflow:hidden;}
-.sitem{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:var(--radius-md);cursor:pointer;font-size:.88rem;color:var(--muted);transition:var(--transition);border:none;background:none;width:100%;text-align:left;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap;overflow:hidden;}
+nav{padding:16px 0;border-bottom:1px solid var(--bord);background:rgba(30,58,138,.95);backdrop-filter:blur(20px);position:sticky;top:0;z-index:50;}
+.nav-inner{max-width:1320px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;}
+.logo-wrap{display:flex;align-items:center;gap:10px;}
+.logo-wrap img{width:32px;height:32px;object-fit:contain;}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;color:#fff;}
+.logo span{color:var(--acc2);}
+.admin-badge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);border-radius:50px;padding:2px 10px;font-size:.7rem;color:#fff;font-weight:700;margin-left:6px;}
+.nav-r{display:flex;align-items:center;gap:16px;}
+.nav-link{color:rgba(255,255,255,.8);text-decoration:none;font-size:.88rem;transition:color .2s;background:none;border:none;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;}
+.nav-link:hover{color:#fff;}
+.page{max-width:1320px;margin:0 auto;padding:28px 24px;display:grid;grid-template-columns:220px 1fr;gap:22px;}@media(max-width:480px){.page{padding:16px 12px;}}
+@media(max-width:768px){.page{grid-template-columns:1fr;}}
+.sidebar{position:sticky;top:72px;height:fit-content;}
+.sidenav{background:var(--surf);border:1px solid var(--bord);border-radius:16px;padding:8px;overflow:hidden;}
+.sitem{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:10px;cursor:pointer;font-size:.88rem;color:var(--muted);transition:all .2s;border:none;background:none;width:100%;text-align:left;font-family:'Plus Jakarta Sans',sans-serif;}
 .sitem:hover{background:var(--surf2);color:var(--txt);}
-.sitem.active{background:linear-gradient(135deg,rgba(59,130,246,.15),rgba(16,185,129,.1));color:var(--acc);border-left:3px solid var(--acc);}
-.sitem .si{font-size:1.1rem;width:24px;text-align:center;flex-shrink:0;}
-.sitem .sl{transition:var(--transition);}
-.sidebar.collapsed .sitem .sl{opacity:0;width:0;overflow:hidden;}
-.sidebar-divider{height:1px;background:var(--bord);margin:8px 16px;}
-.sidebar.collapsed .sidebar-divider{margin:8px 12px;}
-
-/* MAIN CONTENT */
-.main-content{margin-left:var(--sidebar-width);margin-top:var(--topbar-height);padding:24px;min-height:calc(100vh - var(--topbar-height));transition:var(--transition);}
-.sidebar.collapsed ~ .main-content{margin-left:var(--sidebar-collapsed);}
-.page{max-width:1400px;}
-
-/* Responsive */
-@media(max-width:1024px){
-  .sidebar{transform:translateX(-100%);width:var(--sidebar-width);}
-  .sidebar.open{transform:translateX(0);}
-  .sidebar.collapsed{width:var(--sidebar-width);}
-  .main-content{margin-left:0;}
-  .sidebar.collapsed ~ .main-content{margin-left:0;}
-  .topbar-hamburger{display:flex;align-items:center;justify-content:center;}
-  .mobile-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:80;opacity:0;visibility:hidden;transition:var(--transition);}
-  .mobile-overlay.show{opacity:1;visibility:visible;}
-}
-@media(max-width:640px){
-  .topbar{padding:0 12px;}
-  .topbar-logo-text{font-size:1rem;}
-  .main-content{padding:16px;}
-}
-.tab{display:none;}.tab.active{display:block;animation:fadeInUp .4s ease;}
-@keyframes fadeInUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
-
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px;}
-.stat{background:var(--surf);border:1px solid var(--bord);border-radius:var(--radius-lg);padding:24px;text-align:center;transition:var(--transition);position:relative;overflow:hidden;}
-.stat::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--acc),var(--acc2));}
-.stat:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);}
-.stat-icon{width:48px;height:48px;background:linear-gradient(135deg,rgba(59,130,246,.15),rgba(16,185,129,.1));border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:1.4rem;color:var(--acc);}
-.stat-n{font-family:'Syne',sans-serif;font-size:2.2rem;font-weight:800;background:linear-gradient(135deg,var(--acc),var(--acc2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.stat-l{color:var(--muted);font-size:.78rem;margin-top:4px;text-transform:uppercase;letter-spacing:.3px;font-weight:600;}
-@media(max-width:640px){.stats{grid-template-columns:1fr;}}
-
-.sc{background:var(--surf);border:1px solid var(--bord);border-radius:var(--radius-lg);padding:24px;margin-bottom:22px;transition:var(--transition);}
-.sc:hover{box-shadow:var(--shadow-sm);}
-.sc-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:20px;display:flex;align-items:center;gap:10px;color:var(--txt);}
-.sc-title i{color:var(--acc);}
-.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}@media(max-width:640px){.fgrid{grid-template-columns:1fr;}}
+.sitem.active{background:rgba(37,99,235,.16);color:var(--acc);}
+.sitem .si{font-size:1rem;width:20px;text-align:center;}
+.sidebar-divider{height:1px;background:var(--bord);margin:8px 6px;}
+.sidebar-label{padding:8px 14px 4px;font-size:.68rem;color:var(--muted);font-weight:700;letter-spacing:.8px;text-transform:uppercase;}
+.tab{display:none;}.tab.active{display:block;}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px;}@media(max-width:480px){.stats{grid-template-columns:1fr 1fr;}.stats .stat:last-child{grid-column:span 2;}}
+@media(max-width:560px){.stats{grid-template-columns:1fr 1fr;}}
+.stat{background:var(--surf);border:1px solid var(--bord);border-radius:14px;padding:20px;text-align:center;}
+.stat-n{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--acc);}
+.stat-l{color:var(--muted);font-size:.78rem;margin-top:4px;text-transform:uppercase;letter-spacing:.3px;}
+.sc{background:var(--surf);border:1px solid var(--bord);border-radius:18px;padding:28px;margin-bottom:22px;}@media(max-width:480px){.sc{padding:18px 14px;border-radius:14px;}}
+.sc-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:22px;display:flex;align-items:center;gap:9px;}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}@media(max-width:480px){.fgrid{grid-template-columns:1fr;}}
+@media(max-width:600px){.fgrid{grid-template-columns:1fr;}}
 .fg{display:flex;flex-direction:column;gap:6px;}
 .fg.full{grid-column:1/-1;}
-.fl{font-size:.83rem;color:var(--muted);font-weight:600;}
-.fi{background:var(--surf2);border:1.5px solid var(--bord);border-radius:var(--radius-md);padding:12px 16px;color:var(--txt);font-size:.92rem;font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:var(--transition);width:100%;}
-.fi:focus{border-color:var(--acc);box-shadow:0 0 0 3px rgba(59,130,246,.1);}
+.fl{font-size:.83rem;color:var(--muted);font-weight:500;}
+.fi{background:var(--surf2);border:1.5px solid var(--bord);border-radius:10px;padding:11px 14px;color:var(--txt);font-size:.92rem;font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:border-color .2s;width:100%;}
+.fi:focus{border-color:var(--acc);}
 select.fi option{background:var(--surf2);}
 textarea.fi{resize:vertical;min-height:80px;}
-.drive-hint{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);border-radius:var(--radius-md);padding:14px 16px;margin-top:8px;font-size:.82rem;color:var(--muted);line-height:1.6;}
-.drive-hint strong{color:var(--acc2);}
-.info-hint{background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:var(--radius-md);padding:14px 16px;margin-bottom:18px;font-size:.82rem;color:var(--muted);line-height:1.65;}
-.info-hint strong{color:var(--acc);}
-.mcq-mode-switch{display:flex;gap:0;background:var(--surf2);border:1px solid var(--bord);border-radius:var(--radius-md);padding:4px;margin-bottom:24px;}
-.mcq-mode-btn{flex:1;padding:12px 20px;border-radius:var(--radius-sm);border:none;background:none;color:var(--muted);font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;font-weight:600;cursor:pointer;transition:var(--transition);display:flex;align-items:center;justify-content:center;gap:8px;}
-.mcq-mode-btn.active{background:var(--surf);color:var(--txt);box-shadow:0 2px 10px rgba(0,0,0,.15);}
-.mcq-mode-btn.active.full{color:var(--acc2);}
-.mcq-mode-btn.active.key{color:var(--acc);}
-.mcq-mode-info{border-radius:var(--radius-md);padding:16px 18px;margin-bottom:20px;font-size:.84rem;color:var(--muted);line-height:1.6;}
-.mcq-mode-info.full{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);}
-.mcq-mode-info.key{background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);}
-.mcq-mode-info strong{display:block;margin-bottom:6px;}
-.mcq-mode-info.full strong{color:var(--acc2);}
-.mcq-mode-info.key strong{color:var(--acc);}
-.qblock{background:var(--surf2);border:1px solid var(--bord);border-radius:var(--radius-lg);padding:20px;margin-bottom:12px;transition:var(--transition);}
-.qblock:focus-within{border-color:var(--acc2);}
-.qhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
-.qnum{font-family:'Syne',sans-serif;font-weight:800;font-size:.9rem;color:var(--acc2);}
-.qtext-input{width:100%;background:var(--surf);border:1.5px solid var(--bord);border-radius:var(--radius-md);padding:12px 14px;color:var(--txt);font-size:.92rem;font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:var(--transition);margin-bottom:12px;}
-.qtext-input:focus{border-color:var(--acc2);}
-.opt-rows{display:flex;flex-direction:column;gap:10px;}
-.opt-row{display:grid;grid-template-columns:28px 1fr auto;align-items:center;gap:10px;}
-.opt-ltr{font-family:'Syne',sans-serif;font-weight:800;font-size:.85rem;color:var(--muted);text-align:center;}
-.opt-input{background:var(--surf);border:1.5px solid var(--bord);border-radius:var(--radius-sm);padding:10px 14px;color:var(--txt);font-size:.88rem;font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:var(--transition);width:100%;}
-.opt-input:focus{border-color:var(--acc2);}
-.ans-lbl{display:flex;align-items:center;gap:6px;font-size:.78rem;font-weight:600;color:var(--muted);white-space:nowrap;cursor:pointer;padding:8px 12px;border-radius:var(--radius-sm);border:1.5px solid var(--bord);background:var(--surf);transition:var(--transition);user-select:none;}
-.ans-lbl:hover{border-color:var(--acc2);color:var(--acc2);}
-.ans-lbl.sel{border-color:var(--acc2);background:rgba(16,185,129,.12);color:var(--acc2);}
+.drive-hint{background:rgba(67,233,123,.07);border:1px solid rgba(67,233,123,.25);border-radius:10px;padding:13px 15px;margin-top:8px;font-size:.82rem;color:var(--muted);line-height:1.6;}
+.drive-hint strong{color:var(--acc3);}
+.drive-hint code{background:var(--surf2);padding:1px 6px;border-radius:5px;font-size:.8rem;color:var(--acc3);}
+.info-hint{background:rgba(37,99,235,.07);border:1px solid rgba(37,99,235,.2);border-radius:10px;padding:13px 15px;margin-bottom:18px;font-size:.82rem;color:var(--muted);line-height:1.65;}
+.info-hint strong{color:#60a5fa;}
+.mcq-mode-switch{display:flex;gap:0;background:var(--surf2);border:1px solid var(--bord);border-radius:12px;padding:4px;margin-bottom:24px;}
+.mcq-mode-btn{flex:1;padding:10px 18px;border-radius:9px;border:none;background:none;color:var(--muted);font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;font-weight:600;cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:7px;}
+.mcq-mode-btn.active{background:var(--surf);color:var(--txt);box-shadow:0 2px 10px rgba(0,0,0,.3);}
+.mcq-mode-btn.active.full{color:var(--acc3);}
+.mcq-mode-btn.active.key{color:var(--acc2);}
+.mcq-mode-info{border-radius:12px;padding:14px 16px;margin-bottom:20px;font-size:.84rem;color:var(--muted);line-height:1.6;}
+.mcq-mode-info.full{background:rgba(67,233,123,.07);border:1px solid rgba(67,233,123,.22);}
+.mcq-mode-info.key{background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.22);}
+.mcq-mode-info strong{display:block;margin-bottom:4px;}
+.mcq-mode-info.full strong{color:var(--acc3);}
+.mcq-mode-info.key strong{color:var(--acc2);}
+.qblock{background:var(--surf2);border:1px solid var(--bord);border-radius:14px;padding:18px 20px;margin-bottom:12px;}
+.qblock:focus-within{border-color:rgba(67,233,123,.4);}
+.qhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:13px;}
+.qnum{font-family:'Syne',sans-serif;font-weight:800;font-size:.9rem;color:var(--acc3);}
+.qtext-input{width:100%;background:var(--surf);border:1.5px solid var(--bord);border-radius:9px;padding:10px 13px;color:var(--txt);font-size:.92rem;font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:border-color .2s;margin-bottom:12px;}
+.qtext-input:focus{border-color:var(--acc3);}
+.opt-rows{display:flex;flex-direction:column;gap:8px;}
+.opt-row{display:grid;grid-template-columns:26px 1fr auto;align-items:center;gap:9px;}
+.opt-ltr{font-family:'Syne',sans-serif;font-weight:800;font-size:.82rem;color:var(--muted);text-align:center;}
+.opt-input{background:var(--surf);border:1.5px solid var(--bord);border-radius:8px;padding:8px 12px;color:var(--txt);font-size:.88rem;font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:border-color .2s;width:100%;}
+.opt-input:focus{border-color:var(--acc3);}
+.ans-lbl{display:flex;align-items:center;gap:5px;font-size:.76rem;font-weight:600;color:var(--muted);white-space:nowrap;cursor:pointer;padding:6px 9px;border-radius:7px;border:1.5px solid var(--bord);background:var(--surf);transition:all .18s;user-select:none;}
+.ans-lbl:hover{border-color:rgba(67,233,123,.5);color:var(--acc3);}
+.ans-lbl.sel{border-color:var(--acc3);background:rgba(67,233,123,.15);color:var(--acc3);}
 .ans-lbl input[type=radio]{display:none;}
-.add-q-btn{width:100%;border:2px dashed var(--bord);background:none;color:var(--muted);border-radius:var(--radius-md);padding:14px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;transition:var(--transition);margin-top:8px;}
-.add-q-btn:hover{border-color:var(--acc2);color:var(--acc2);background:rgba(16,185,129,.05);}
-.img-upload-zone{border:2px dashed var(--bord);border-radius:var(--radius-md);padding:16px 18px;margin-bottom:12px;cursor:pointer;transition:var(--transition);display:flex;align-items:center;gap:12px;background:var(--surf);font-size:.82rem;color:var(--muted);}
-.img-upload-zone:hover{border-color:var(--acc);color:var(--acc);}
-.img-upload-zone.has-img{border-color:var(--acc2);color:var(--acc2);}
+.add-q-btn{width:100%;border:2px dashed var(--bord);background:none;color:var(--muted);border-radius:10px;padding:13px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;transition:all .2s;margin-top:4px;}
+.add-q-btn:hover{border-color:var(--acc3);color:var(--acc3);}
+.img-upload-zone{border:2px dashed var(--bord);border-radius:10px;padding:14px 16px;margin-bottom:12px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:11px;background:var(--surf);font-size:.82rem;color:var(--muted);}
+.img-upload-zone:hover{border-color:rgba(108,99,255,.5);color:var(--acc);}
+.img-upload-zone.has-img{border-color:rgba(67,233,123,.4);color:var(--acc3);}
 .img-upload-zone input[type=file]{display:none;}
 .img-upload-label{cursor:pointer;display:flex;align-items:center;gap:8px;flex:1;}
-.img-thumb{width:56px;height:44px;object-fit:cover;border-radius:var(--radius-sm);border:1px solid var(--bord);flex-shrink:0;}
-.img-remove{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);color:#f87171;border-radius:var(--radius-sm);padding:4px 10px;font-size:.74rem;cursor:pointer;margin-left:auto;flex-shrink:0;}
-.opt-img-zone{border:1.5px dashed var(--bord);border-radius:var(--radius-sm);padding:6px 12px;font-size:.75rem;color:var(--muted);cursor:pointer;transition:var(--transition);display:flex;align-items:center;gap:6px;background:var(--surf);flex-shrink:0;white-space:nowrap;}
-.opt-img-zone:hover{border-color:var(--acc2);color:var(--acc2);}
-.opt-img-zone.has-img{border-color:var(--acc2);color:var(--acc2);}
+.img-thumb{width:54px;height:42px;object-fit:cover;border-radius:7px;border:1px solid var(--bord);flex-shrink:0;}
+.img-remove{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:#f87171;border-radius:6px;padding:2px 8px;font-size:.72rem;cursor:pointer;margin-left:auto;flex-shrink:0;}
+.opt-img-zone{border:1.5px dashed var(--bord);border-radius:7px;padding:5px 10px;font-size:.75rem;color:var(--muted);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px;background:var(--surf);flex-shrink:0;white-space:nowrap;}
+.opt-img-zone:hover{border-color:rgba(67,233,123,.4);color:var(--acc3);}
+.opt-img-zone.has-img{border-color:rgba(67,233,123,.4);color:var(--acc3);}
 .opt-img-zone input[type=file]{display:none;}
 .opt-img-label{cursor:pointer;display:flex;align-items:center;gap:5px;}
 .opt-img-thumb{width:32px;height:24px;object-fit:cover;border-radius:4px;}
-.opt-img-remove{font-size:.7rem;color:#f87171;cursor:pointer;background:none;border:none;padding:0 4px;}
-.qcount-btn{width:36px;height:36px;border-radius:var(--radius-sm);border:1.5px solid var(--bord);background:var(--surf);color:var(--txt);font-size:1.2rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--transition);flex-shrink:0;line-height:1;}
-.qcount-btn:hover{border-color:var(--acc);color:var(--acc);}
-.ak-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;}
-.ak-row{display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--surf2);border:1px solid var(--bord);border-radius:var(--radius-md);transition:var(--transition);}
-.ak-row.has-ans{border-color:var(--acc);background:rgba(59,130,246,.05);}
-.ak-qnum{font-family:'Syne',sans-serif;font-weight:700;font-size:.82rem;color:var(--muted);min-width:32px;}
-.ak-row.has-ans .ak-qnum{color:var(--acc);}
-.ak-opts{display:flex;gap:8px;}
-.ak-opt{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:var(--radius-sm);border:1.5px solid var(--bord);background:var(--surf);cursor:pointer;font-size:.82rem;font-weight:700;color:var(--muted);transition:var(--transition);user-select:none;}
-.ak-opt:hover{border-color:var(--acc);color:var(--acc);}
-.ak-opt.sel{border-color:var(--acc);background:rgba(59,130,246,.12);color:var(--acc);}
-.ak-opt-box{width:14px;height:14px;border:1.5px solid currentColor;border-radius:3px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.6rem;}
-.ak-opt.sel .ak-opt-box::after{content:'\f00c';font-family:'Font Awesome 6 Free';font-weight:900;font-size:.5rem;}
-.elist{display:flex;flex-direction:column;gap:12px;}
-.eitem{display:flex;justify-content:space-between;align-items:center;background:var(--surf2);border:1px solid var(--bord);border-radius:var(--radius-lg);padding:16px 18px;gap:16px;transition:var(--transition);}
-.eitem:hover{border-color:var(--acc);box-shadow:var(--shadow-sm);}
-.eitem-title{font-weight:600;margin-bottom:4px;font-size:.95rem;}
-.eitem-sub{color:var(--muted);font-size:.8rem;}
-.eitem-acts{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap;}
-.eitem-type{display:inline-block;padding:3px 10px;border-radius:50px;font-size:.7rem;font-weight:700;margin-left:8px;}
-.eitem-type.full{background:rgba(16,185,129,.12);color:var(--acc2);border:1px solid rgba(16,185,129,.25);}
-.eitem-type.key{background:rgba(59,130,246,.12);color:var(--acc);border:1px solid rgba(59,130,246,.25);}
-.empty{color:var(--muted);text-align:center;padding:32px;font-size:.9rem;}
-.btn{border:none;padding:12px 28px;border-radius:var(--radius-md);font-size:.92rem;font-weight:600;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:var(--transition);display:inline-flex;align-items:center;gap:8px;margin-top:16px;}
-.btn-p{background:linear-gradient(135deg,#3B82F6,#10B981);color:#fff;box-shadow:0 4px 20px rgba(59,130,246,.35);}
-.btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(59,130,246,.45);}
+.opt-img-remove{font-size:.68rem;color:#f87171;cursor:pointer;background:none;border:none;padding:0 2px;}
+.qcount-btn{width:32px;height:32px;border-radius:8px;border:1.5px solid var(--bord);background:var(--surf);color:var(--txt);font-size:1.2rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;line-height:1;}
+.qcount-btn:hover{border-color:var(--acc2);color:var(--acc2);}
+.ak-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px;}
+.ak-row{display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--surf2);border:1px solid var(--bord);border-radius:9px;transition:border-color .2s;}
+.ak-row.has-ans{border-color:rgba(245,158,11,.35);background:rgba(245,158,11,.04);}
+.ak-qnum{font-family:'Syne',sans-serif;font-weight:700;font-size:.8rem;color:var(--muted);min-width:30px;}
+.ak-row.has-ans .ak-qnum{color:var(--acc2);}
+.ak-opts{display:flex;gap:6px;}
+.ak-opt{display:flex;align-items:center;gap:4px;padding:5px 10px;border-radius:7px;border:1.5px solid var(--bord);background:var(--surf);cursor:pointer;font-size:.8rem;font-weight:700;color:var(--muted);transition:all .18s;user-select:none;}
+.ak-opt:hover{border-color:rgba(245,158,11,.5);color:var(--acc2);}
+.ak-opt.sel{border-color:var(--acc2);background:rgba(245,158,11,.18);color:var(--acc2);}
+.ak-opt-box{width:13px;height:13px;border:1.5px solid currentColor;border-radius:3px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.58rem;}
+.ak-opt.sel .ak-opt-box::after{content:'✓';}
+.elist{display:flex;flex-direction:column;gap:10px;}
+.eitem{display:flex;justify-content:space-between;align-items:center;background:var(--surf2);border:1px solid var(--bord);border-radius:12px;padding:14px 16px;gap:12px;}
+@media(max-width:580px){.eitem{flex-direction:column;align-items:flex-start;padding:12px 14px;}}
+.eitem-title{font-weight:600;margin-bottom:3px;font-size:.95rem;}
+.eitem-sub{color:var(--muted);font-size:.78rem;}
+.eitem-acts{display:flex;gap:7px;flex-shrink:0;flex-wrap:wrap;}
+.eitem-type{display:inline-block;padding:2px 9px;border-radius:50px;font-size:.7rem;font-weight:700;margin-left:6px;}
+.eitem-type.full{background:rgba(67,233,123,.12);color:var(--acc3);border:1px solid rgba(67,233,123,.28);}
+.eitem-type.key{background:rgba(245,158,11,.1);color:var(--acc2);border:1px solid rgba(245,158,11,.25);}
+.empty{color:var(--muted);text-align:center;padding:28px;font-size:.88rem;}
+.btn{border:none;padding:11px 26px;border-radius:10px;font-size:.92rem;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .3s;display:inline-flex;align-items:center;gap:7px;margin-top:16px;}
+.btn-p{background:linear-gradient(135deg,var(--acc),#1d4ed8);color:#fff;box-shadow:0 4px 18px rgba(37,99,235,.28);}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(37,99,235,.4);}
 .btn-p:disabled{opacity:.5;cursor:not-allowed;transform:none;}
-.btn-g{background:linear-gradient(135deg,#10B981,#06B6D4);color:#fff;box-shadow:0 4px 20px rgba(16,185,129,.35);}
-.btn-g:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(16,185,129,.45);}
-.btn-g:disabled{opacity:.5;cursor:not-allowed;transform:none;}
-.btn-y{background:linear-gradient(135deg,#F59E0B,#EF4444);color:#fff;box-shadow:0 4px 20px rgba(245,158,11,.35);}
-.btn-y:hover{transform:translateY(-2px);}
-.btn-y:disabled{opacity:.5;cursor:not-allowed;transform:none;}
-.bsm{padding:8px 16px;border-radius:var(--radius-sm);font-size:.8rem;font-weight:600;cursor:pointer;border:none;font-family:'Plus Jakarta Sans',sans-serif;transition:var(--transition);}
-.bsm-bg{background:var(--surf2);color:var(--txt);border:1px solid var(--bord);text-decoration:none;display:inline-flex;align-items:center;}
-.bsm-bg:hover{border-color:var(--acc);color:var(--acc);}
-.bsm-bd{background:rgba(239,68,68,.1);color:#f87171;border:1px solid rgba(239,68,68,.25);}
-.bsm-bd:hover{background:rgba(239,68,68,.2);}
-.bsm-be{background:rgba(59,130,246,.1);color:var(--acc);border:1px solid rgba(59,130,246,.25);}
-.bsm-be:hover{background:rgba(59,130,246,.2);}
-.rrow{display:flex;justify-content:space-between;align-items:center;background:var(--surf2);border:1px solid var(--bord);border-radius:var(--radius-md);padding:14px 18px;margin-bottom:10px;gap:12px;transition:var(--transition);}
-.rrow:hover{box-shadow:var(--shadow-sm);}
-.score-badge{background:linear-gradient(135deg,#10B981,#06B6D4);color:#fff;font-weight:700;padding:6px 14px;border-radius:50px;font-size:.85rem;white-space:nowrap;box-shadow:0 2px 10px rgba(16,185,129,.3);}
-#modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);z-index:200;align-items:center;justify-content:center;padding:24px;}
-.modal-box{background:var(--surf);border:1px solid var(--bord);border-radius:var(--radius-xl);width:100%;max-width:640px;max-height:85vh;display:flex;flex-direction:column;box-shadow:var(--shadow-lg);animation:modalIn .3s ease;}
-@keyframes modalIn{from{opacity:0;transform:scale(.95);}to{opacity:1;transform:scale(1);}}
-.modal-head{padding:18px 24px;border-bottom:1px solid var(--bord);display:flex;justify-content:space-between;align-items:center;}
-.modal-head h3{font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;}
-.modal-x{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.2rem;transition:var(--transition);width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:var(--radius-sm);}
-.modal-x:hover{background:var(--surf2);color:var(--txt);}
-.modal-body{padding:20px 24px;overflow-y:auto;}
+.btn-g{background:linear-gradient(135deg,var(--acc3),#38f9d7);color:#082a18;box-shadow:0 4px 18px rgba(67,233,123,.22);}
+.btn-g:hover{transform:translateY(-2px);}.btn-g:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+.btn-y{background:linear-gradient(135deg,var(--acc2),#f97316);color:#000;}
+.btn-y:hover{transform:translateY(-2px);}.btn-y:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+.bsm{padding:6px 13px;border-radius:8px;font-size:.78rem;font-weight:600;cursor:pointer;border:none;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s;}
+.bg{background:var(--surf2);color:var(--txt);border:1px solid var(--bord);text-decoration:none;display:inline-flex;align-items:center;}
+.bg:hover{border-color:var(--acc);color:var(--acc);}
+.bd{background:rgba(239,68,68,.12);color:#f87171;border:1px solid rgba(239,68,68,.25);}
+.bd:hover{background:rgba(239,68,68,.22);}
+.be{background:rgba(245,158,11,.1);color:var(--acc2);border:1px solid rgba(245,158,11,.25);}
+.be:hover{background:rgba(245,158,11,.22);}
+.rrow{display:flex;justify-content:space-between;align-items:center;background:var(--surf2);border:1px solid var(--bord);border-radius:11px;padding:13px 15px;margin-bottom:9px;gap:12px;}
+.score-badge{background:linear-gradient(135deg,var(--acc3),#38f9d7);color:#082a18;font-weight:700;padding:5px 13px;border-radius:50px;font-size:.85rem;white-space:nowrap;}
+#modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center;padding:24px;}
+.modal-box{background:var(--surf);border:1px solid var(--bord);border-radius:20px;width:100%;max-width:640px;max-height:85vh;display:flex;flex-direction:column;}
+.modal-head{padding:18px 22px;border-bottom:1px solid var(--bord);display:flex;justify-content:space-between;align-items:center;}
+.modal-head h3{font-family:'Syne',sans-serif;font-weight:700;}
+.modal-x{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.2rem;}
+.modal-body{padding:20px 22px;overflow-y:auto;}
 /* gallery admin */
-.gallery-admin-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;margin-bottom:16px;}
-.gal-thumb{background:var(--surf2);border:1px solid var(--bord);border-radius:var(--radius-lg);overflow:hidden;position:relative;transition:var(--transition);}
-.gal-thumb:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);}
+.gallery-admin-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-bottom:16px;}
+.gal-thumb{background:var(--surf2);border:1px solid var(--bord);border-radius:12px;overflow:hidden;position:relative;}
 .gal-thumb img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;}
 .gal-no-img{aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;font-size:2rem;color:var(--muted);}
-.gal-thumb-info{padding:10px 12px;}
-.gal-thumb-title{font-size:.8rem;font-weight:600;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.gal-thumb-del{position:absolute;top:6px;right:6px;background:rgba(0,0,0,.7);border:none;color:#f87171;border-radius:var(--radius-sm);padding:4px 10px;font-size:.72rem;cursor:pointer;transition:var(--transition);}
-.gal-thumb-del:hover{background:rgba(239,68,68,.9);}
+.gal-thumb-info{padding:8px 10px;}
+.gal-thumb-title{font-size:.78rem;font-weight:600;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.gal-thumb-del{position:absolute;top:5px;right:5px;background:rgba(0,0,0,.65);border:none;color:#f87171;border-radius:6px;padding:2px 8px;font-size:.7rem;cursor:pointer;}
 /* day toggle */
 .day-toggle-wrap{display:flex;gap:8px;flex-wrap:wrap;}
-.day-toggle{padding:8px 16px;border-radius:var(--radius-sm);border:1.5px solid var(--bord);background:var(--surf2);color:var(--muted);font-size:.84rem;font-weight:600;cursor:pointer;transition:var(--transition);user-select:none;}
-.day-toggle:hover{border-color:var(--acc);}
-.day-toggle.active{border-color:var(--acc2);background:rgba(16,185,129,.12);color:var(--acc2);}
+.day-toggle{padding:7px 14px;border-radius:8px;border:1.5px solid var(--bord);background:var(--surf2);color:var(--muted);font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s;user-select:none;}
+.day-toggle.active{border-color:var(--acc3);background:rgba(67,233,123,.12);color:var(--acc3);}
 /* toast */
 /* written marks entry */
-.mark-form{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px;padding-top:12px;border-top:1px solid var(--bord);}
-.mark-inp{background:var(--surf);border:1.5px solid var(--bord);border-radius:var(--radius-sm);padding:8px 12px;color:var(--txt);font-size:.84rem;font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:var(--transition);width:70px;}
-.mark-inp:focus{border-color:var(--acc);}
-.mark-inp.wide{width:200px;}
-.mark-lbl{font-size:.76rem;color:var(--muted);font-weight:600;white-space:nowrap;}
+.mark-form{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px;padding-top:10px;border-top:1px solid var(--bord);}
+.mark-inp{background:var(--surf);border:1.5px solid var(--bord);border-radius:8px;padding:6px 10px;color:var(--txt);font-size:.82rem;font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:border-color .2s;width:64px;}
+.mark-inp:focus{border-color:var(--acc2);}
+.mark-inp.wide{width:180px;}
+.mark-lbl{font-size:.75rem;color:var(--muted);font-weight:600;white-space:nowrap;}
 .mark-sep{color:var(--muted);font-size:.9rem;font-weight:700;}
-.mark-save-btn{background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.3);border-radius:var(--radius-sm);padding:8px 16px;color:var(--acc);font-size:.8rem;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:var(--transition);white-space:nowrap;}
-.mark-save-btn:hover{background:rgba(59,130,246,.2);}
+.mark-save-btn{background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.3);border-radius:8px;padding:6px 14px;color:var(--acc2);font-size:.78rem;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s;white-space:nowrap;}
+.mark-save-btn:hover{background:rgba(245,158,11,.28);}
 .mark-save-btn:disabled{opacity:.5;cursor:not-allowed;}
-.mark-saved-badge{font-size:.74rem;color:var(--acc2);font-weight:600;display:none;}
+.mark-saved-badge{font-size:.72rem;color:var(--acc3);font-weight:600;display:none;}
 .mark-saved-badge.show{display:inline;}
-.photo-thumb-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
-.photo-thumb-row a{display:block;width:60px;height:48px;border-radius:var(--radius-sm);overflow:hidden;border:1px solid var(--bord);background:var(--surf2);}
+.photo-thumb-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.photo-thumb-row a{display:block;width:56px;height:44px;border-radius:6px;overflow:hidden;border:1px solid var(--bord);background:var(--surf2);}
 .photo-thumb-row img{width:100%;height:100%;object-fit:cover;}
-.toast{position:fixed;bottom:24px;right:24px;background:var(--surf);border:1px solid var(--bord);border-radius:var(--radius-md);padding:14px 20px;font-size:.9rem;z-index:9999;transform:translateY(20px);opacity:0;transition:var(--transition);max-width:320px;box-shadow:var(--shadow-lg);}
+.toast{position:fixed;bottom:22px;right:22px;background:var(--surf2);border:1px solid var(--bord);border-radius:12px;padding:13px 18px;font-size:.88rem;z-index:9999;transform:translateY(20px);opacity:0;transition:all .3s;max-width:300px;}
 .toast.show{transform:translateY(0);opacity:1;}
-.toast.ts{border-color:var(--acc2);color:var(--acc2);}
-.toast.te{border-color:#f87171;color:#f87171;}
-.toast.ty{border-color:var(--acc);color:var(--acc);}
+.ts{border-color:var(--acc3);color:var(--acc3);}
+.te{border-color:#f87171;color:#f87171;}
+.ty{border-color:var(--acc2);color:var(--acc2);}
 </style>
 </head>
 <body>
@@ -281,114 +209,97 @@ textarea.fi{resize:vertical;min-height:80px;}
 
 <div id="login-screen">
   <div class="login-box">
-    <div class="login-logo">
-      <img src="logo.png" alt="logo">
+    <div style="width:70px;height:70px;border-radius:20px;background:rgba(37,99,235,.12);border:1px solid rgba(37,99,235,.25);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+      <img src="login.png" alt="logo" style="width:44px;height:44px;object-fit:contain;">
     </div>
     <h2>Rahat Math Care</h2>
     <p>Admin Panel — Enter password to continue</p>
     <input type="password" id="lpwd" class="login-input" placeholder="Password" onkeydown="if(event.key==='Enter')doLogin()">
-    <button class="login-btn" onclick="doLogin()"><i class="fas fa-sign-in-alt"></i> Login</button>
+    <button class="login-btn" onclick="doLogin()">🔐 Login</button>
     <div class="login-err" id="lerr">Incorrect password.</div>
-    <div style="margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.2);">
-      <a href="index.html" class="login-back">← Back to website</a>
+    <div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--bord);">
+      <a href="index.html" style="color:var(--muted);text-decoration:none;font-size:.82rem;">Back to website</a>
     </div>
   </div>
 </div>
 
-<!-- Top Bar -->
-<div class="topbar" id="topbar" style="display:none;">
-  <div class="topbar-left">
-    <button class="topbar-hamburger" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
-    <div class="topbar-logo">
+<nav>
+  <div class="nav-inner">
+    <div class="logo-wrap">
       <img src="logo.png" alt="Rahat Math Care">
-      <span class="topbar-logo-text">Rahat Math <span>Care</span></span>
-      <span class="topbar-badge">Admin</span>
+      <span class="logo">Rahat Math <span>Care</span></span>
+      <span class="admin-badge">Admin</span>
+    </div>
+    <div class="nav-r">
+      <!--<a href="index.html" class="nav-link">← Back to Site</a>-->
+      <a href="index.html" class="nav-link"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M400-240 160-480l240-240 56 58-142 142h486v80H314l142 142-56 58Z"/></svg></a>
+      <!--<button onclick="doLogout()" class="nav-link">Logout</button>-->
+      <button onclick="doLogout()" class="nav-link"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z"/></svg></button>
     </div>
   </div>
-  <div class="topbar-right">
-    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme"><i class="fas fa-moon"></i></button>
-    <button class="topbar-logout" onclick="doLogout()" title="Logout"><i class="fas fa-sign-out-alt"></i></button>
-  </div>
-</div>
+</nav>
 
-<!-- Mobile Overlay -->
-<div class="mobile-overlay" id="mobileOverlay" onclick="toggleSidebar()"></div>
+<div class="page">
+  <aside class="sidebar">
+    <div class="sidenav">
+      <div class="sidebar-label">Exam System</div>
+      <button class="sitem active" onclick="showTab('overview',this)"><span class="si">📊</span>Overview</button>
+      <button class="sitem" onclick="showTab('written',this)"><span class="si">📝</span>Written Exams</button>
+      <button class="sitem" onclick="showTab('mcq',this)"><span class="si">✅</span>MCQ Exams</button>
+      <button class="sitem" onclick="showTab('subs',this)"><span class="si">📋</span>Submissions</button>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-label">Website Content</div>
+      <button class="sitem" onclick="showTab('programs',this)"><span class="si">📚</span>Programs</button>
+      <button class="sitem" onclick="showTab('schedule',this)"><span class="si">📅</span>Schedule</button>
+      <button class="sitem" onclick="showTab('gallery',this)"><span class="si">🖼️</span>Gallery</button>
+      <button class="sitem" onclick="showTab('contact',this)"><span class="si">📞</span>Contact Info</button>
+      <button class="sitem" onclick="showTab('app',this)"><span class="si">📱</span>App Download</button>
+      <button class="sitem" onclick="showTab('notice',this)"><span class="si">🔔</span>Notice Board</button>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-label">Students</div>
+      <button class="sitem" onclick="showTab('students',this)"><span class="si">🎓</span>Students</button>
+      <button class="sitem" onclick="showTab('monitor',this)"><span class="si">👁️</span>Monitor Dashboards</button>
+    </div>
+  </aside>
 
-<!-- Sidebar -->
-<aside class="sidebar" id="sidebar" style="display:none;">
-  <div class="sidenav">
-    <div class="sidebar-label">Exam System</div>
-    <button class="sitem active" onclick="showTab('overview',this)"><span class="si"><i class="fas fa-chart-pie"></i></span><span class="sl">Overview</span></button>
-    <button class="sitem" onclick="showTab('written',this)"><span class="si"><i class="fas fa-pen-to-square"></i></span><span class="sl">Written Exams</span></button>
-    <button class="sitem" onclick="showTab('mcq',this)"><span class="si"><i class="fas fa-list-check"></i></span><span class="sl">MCQ Exams</span></button>
-    <button class="sitem" onclick="showTab('subs',this)"><span class="si"><i class="fas fa-clipboard-list"></i></span><span class="sl">Submissions</span></button>
-    <div class="sidebar-divider"></div>
-    <div class="sidebar-label">Website Content</div>
-    <button class="sitem" onclick="showTab('programs',this)"><span class="si"><i class="fas fa-graduation-cap"></i></span><span class="sl">Programs</span></button>
-    <button class="sitem" onclick="showTab('schedule',this)"><span class="si"><i class="fas fa-calendar-days"></i></span><span class="sl">Schedule</span></button>
-    <button class="sitem" onclick="showTab('gallery',this)"><span class="si"><i class="fas fa-images"></i></span><span class="sl">Gallery</span></button>
-    <button class="sitem" onclick="showTab('contact',this)"><span class="si"><i class="fas fa-phone"></i></span><span class="sl">Contact Info</span></button>
-    <button class="sitem" onclick="showTab('app',this)"><span class="si"><i class="fas fa-mobile-screen"></i></span><span class="sl">App Download</span></button>
-    <button class="sitem" onclick="showTab('notice',this)"><span class="si"><i class="fas fa-bell"></i></span><span class="sl">Notice Board</span></button>
-    <div class="sidebar-divider"></div>
-    <div class="sidebar-label">Students</div>
-    <button class="sitem" onclick="showTab('students',this)"><span class="si"><i class="fas fa-user-graduate"></i></span><span class="sl">Students</span></button>
-    <button class="sitem" onclick="showTab('monitor',this)"><span class="si"><i class="fas fa-eye"></i></span><span class="sl">Monitor Dashboards</span></button>
-  </div>
-</aside>
-
-<!-- Main Content -->
-<div class="main-content" id="mainContent" style="display:none;">
-  <div class="page">
+  <div>
     <!-- OVERVIEW -->
     <div class="tab active" id="tab-overview">
       <div class="stats">
-        <div class="stat">
-          <div class="stat-icon"><i class="fas fa-pen-to-square"></i></div>
-          <div class="stat-n" id="wc">—</div>
-          <div class="stat-l">Written Exams</div>
-        </div>
-        <div class="stat">
-          <div class="stat-icon"><i class="fas fa-list-check"></i></div>
-          <div class="stat-n" id="mc">—</div>
-          <div class="stat-l">MCQ Exams</div>
-        </div>
-        <div class="stat">
-          <div class="stat-icon"><i class="fas fa-clipboard-check"></i></div>
-          <div class="stat-n" id="sc">—</div>
-          <div class="stat-l">Total Submissions</div>
+        <div class="stat"><div class="stat-n" id="wc">—</div><div class="stat-l">Written Exams</div></div>
+        <div class="stat"><div class="stat-n" id="mc">—</div><div class="stat-l">MCQ Exams</div></div>
+        <div class="stat"><div class="stat-n" id="sc">—</div><div class="stat-l">Submissions</div></div>
+      </div>
+      <div class="sc">
+        <div class="sc-title">🚀 Quick Actions</div>
+        <div style="display:flex;gap:11px;flex-wrap:wrap;">
+          <button class="btn btn-p" onclick="showTab('written',document.querySelector('[onclick*=written]'))">+ Written Exam</button>
+          <button class="btn btn-g" onclick="showTab('mcq',document.querySelector('[onclick*=mcq]'))">+ MCQ Exam</button>
+          <button class="bsm bg" style="margin-top:16px;" onclick="showTab('subs',document.querySelector('[onclick*=subs]'))">View Submissions</button>
         </div>
       </div>
       <div class="sc">
-        <div class="sc-title"><i class="fas fa-rocket"></i> Quick Actions</div>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;">
-          <button class="btn btn-p" onclick="showTab('written',document.querySelector('[onclick*=written]'))"><i class="fas fa-plus"></i> Written Exam</button>
-          <button class="btn btn-g" onclick="showTab('mcq',document.querySelector('[onclick*=mcq]'))"><i class="fas fa-plus"></i> MCQ Exam</button>
-          <button class="bsm bsm-bg" style="margin-top:16px;" onclick="showTab('subs',document.querySelector('[onclick*=subs]'))"><i class="fas fa-eye"></i> View Submissions</button>
-        </div>
-      </div>
-      <div class="sc">
-        <div class="sc-title"><i class="fas fa-globe"></i> Website Sections</div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;">
+        <div class="sc-title">🌐 Website Sections</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;">
           <div onclick="showTab('programs',document.querySelector('[onclick*=programs]'))" class="overview-tile">
-            <div class="tile-icon"><i class="fas fa-graduation-cap"></i></div>
-            <div class="tile-title">Programs</div>
-            <div class="tile-sub">Manage batches & fees</div>
+            <div style="font-size:1.5rem;margin-bottom:8px;">📚</div>
+            <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:4px;">Programs</div>
+            <div style="color:var(--muted);font-size:.78rem;">Manage batches & fees</div>
           </div>
           <div onclick="showTab('schedule',document.querySelector('[onclick*=schedule]'))" class="overview-tile">
-            <div class="tile-icon"><i class="fas fa-calendar-days"></i></div>
-            <div class="tile-title">Schedule</div>
-            <div class="tile-sub">Edit class timetables</div>
+            <div style="font-size:1.5rem;margin-bottom:8px;">📅</div>
+            <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:4px;">Schedule</div>
+            <div style="color:var(--muted);font-size:.78rem;">Edit class timetables</div>
           </div>
           <div onclick="showTab('gallery',document.querySelector('[onclick*=gallery]'))" class="overview-tile">
-            <div class="tile-icon"><i class="fas fa-images"></i></div>
-            <div class="tile-title">Gallery</div>
-            <div class="tile-sub">Upload & manage photos</div>
+            <div style="font-size:1.5rem;margin-bottom:8px;">🖼️</div>
+            <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:4px;">Gallery</div>
+            <div style="color:var(--muted);font-size:.78rem;">Upload & manage photos</div>
           </div>
           <div onclick="showTab('contact',document.querySelector('[onclick*=contact]'))" class="overview-tile">
-            <div class="tile-icon"><i class="fas fa-phone"></i></div>
-            <div class="tile-title">Contact Info</div>
-            <div class="tile-sub">Update phone & address</div>
+            <div style="font-size:1.5rem;margin-bottom:8px;">📞</div>
+            <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:4px;">Contact Info</div>
+            <div style="color:var(--muted);font-size:.78rem;">Update phone & address</div>
           </div>
         </div>
       </div>
@@ -397,7 +308,7 @@ textarea.fi{resize:vertical;min-height:80px;}
     <!-- WRITTEN EXAMS -->
     <div class="tab" id="tab-written">
       <div class="sc">
-        <div class="sc-title"><i class="fas fa-pen-to-square"></i> Add Written Exam</div>
+        <div class="sc-title">📝 Add Written Exam</div>
         <div class="fgrid">
           <div class="fg"><label class="fl">Exam Title</label><input class="fi" id="w-title" placeholder="e.g. Mathematics Mid-Term"></div>
           <div class="fg"><label class="fl">Class / Grade</label><input class="fi" id="w-class" placeholder="e.g. HSC 26"></div>
@@ -415,7 +326,7 @@ textarea.fi{resize:vertical;min-height:80px;}
         <button class="btn btn-p" id="w-btn" onclick="saveWritten()">Save Written Exam</button>
       </div>
       <div class="sc">
-        <div class="sc-title"><i class="fas fa-clipboard-list"></i> Written Exams</div>
+        <div class="sc-title">📋 Written Exams</div>
         <div class="elist" id="w-list"><p class="empty">Loading…</p></div>
       </div>
     </div>
@@ -423,7 +334,7 @@ textarea.fi{resize:vertical;min-height:80px;}
     <!-- MCQ EXAMS -->
     <div class="tab" id="tab-mcq">
       <div class="sc">
-        <div class="sc-title"><i class="fas fa-plus-circle"></i> Create MCQ Exam</div>
+        <div class="sc-title">✅ Create MCQ Exam</div>
         <div class="fgrid">
           <div class="fg"><label class="fl">Exam Title</label><input class="fi" id="m-title" placeholder="e.g. Chapter 3 Quiz"></div>
           <div class="fg"><label class="fl">Class / Grade</label><input class="fi" id="m-class" placeholder="e.g. HSC 26"></div>
@@ -436,11 +347,11 @@ textarea.fi{resize:vertical;min-height:80px;}
         </div>
         <div style="margin-top:24px;margin-bottom:6px;font-family:'Syne',sans-serif;font-weight:700;font-size:.92rem;color:var(--muted);">Select MCQ Type</div>
         <div class="mcq-mode-switch">
-          <button class="mcq-mode-btn active full" id="mode-btn-full" onclick="setMCQMode('full')"><i class="fas fa-list-ol"></i> Full Questions</button>
-          <button class="mcq-mode-btn key" id="mode-btn-key" onclick="setMCQMode('key')"><i class="fas fa-key"></i> Answer Key Only</button>
+          <button class="mcq-mode-btn active full" id="mode-btn-full" onclick="setMCQMode('full')">✅ Full Questions</button>
+          <button class="mcq-mode-btn key" id="mode-btn-key" onclick="setMCQMode('key')">🗂️ Answer Key Only</button>
         </div>
-        <div class="mcq-mode-info full" id="mode-info-full"><strong><i class="fas fa-check-circle"></i> Full Questions Mode</strong>Type each question with 4 options and mark the correct answer. Students see full questions on screen.</div>
-        <div class="mcq-mode-info key" id="mode-info-key" style="display:none;"><strong><i class="fas fa-key"></i> Answer Key Mode</strong>Set number of questions and correct answers (A/B/C/D). Students use a printed paper.</div>
+        <div class="mcq-mode-info full" id="mode-info-full"><strong>✅ Full Questions Mode</strong>Type each question with 4 options and mark the correct answer. Students see full questions on screen.</div>
+        <div class="mcq-mode-info key" id="mode-info-key" style="display:none;"><strong>🗂️ Answer Key Mode</strong>Set number of questions and correct answers (A/B/C/D). Students use a printed paper.</div>
         <div id="full-builder-section">
           <div style="margin-top:20px;">
             <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;">
@@ -468,22 +379,22 @@ textarea.fi{resize:vertical;min-height:80px;}
         </div>
       </div>
       <div class="sc">
-        <div class="sc-title"><i class="fas fa-list-check"></i> MCQ Exams</div>
+        <div class="sc-title">📋 MCQ Exams</div>
         <div class="elist" id="m-list"><p class="empty">Loading…</p></div>
       </div>
     </div>
 
     <!-- SUBMISSIONS -->
     <div class="tab" id="tab-subs">
-      <div class="sc"><div class="sc-title"><i class="fas fa-pen-to-square"></i> Written Submissions</div><div id="w-subs"><p class="empty">Loading…</p></div></div>
-      <div class="sc"><div class="sc-title"><i class="fas fa-check-circle"></i> MCQ Results</div><div id="m-subs"><p class="empty">Loading…</p></div></div>
+      <div class="sc"><div class="sc-title">📝 Written Submissions</div><div id="w-subs"><p class="empty">Loading…</p></div></div>
+      <div class="sc"><div class="sc-title">✅ MCQ Results</div><div id="m-subs"><p class="empty">Loading…</p></div></div>
     </div>
 
     <!-- PROGRAMS -->
     <div class="tab" id="tab-programs">
       <div class="sc">
         <div class="info-hint"><strong>ℹ️ How this works:</strong> Add or edit programs here. The public Programs page loads these from the database in real time. Changes are instant.</div>
-        <div class="sc-title"><i class="fas fa-graduation-cap"></i> Add / Edit Program</div>
+        <div class="sc-title">📚 Add / Edit Program</div>
         <input type="hidden" id="prog-edit-id">
         <div class="fgrid">
           <div class="fg"><label class="fl">Batch Name</label><input class="fi" id="prog-name" placeholder="e.g. HSC 27"></div>
@@ -513,7 +424,7 @@ textarea.fi{resize:vertical;min-height:80px;}
         </div>
       </div>
       <div class="sc">
-        <div class="sc-title"><i class="fas fa-clipboard-list"></i> Current Programs</div>
+        <div class="sc-title">📋 Current Programs</div>
         <div class="elist" id="prog-list"><p class="empty">Loading…</p></div>
       </div>
     </div>
@@ -522,7 +433,7 @@ textarea.fi{resize:vertical;min-height:80px;}
     <div class="tab" id="tab-schedule">
       <div class="sc">
         <div class="info-hint"><strong>ℹ️ How this works:</strong> Each entry is one batch's class schedule. The Schedule page on your site loads these automatically. Add multiple batches as needed.</div>
-        <div class="sc-title"><i class="fas fa-calendar-day"></i> Add / Edit Batch Schedule</div>
+        <div class="sc-title">📅 Add / Edit Batch Schedule</div>
         <input type="hidden" id="sch-edit-id">
         <div class="fgrid">
           <div class="fg"><label class="fl">Batch Name</label><input class="fi" id="sch-batch" placeholder="e.g. HSC 26"></div>
@@ -552,7 +463,7 @@ textarea.fi{resize:vertical;min-height:80px;}
         </div>
       </div>
       <div class="sc">
-        <div class="sc-title"><i class="fas fa-clipboard-list"></i> Batch Schedules</div>
+        <div class="sc-title">📋 Batch Schedules</div>
         <div class="elist" id="sch-list"><p class="empty">Loading…</p></div>
       </div>
     </div>
@@ -564,7 +475,7 @@ textarea.fi{resize:vertical;min-height:80px;}
           <strong>📸 New: Direct Image Upload</strong><br>
           Now you can upload images directly instead of using URLs. Just click "Choose File" and select an image from your computer. Maximum size: 5MB.
         </div>
-        <div class="sc-title"><i class="fas fa-image"></i> Add Gallery Photo</div>
+        <div class="sc-title">🖼️ Add Gallery Photo</div>
         <input type="hidden" id="gal-edit-id">
         <div class="fgrid">
           <div class="fg">
@@ -603,7 +514,7 @@ textarea.fi{resize:vertical;min-height:80px;}
         </div>
       </div>
       <div class="sc">
-        <div class="sc-title"><i class="fas fa-images"></i> Gallery Photos</div>
+        <div class="sc-title">📷 Gallery Photos</div>
         <div class="gallery-admin-grid" id="gal-list"></div>
         <p class="empty" id="gal-empty" style="display:none;">No photos yet. Add one above.</p>
       </div>
@@ -613,7 +524,7 @@ textarea.fi{resize:vertical;min-height:80px;}
     <div class="tab" id="tab-notice">
       <div class="sc">
         <div class="info-hint"><strong>ℹ️ How this works:</strong> Post notices here. They appear on the public Notice Board page instantly. Pinned notices always show first.</div>
-        <div class="sc-title"><i class="fas fa-bullhorn"></i> Post New Notice</div>
+        <div class="sc-title">🔔 Post New Notice</div>
         <div class="fgrid">
           <div class="fg"><label class="fl">Notice Title</label><input class="fi" id="n-title" placeholder="e.g. Exam Schedule Update"></div>
           <div class="fg">
@@ -641,7 +552,7 @@ textarea.fi{resize:vertical;min-height:80px;}
         <button class="btn btn-p" id="n-save-btn" onclick="saveNotice()">📌 Post Notice</button>
       </div>
       <div class="sc">
-        <div class="sc-title"><i class="fas fa-bell"></i> All Notices</div>
+        <div class="sc-title">📋 All Notices</div>
         <div id="n-list"><p class="empty">Loading…</p></div>
       </div>
     </div>
@@ -650,7 +561,7 @@ textarea.fi{resize:vertical;min-height:80px;}
     <div class="tab" id="tab-students">
       <div class="sc">
         <div class="info-hint"><strong>ℹ️ How this works:</strong> Add students here with their roll and phone. Students use these to log in to their dashboard. You can deactivate any student at any time.</div>
-        <div class="sc-title"><i class="fas fa-user-graduate"></i> Add Student</div>
+        <div class="sc-title">🎓 Add Student</div>
         <div class="fgrid">
           <div class="fg"><label class="fl">Student Name</label><input class="fi" id="st-name" placeholder="Full name"></div>
           <div class="fg"><label class="fl">Roll Number</label><input class="fi" id="st-roll" placeholder="e.g. 101"></div>
@@ -675,7 +586,7 @@ textarea.fi{resize:vertical;min-height:80px;}
         </div>
       </div>
       <div class="sc">
-        <div class="sc-title"><i class="fas fa-users"></i> All Students</div>
+        <div class="sc-title">📋 All Students</div>
         <div id="st-list"><p class="empty">Loading…</p></div>
       </div>
     </div>
@@ -684,7 +595,7 @@ textarea.fi{resize:vertical;min-height:80px;}
     <div class="tab" id="tab-monitor">
       <div class="sc">
         <div class="info-hint"><strong>ℹ️ How this works:</strong> Click any student card to view their full dashboard — profile, exam results, score history — exactly as they see it. You are logged in via your super admin password so no student credentials are needed.</div>
-        <div class="sc-title"><i class="fas fa-eye"></i> Student Dashboards</div>
+        <div class="sc-title">👁️ Student Dashboards</div>
         <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;">
           <input class="fi" id="mon-search" placeholder="Search by name, roll, or class…" oninput="filterMonitor(this.value)" style="max-width:320px;margin:0;">
           <select class="fi" id="mon-class" onchange="filterMonitor()" style="max-width:200px;margin:0;">
@@ -701,7 +612,7 @@ textarea.fi{resize:vertical;min-height:80px;}
     <div class="tab" id="tab-contact">
       <div class="sc">
         <div class="info-hint"><strong>ℹ️ How this works:</strong> Save your contact details here. The Contact page and all footers across the site will display the latest saved info.</div>
-        <div class="sc-title"><i class="fas fa-phone"></i> Contact Information</div>
+        <div class="sc-title">📞 Contact Information</div>
         <div class="fgrid">
           <div class="fg"><label class="fl">Phone 1</label><input class="fi" id="ct-phone1" placeholder="+8801310265252"></div>
           <div class="fg"><label class="fl">Phone 2 (optional)</label><input class="fi" id="ct-phone2" placeholder="+8801319090808"></div>
@@ -715,7 +626,7 @@ textarea.fi{resize:vertical;min-height:80px;}
         <button class="btn btn-p" id="ct-save-btn" onclick="saveContact()">💾 Save Contact Info</button>
       </div>
       <div class="sc" id="ct-preview-card" style="display:none;">
-        <div class="sc-title"><i class="fas fa-eye"></i> Saved Info Preview</div>
+        <div class="sc-title">👁️ Saved Info Preview</div>
         <div id="ct-preview"></div>
       </div>
     </div>
@@ -724,7 +635,7 @@ textarea.fi{resize:vertical;min-height:80px;}
     <div class="tab" id="tab-app">
       <div class="sc">
         <div class="info-hint"><strong>ℹ️ How this works:</strong> Upload your APK to Google Drive, make it shareable, then paste the link below. The public Download App page button will redirect students to this link.</div>
-        <div class="sc-title"><i class="fas fa-mobile-screen"></i> App Download Link</div>
+        <div class="sc-title">📱 App Download Link</div>
         <div class="fgrid">
           <div class="fg full">
             <label class="fl">Google Drive APK Link</label>
@@ -732,10 +643,10 @@ textarea.fi{resize:vertical;min-height:80px;}
             <div class="drive-hint"><strong>Tip:</strong> In Google Drive set sharing to <strong>Anyone with the link</strong> before saving.</div>
           </div>
         </div>
-        <button class="btn btn-p" id="app-save-btn" onclick="saveAppLink()"><i class="fas fa-save"></i> Save App Link</button>
+        <button class="btn btn-p" id="app-save-btn" onclick="saveAppLink()">💾 Save App Link</button>
       </div>
       <div class="sc" id="app-preview-card" style="display:none;">
-        <div class="sc-title"><i class="fas fa-link"></i> Current App Link</div>
+        <div class="sc-title">👁️ Current App Link</div>
         <div id="app-preview" style="color:var(--muted);font-size:.9rem;line-height:1.7;"></div>
       </div>
     </div>
@@ -745,33 +656,30 @@ textarea.fi{resize:vertical;min-height:80px;}
 <!-- Modal -->
 <div id="modal">
   <div class="modal-box">
-    <div class="modal-head"><h3 id="modal-title">Results</h3><button class="modal-x" onclick="closeModal()"><i class="fas fa-xmark"></i></button></div>
+    <div class="modal-head"><h3 id="modal-title">Results</h3><button class="modal-x" onclick="closeModal()">✕</button></div>
     <div class="modal-body" id="modal-body"></div>
   </div>
 </div>
 
 <style>
-.overview-tile{background:var(--surf2);border:1px solid var(--bord);border-radius:var(--radius-lg);padding:20px;cursor:pointer;transition:var(--transition);text-align:center;}
-.overview-tile:hover{border-color:var(--acc);transform:translateY(-4px);box-shadow:var(--shadow-md);}
-.tile-icon{width:50px;height:50px;background:linear-gradient(135deg,rgba(59,130,246,.15),rgba(16,185,129,.1));border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:1.4rem;color:var(--acc);}
-.tile-title{font-family:'Syne',sans-serif;font-weight:700;margin-bottom:6px;}
-.tile-sub{color:var(--muted);font-size:.8rem;}
+.overview-tile{background:var(--surf2);border:1px solid var(--bord);border-radius:12px;padding:18px;cursor:pointer;transition:all .2s;}
+.overview-tile:hover{border-color:rgba(37,99,235,.4);transform:translateY(-2px);}
 /* monitor student cards */
-.mon-card{background:var(--surf2);border:1px solid var(--bord);border-radius:var(--radius-lg);padding:20px;cursor:pointer;transition:var(--transition);display:flex;flex-direction:column;gap:10px;}
-.mon-card:hover{border-color:var(--acc2);transform:translateY(-4px);box-shadow:var(--shadow-md);}
-.mon-av{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--acc),var(--acc2));display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:800;color:#fff;font-family:'Syne',sans-serif;flex-shrink:0;}
+.mon-card{background:var(--surf2);border:1px solid var(--bord);border-radius:16px;padding:20px;cursor:pointer;transition:all .3s;display:flex;flex-direction:column;gap:10px;}
+.mon-card:hover{border-color:rgba(16,185,129,.4);transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.3);}
+.mon-av{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--acc3),var(--acc));display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:800;color:#fff;font-family:'Syne',sans-serif;flex-shrink:0;}
 .mon-top{display:flex;align-items:center;gap:12px;}
 .mon-name{font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;}
 .mon-roll{color:var(--muted);font-size:.76rem;margin-top:2px;}
 .mon-stats{display:flex;gap:8px;flex-wrap:wrap;}
-.mon-stat{background:var(--surf);border-radius:var(--radius-sm);padding:6px 12px;font-size:.76rem;color:var(--muted);}
+.mon-stat{background:var(--surf);border-radius:8px;padding:5px 10px;font-size:.74rem;color:var(--muted);}
 .mon-stat strong{color:var(--txt);}
 .mon-bar{height:4px;background:var(--bord);border-radius:2px;overflow:hidden;}
 .mon-bar-fill{height:100%;border-radius:2px;}
-.mon-status{display:inline-flex;align-items:center;gap:4px;font-size:.7rem;font-weight:600;padding:3px 10px;border-radius:50px;}
-.ms-active{background:rgba(16,185,129,.1);color:var(--acc2);border:1px solid rgba(16,185,129,.25);}
+.mon-status{display:inline-flex;align-items:center;gap:4px;font-size:.7rem;font-weight:600;padding:2px 8px;border-radius:50px;}
+.ms-active{background:rgba(16,185,129,.1);color:var(--acc3);border:1px solid rgba(16,185,129,.25);}
 .ms-inactive{background:rgba(239,68,68,.08);color:#f87171;border:1px solid rgba(239,68,68,.2);}
-.mon-view-btn{width:100%;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.25);border-radius:var(--radius-md);padding:10px;color:var(--acc2);font-size:.84rem;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:var(--transition);margin-top:4px;}
+.mon-view-btn{width:100%;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.25);border-radius:10px;padding:9px;color:var(--acc3);font-size:.82rem;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s;margin-top:2px;}
 .mon-view-btn:hover{background:rgba(16,185,129,.2);}
 </style>
 
@@ -799,53 +707,12 @@ async function doLogin(){
     sessionStorage.setItem('adm','1');
     sessionStorage.setItem('rmc_admin_token',json.token);
     document.getElementById('login-screen').style.display='none';
-    showMainUI();
     init();
   }catch(e){document.getElementById('lerr').textContent='Error: '+e.message;document.getElementById('lerr').style.display='block';}
 }
 function doLogout(){sessionStorage.removeItem('adm');sessionStorage.removeItem('rmc_admin_token');location.reload();}
 document.getElementById('lpwd').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
-if(sessionStorage.getItem('adm')==='1'){sessionStorage.removeItem('rmc_stu');sessionStorage.removeItem('rmc_av');document.getElementById('login-screen').style.display='none';showMainUI();init();}
-
-function showMainUI(){
-  document.getElementById('topbar').style.display='flex';
-  document.getElementById('sidebar').style.display='block';
-  document.getElementById('mainContent').style.display='block';
-  initTheme();
-}
-
-function toggleSidebar(){
-  const sidebar=document.getElementById('sidebar');
-  const overlay=document.getElementById('mobileOverlay');
-  if(window.innerWidth<=1024){
-    sidebar.classList.toggle('open');
-    overlay.classList.toggle('show');
-  }else{
-    sidebar.classList.toggle('collapsed');
-  }
-}
-
-function toggleTheme(){
-  const html=document.documentElement;
-  const isDark=html.getAttribute('data-theme')==='dark';
-  const newTheme=isDark?'light':'dark';
-  html.setAttribute('data-theme',newTheme);
-  localStorage.setItem('admin-theme',newTheme);
-  updateThemeIcon(isDark);
-}
-
-function initTheme(){
-  const saved=localStorage.getItem('admin-theme')||'light';
-  document.documentElement.setAttribute('data-theme',saved);
-  updateThemeIcon(saved==='dark');
-}
-
-function updateThemeIcon(isDark){
-  const btn=document.querySelector('.theme-toggle i');
-  if(btn){
-    btn.className=isDark?'fas fa-sun':'fas fa-moon';
-  }
-}
+if(sessionStorage.getItem('adm')==='1'){sessionStorage.removeItem('rmc_stu');sessionStorage.removeItem('rmc_av');document.getElementById('login-screen').style.display='none';init();}
 
 // ── SUPABASE ──────────────────────────────────────────────────
 let sb, initRetryCount = 0;
@@ -935,7 +802,7 @@ async function saveCheckedLink(resultId){
       .map(s=>s.trim())
       .filter(Boolean);
     await dbWrite('written_results','update',{checked_urls: links.length?links.join(','):null},{id:resultId});
-    toast('Checked paper link saved! <i class="fas fa-check"></i>');
+    toast('Checked paper link saved! ✅');
     await loadSubs();
   }catch(e){
     const msg=(e&&e.message)?e.message:String(e||'Error');
@@ -982,7 +849,7 @@ async function saveWritten(){
   btn.textContent='Saving…';btn.disabled=true;
   try{
     await dbWrite('written_exams','insert',{title,class_name:cls,duration:dur,drive_link:link,alert_time:alert,thumbnail:thumb,exam_start:start,exam_end:end,created_at:new Date().toISOString()});
-    toast('Written exam saved! <i class="fas fa-check"></i>');
+    toast('Written exam saved! ✅');
     ['w-title','w-class','w-dur','w-link','w-alert','w-thumb','w-start','w-end'].forEach(id=>document.getElementById(id).value='');
     await loadWritten();await loadStats();
   }catch(err){toast('Save failed: '+err.message,'e');}
@@ -1073,7 +940,7 @@ async function saveMCQFull(){
   btn.textContent='Saving…';btn.disabled=true;
   try{
     await dbWrite('mcq_exams','insert',{title,class_name:cls,duration:dur,alert_time,drive_link:link||null,thumbnail:thumb,exam_start:start,exam_end:end,questions:JSON.stringify(questions),created_at:new Date().toISOString()});
-    toast('Full MCQ Exam saved! <i class="fas fa-check"></i>');
+    toast('Full MCQ Exam saved! ✅');
     ['m-title','m-class','m-dur','m-alert','m-link','m-thumb','m-start','m-end'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
     questions=[];document.getElementById('q-builder').innerHTML='';document.getElementById('q-count-display').textContent='0';
     await loadMCQ();await loadStats();
@@ -1112,7 +979,7 @@ async function saveMCQKey(){
   try{
     const qs=correctAnswers.map((ans,i)=>({text:`Question ${i+1}`,options:['A','B','C','D'],answer:ans,keyMode:true}));
     await dbWrite('mcq_exams','insert',{title,class_name:cls,duration:dur,alert_time,drive_link:link||null,thumbnail:thumb,exam_start:start,exam_end:end,questions:JSON.stringify(qs),created_at:new Date().toISOString()});
-    toast('Answer Key Exam saved! <i class="fas fa-check"></i>');
+    toast('Answer Key Exam saved! ✅');
     ['m-title','m-class','m-dur','m-alert','m-link','m-thumb','m-start','m-end'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
     qCount=0;correctAnswers=[];document.getElementById('ak-count-display').textContent='0';document.getElementById('ak-count-input').value='';document.getElementById('ak-builder').innerHTML='';
     await loadMCQ();await loadStats();
@@ -1201,7 +1068,7 @@ async function saveMark(id){
     btn.textContent='Save Marks';btn.disabled=false;
     badge.classList.add('show');
     setTimeout(()=>badge.classList.remove('show'),3000);
-    toast('Marks saved! Student dashboard updated. <i class="fas fa-check"></i>');
+    toast('Marks saved! Student dashboard updated. ✅');
   }catch(e){
     btn.disabled=false;btn.textContent='Save Marks';
     toast('Error: '+e.message,'e');
@@ -1240,7 +1107,7 @@ async function saveProgram(){
     if(id){({error}=(await dbWrite('site_programs','update',payload,{id})));}
     else{({error}=(await dbWrite('site_programs','insert',{...payload,created_at:new Date().toISOString()})));}
     if(error)throw error;
-    toast(id?'Program updated! <i class="fas fa-check"></i>':'Program saved! <i class="fas fa-check"></i>');resetProgForm();await loadPrograms();
+    toast(id?'Program updated! ✅':'Program saved! ✅');resetProgForm();await loadPrograms();
   }catch(err){toast('Save failed: '+err.message,'e');}
   btn.textContent='Save Program';btn.disabled=false;
 }
@@ -1284,7 +1151,7 @@ async function saveSchedule(){
     if(id){({error}=(await dbWrite('site_schedules','update',payload,{id})));}
     else{({error}=(await dbWrite('site_schedules','insert',{...payload,created_at:new Date().toISOString()})));}
     if(error)throw error;
-    toast(id?'Schedule updated! <i class="fas fa-check"></i>':'Schedule saved! <i class="fas fa-check"></i>');resetSchForm();await loadSchedules();
+    toast(id?'Schedule updated! ✅':'Schedule saved! ✅');resetSchForm();await loadSchedules();
   }catch(err){toast('Save failed: '+err.message,'e');}
   btn.textContent='Save Schedule';btn.disabled=false;
 }
@@ -1367,7 +1234,7 @@ async function saveGallery() {
     
     if (error) throw error;
     
-    toast('Photo saved! <i class="fas fa-check"></i>');
+    toast('Photo saved! ✅');
     resetGalForm();
     await loadGallery();
     
@@ -1465,7 +1332,7 @@ async function saveContact(){
     if(existing&&existing.length>0){await dbWrite('site_contact','update',payload,{id:existing[0].id});error=null;}
     else{await dbWrite('site_contact','insert',{...payload,created_at:new Date().toISOString()});error=null;}
     if(error)throw error;
-    toast('Contact info saved! <i class="fas fa-check"></i>');renderContactPreview(payload);
+    toast('Contact info saved! ✅');renderContactPreview(payload);
   }catch(err){toast('Save failed: '+err.message,'e');}
   btn.textContent='💾 Save Contact Info';btn.disabled=false;
 }
@@ -1502,7 +1369,7 @@ async function saveAppLink(){
     const payload={app_download_link,updated_at:new Date().toISOString()};
     if(existing&&existing.length>0){await dbWrite('site_contact','update',payload,{id:existing[0].id});}
     else{await dbWrite('site_contact','insert',{...payload,created_at:new Date().toISOString()});}
-    toast('App link saved! <i class="fas fa-check"></i>');
+    toast('App link saved! ✅');
     renderAppPreview(app_download_link);
   }catch(err){toast('Save failed: '+err.message,'e');}
   btn.textContent='💾 Save App Link';btn.disabled=false;
@@ -1569,7 +1436,7 @@ async function saveStudent(){
     if(editId){await dbWrite('students','update',payload,{id:editId});}
     else{await dbWrite('students','insert',{...payload,created_at:new Date().toISOString()});}
     if(error)throw error;
-    toast(editId?'Student updated! <i class="fas fa-check"></i>':'Student added! <i class="fas fa-check"></i>');
+    toast(editId?'Student updated! ✅':'Student added! ✅');
     resetStudentForm();await loadStudents();await loadStudentsForSelect();
   }catch(e){toast('Error: '+e.message,'e');}
   btn.disabled=false;btn.textContent='Save Student';
