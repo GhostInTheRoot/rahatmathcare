@@ -1016,7 +1016,7 @@ async function loadSubs(){
     const hasMarks=r.marks_obtained!=null&&r.marks_total!=null;
     const pct=hasMarks?Math.round((r.marks_obtained/r.marks_total)*100):0;
     const markDisplay=hasMarks
-      ?`<span class="score-badge">${r.marks_obtained}/${r.marks_total} (${pct}%)</span>`
+      ?`<span style="background:linear-gradient(135deg,#f97316,#fb923c);color:#fff;font-weight:700;padding:5px 12px;border-radius:50px;font-size:.85rem;box-shadow:0 2px 8px rgba(249,115,22,0.3);">${r.marks_obtained}/${r.marks_total} (${pct}%)</span>`
       :'<span style="color:var(--muted);font-size:.72rem;">No marks yet</span>';
     return `<div class="rrow" style="flex-direction:column;align-items:flex-start;">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;width:100%;flex-wrap:wrap;gap:8px;">
