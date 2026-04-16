@@ -234,7 +234,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 <!-- Lightbox -->
 <div class="lightbox" id="lightbox" onclick="closeLB(event)">
   <div class="lb-content" onclick="event.stopPropagation()">
-    <button class="lb-close" onclick="closeLB()">✕</button>
+    <button class="lb-close" onclick="closeLB()"><i class="fas fa-times" style="color:#6B7280;"></i></button>
     <div class="lb-img" id="lbImgContainer">
       <img id="lbImg" src="" alt="" style="display:none;">
     </div>
@@ -268,10 +268,10 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
       </div>
       <div class="footer-col">
         <h4>Contact</h4>
-        <div class="contact-item">📞 <span>+8801884570279</span></div>
-        <div class="contact-item">📞 <span>+8801572938979</span></div>
-        <div class="contact-item">✉️ <span>rahatmathcare@gmail.com</span></div>
-        <div class="contact-item">📍 <span>Jor Pukur Par,Joydebpur Road,Gazipur-1700</span></div>
+        <div class="contact-item"><i class="fas fa-phone-alt"></i> <span>+8801884570279</span></div>
+        <div class="contact-item"><i class="fas fa-phone-alt"></i> <span>+8801572938979</span></div>
+        <div class="contact-item"><i class="fas fa-envelope"></i> <span>rahatmathcare@gmail.com</span></div>
+        <div class="contact-item"><i class="fas fa-map-marker-alt"></i> <span>Jor Pukur Par,Joydebpur Road,Gazipur-1700</span></div>
       </div>
     </div>
     <div class="footer-bottom">
@@ -288,7 +288,7 @@ let allPhotos = [];
 (function(){
   const cfg = window.EXAM_CONFIG;
   if(!cfg || cfg.supabaseUrl==='YOUR_SUPABASE_URL') {
-    document.getElementById('loading').innerHTML = '<p style="color:var(--red)">❌ Database not configured.</p>';
+    document.getElementById('loading').innerHTML = '<p style="color:var(--red)"><i class="fas fa-circle-exclamation" style="color:var(--red);"></i> Database not configured.</p>';
     return;
   }
   sb = supabase.createClient(cfg.supabaseUrl, cfg.supabaseKey);
@@ -311,7 +311,7 @@ async function loadGallery() {
     
   } catch (err) {
     console.error('Error loading gallery:', err);
-    document.getElementById('loading').innerHTML = '<p style="color:var(--red)">❌ Failed to load gallery.</p>';
+    document.getElementById('loading').innerHTML = '<p style="color:var(--red)"><i class="fas fa-circle-exclamation" style="color:var(--red);"></i> Failed to load gallery.</p>';
   }
 }
 
@@ -329,22 +329,26 @@ function displayGallery(photos) {
   container.innerHTML = photos.map(photo => {
     const imageSrc = photo.image_data || photo.image_url || '';
     const hasImage = imageSrc && imageSrc.startsWith('data:image');
-    const icon = getCategoryIcon(photo.category);
     
-    return `<div class="g-item" data-category="${escapeHtml(photo.category || 'Classes')}" onclick="openLB('${escapeHtml(photo.title)}', '${escapeHtml(photo.description || '')}', '${escapeHtml(imageSrc)}', '${icon}')">
+    return `<div class="g-item" data-category="${escapeHtml(photo.category || 'Classes')}" onclick="openLB('${escapeHtml(photo.title)}', '${escapeHtml(photo.description || '')}', '${escapeHtml(imageSrc)}', '${escapeHtml(photo.category || 'Classes')}')">
       ${hasImage 
         ? `<img src="${escapeHtml(imageSrc)}" alt="${escapeHtml(photo.title)}" loading="lazy">` 
-        : `<div style="height:200px; display:flex; align-items:center; justify-content:center; font-size:4rem; background:var(--surf2);">${icon}</div>`
+        : `<div style="height:200px; display:flex; align-items:center; justify-content:center; font-size:4rem; background:var(--surf2);">${getCategoryIcon(photo.category || 'Classes')}</div>`
       }
-      <div class="g-overlay"><span>🔍</span></div>
+      <div class="g-overlay"><span><i class="fas fa-search" style="color:#fff;"></i></span></div>
       <div class="g-caption"><strong>${escapeHtml(photo.title)}</strong></div>
     </div>`;
   }).join('');
 }
 
 function getCategoryIcon(category) {
-  const icons = { 'Classes': '📚', 'Exams': '📝', 'Results': '🏆', 'Events': '🎉' };
-  return icons[category] || '📸';
+  const icons = { 
+    'Classes': '<i class="fas fa-graduation-cap" style="color:#8B5CF6;"></i>', 
+    'Exams': '<i class="fas fa-pen-to-square" style="color:#3B82F6;"></i>', 
+    'Results': '<i class="fas fa-trophy" style="color:#F59E0B;"></i>', 
+    'Events': '<i class="fas fa-party-hornister" style="color:#34D399;"></i>' 
+  };
+  return icons[category] || '<i class="fas fa-camera" style="color:#6B7280;"></i>';
 }
 
 function filterGallery(category, btn) {
@@ -359,7 +363,7 @@ function filterGallery(category, btn) {
   }
 }
 
-function openLB(title, desc, imgSrc, icon) {
+function openLB(title, desc, imgSrc, category) {
   const lbImg = document.getElementById('lbImg');
   const lbTitle = document.getElementById('lbTitle');
   const lbDesc = document.getElementById('lbDesc');

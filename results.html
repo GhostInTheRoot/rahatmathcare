@@ -249,7 +249,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 </div>
 
 <div class="photo-modal" id="photoModal" onclick="this.classList.remove('open')">
-  <button class="photo-close" onclick="document.getElementById('photoModal').classList.remove('open')">✕</button>
+  <button class="photo-close" onclick="document.getElementById('photoModal').classList.remove('open')"><i class="fas fa-times" style="color:#6B7280;"></i></button>
   <img id="photoModalImg" src="" alt="Answer sheet">
 </div>
 
@@ -263,7 +263,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 
     <div class="search-section reveal">
       <div class="search-card">
-        <h2>🔍 Find Your Results</h2>
+        <h2><i class="fas fa-search" style="color:#3B82F6;"></i> Find Your Results</h2>
         <p class="sub">Use the same name and roll number you entered during the exam.</p>
         <div class="fgrid">
           <div class="fg">
@@ -285,7 +285,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
           </div>
         </div>
         <button class="search-btn" id="searchBtn" onclick="searchResults()">
-          <span id="searchBtnText">📊 View My Results</span>
+          <span id="searchBtnText"><i class="fas fa-chart-bar" style="color:#fff;"></i> View My Results</span>
         </button>
         <div class="error-box" id="errBox">No results found. Please check your name and roll number.</div>
       </div>
@@ -293,13 +293,13 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 
     <div id="results-section">
       <div class="results-header">
-        <h2>📋 Your Results</h2>
+        <h2><i class="fas fa-list-alt" style="color:#8B5CF6;"></i> Your Results</h2>
         <button class="clear-btn" onclick="clearResults()">← Search Again</button>
       </div>
       <div class="student-info-banner" id="stuBanner"></div>
       <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('mcq',this)">✅ MCQ Results</button>
-        <button class="tab-btn" onclick="switchTab('written',this)">📝 Written Submissions</button>
+        <button class="tab-btn active" onclick="switchTab('mcq',this)"><i class="fas fa-check-circle" style="color:#34D399;"></i> MCQ Results</button>
+        <button class="tab-btn" onclick="switchTab('written',this)"><i class="fas fa-pen-to-square" style="color:#3B82F6;"></i> Written Submissions</button>
       </div>
       <div class="tab-content active" id="tab-mcq">
         <div id="mcqResults"></div>
@@ -334,10 +334,10 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
       </div>
       <div class="footer-col">
         <h4>Contact</h4>
-        <div class="contact-item">📞 <span>+8801884570279</span></div>
-        <div class="contact-item">📞 <span>+8801572938979</span></div>
-        <div class="contact-item">✉️ <span>rahatmathcare@gmail.com</span></a></span></div>
-        <div class="contact-item">📍 <span>Jor Pukur Par, Gazipur-1700</span></div>
+        <div class="contact-item"><i class="fas fa-phone-alt"></i> <span>+8801884570279</span></div>
+        <div class="contact-item"><i class="fas fa-phone-alt"></i> <span>+8801572938979</span></div>
+        <div class="contact-item"><i class="fas fa-envelope"></i> <span>rahatmathcare@gmail.com</span></div>
+        <div class="contact-item"><i class="fas fa-map-marker-alt"></i> <span>Jor Pukur Par, Gazipur-1700</span></div>
       </div>
     </div>
     <div class="footer-bottom">
@@ -367,7 +367,7 @@ async function searchResults(){
   btn.disabled=true;txt.innerHTML='<div class="spin"></div>';
   sb=initSB();
   if(!sb){
-    btn.disabled=false;txt.textContent='📊 View My Results';
+    btn.disabled=false;txt.innerHTML='<i class="fas fa-chart-bar" style="color:#fff;"></i> View My Results';
     err.textContent='Database not configured. Please contact admin.';err.classList.add('show');return;
   }
   try{
@@ -377,14 +377,14 @@ async function searchResults(){
     mq=mq.order('submitted_at',{ascending:false});
     wq=wq.order('submitted_at',{ascending:false});
     const[{data:mcqData},{data:writtenData}]=await Promise.all([mq,wq]);
-    btn.disabled=false;txt.textContent='📊 View My Results';
+    btn.disabled=false;txt.innerHTML='<i class="fas fa-chart-bar" style="color:#fff;"></i> View My Results';
     if((!mcqData||mcqData.length===0)&&(!writtenData||writtenData.length===0)){
       err.textContent='No results found. Make sure your name and roll match what you entered during the exam.';
       err.classList.add('show');return;
     }
     showResults(mcqData||[],writtenData||[],name,roll,cls);
   }catch(e){
-    btn.disabled=false;txt.textContent='📊 View My Results';
+    btn.disabled=false;txt.innerHTML='<i class="fas fa-chart-bar" style="color:#fff;"></i> View My Results';
     err.textContent='Error fetching results: '+e.message;err.classList.add('show');
   }
 }
@@ -409,7 +409,7 @@ function showResults(mcq,written,name,roll,cls){
     const dt=new Date(r.submitted_at).toLocaleDateString('en-BD',{day:'numeric',month:'short',year:'numeric'});
     return `<div class="result-card">
       <div class="rc-top">
-        <div><div class="rc-title">${esc(r.exam_title||'MCQ Exam')}</div><div class="rc-meta">📅 ${dt} · ${esc(r.class_name||'')}</div></div>
+        <div><div class="rc-title">${esc(r.exam_title||'MCQ Exam')}</div><div class="rc-meta"><i class="fas fa-calendar-alt" style="color:#8B5CF6;"></i> ${dt} · ${esc(r.class_name||'')}</div></div>
         <span class="score-badge score-${cls2}">${pct}%</span>
       </div>
       <div class="score-bar-wrap">
@@ -417,10 +417,10 @@ function showResults(mcq,written,name,roll,cls){
         <div class="score-bar"><div class="score-bar-fill fill-${cls2}" style="width:${pct}%"></div></div>
       </div>
       <div class="stats-row">
-        <div class="stat-item">✅ Correct <strong>${r.correct||0}</strong></div>
-        <div class="stat-item">❌ Wrong <strong>${r.wrong||0}</strong></div>
-        <div class="stat-item">⏭️ Skipped <strong>${r.skipped||0}</strong></div>
-        <div class="stat-item">📊 Score <strong>${r.score||0}/${r.total||0}</strong></div>
+        <div class="stat-item"><i class="fas fa-check-circle" style="color:#34D399;"></i> Correct <strong>${r.correct||0}</strong></div>
+        <div class="stat-item"><i class="fas fa-circle-xmark" style="color:#EF4444;"></i> Wrong <strong>${r.wrong||0}</strong></div>
+        <div class="stat-item"><i class="fas fa-forward" style="color:#F59E0B;"></i> Skipped <strong>${r.skipped||0}</strong></div>
+        <div class="stat-item"><i class="fas fa-chart-pie" style="color:#3B82F6;"></i> Score <strong>${r.score||0}/${r.total||0}</strong></div>
       </div>
     </div>`;
   }).join('');}
@@ -435,7 +435,7 @@ function showResults(mcq,written,name,roll,cls){
     const badgeText  = hasMarks ? `${r.marks_obtained}/${r.marks_total}` : 'Submitted';
     return `<div class="result-card">
       <div class="rc-top">
-        <div><div class="rc-title">${esc(r.exam_title||'Written Exam')}</div><div class="rc-meta">📅 ${dt} · ${esc(r.class_name||'')}${r.phone?` · 📞 ${esc(r.phone)}`:''}
+        <div><div class="rc-title">${esc(r.exam_title||'Written Exam')}</div><div class="rc-meta"><i class="fas fa-calendar-alt" style="color:#8B5CF6;"></i> ${dt} · ${esc(r.class_name||'')}${r.phone?` · <i class="fas fa-phone-alt" style="color:#3B82F6;"></i> ${esc(r.phone)}`:''}
         </div></div>
         <span class="score-badge ${badgeClass}">${badgeText}</span>
       </div>
@@ -541,7 +541,7 @@ window.addEventListener('scroll', () => {
 
 // ── 3D TILT EFFECT FOR CARDS ──
 function initTiltCards() {
-  document.querySelectorAll('.result-card, .search-card, .result-item').forEach(card => {
+  document.querySelectorAll('.result-card, .result-item').forEach(card => {
     if(card.querySelector('.tilt-glare')) return;
     card.classList.add('tilt-card');
     card.style.transformStyle = 'preserve-3d';

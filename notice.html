@@ -100,6 +100,11 @@ main{padding-top:96px;padding-bottom:60px;position:relative;background:#FFFFFF;}
 .filter-btn{padding:7px 16px;border-radius:50px;border:1px solid #E5E7EB;background:#FFFFFF;color:#6B7280;font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s;font-family:'Plus Jakarta Sans',sans-serif;}
 .filter-btn:hover{border-color:rgba(59,130,246,.4);color:#111827;}
 .filter-btn.active{background:rgba(59,130,246,.1);border-color:rgba(59,130,246,.4);color:#3B82F6;}
+.type-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:middle;}
+.type-dot.urgent{background:#EF4444;}
+.type-dot.important{background:#F59E0B;}
+.type-dot.info{background:#3B82F6;}
+.type-dot.general{background:#34D399;}
 
 /* Notice cards */
 .notices-grid{display:flex;flex-direction:column;gap:16px;}
@@ -221,14 +226,14 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 
     <div class="filter-bar reveal" id="filterBar">
       <button class="filter-btn active" onclick="filterNotices('all',this)">All</button>
-      <button class="filter-btn" onclick="filterNotices('urgent',this)">🔴 Urgent</button>
-      <button class="filter-btn" onclick="filterNotices('important',this)">🟡 Important</button>
-      <button class="filter-btn" onclick="filterNotices('info',this)">🔵 Info</button>
-      <button class="filter-btn" onclick="filterNotices('general',this)">🟢 General</button>
+      <button class="filter-btn" onclick="filterNotices('urgent',this)"><span class="type-dot urgent"></span> Urgent</button>
+      <button class="filter-btn" onclick="filterNotices('important',this)"><span class="type-dot important"></span> Important</button>
+      <button class="filter-btn" onclick="filterNotices('info',this)"><span class="type-dot info"></span> Info</button>
+      <button class="filter-btn" onclick="filterNotices('general',this)"><span class="type-dot general"></span> General</button>
     </div>
 
     <div class="notices-grid" id="noticesGrid">
-      <div class="notices-empty"><div class="ei">🔔</div><p>Loading notices…</p></div>
+      <div class="notices-empty"><div class="ei"><i class="fas fa-bell" style="color:#3B82F6;font-size:2.5rem;"></i></div><p>Loading notices…</p></div>
     </div>
   </div>
 </main>
@@ -256,10 +261,10 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
       </div>
       <div class="footer-col">
         <h4>Contact</h4>
-        <div class="contact-item">📞 <span>+8801884570279</span></div>
-        <div class="contact-item">📞 <span>+8801572938979</span></div>
-        <div class="contact-item">✉️ <span>rahatmathcare@gmail.com</span></a></span></div>
-        <div class="contact-item">📍 <span>Jor Pukur Par, Joydebpur Road, Gazipur-1700</span></div>
+        <div class="contact-item"><i class="fas fa-phone-alt"></i> <span>+8801884570279</span></div>
+        <div class="contact-item"><i class="fas fa-phone-alt"></i> <span>+8801572938979</span></div>
+        <div class="contact-item"><i class="fas fa-envelope"></i> <span>rahatmathcare@gmail.com</span></div>
+        <div class="contact-item"><i class="fas fa-map-marker-alt"></i> <span>Jor Pukur Par, Joydebpur Road, Gazipur-1700</span></div>
       </div>
     </div>
     <div class="footer-bottom">
@@ -306,25 +311,25 @@ function filterNotices(type, btn) {
 function renderNotices(notices) {
   const grid = document.getElementById('noticesGrid');
   if (!notices || notices.length === 0) {
-    grid.innerHTML = `<div class="notices-empty"><div class="ei">🔔</div><p>No notices found${currentFilter !== 'all' ? ' in this category' : ''}.</p></div>`;
+    grid.innerHTML = `<div class="notices-empty"><div class="ei"><i class="fas fa-bell" style="color:#6B7280;font-size:2.5rem;"></i></div><p>No notices found${currentFilter !== 'all' ? ' in this category' : ''}.</p></div>`;
     return;
   }
   grid.innerHTML = notices.map(n => {
-    const typeMap = { urgent:'🔴 Urgent', important:'🟡 Important', info:'🔵 Info', general:'🟢 General' };
+    const typeMap = { urgent:'<span class="type-dot urgent"></span> Urgent', important:'<span class="type-dot important"></span> Important', info:'<span class="type-dot info"></span> Info', general:'<span class="type-dot general"></span> General' };
     const badgeClass = { urgent:'badge-urgent', important:'badge-important', info:'badge-info', general:'badge-general' };
     const dt = new Date(n.created_at);
     const dateStr = dt.toLocaleDateString('en-BD', { day:'numeric', month:'long', year:'numeric' });
     return `
     <div class="notice-card ${n.type||'general'}">
-      ${n.pinned ? '<div class="pinned-label">📌 Pinned</div>' : ''}
+      ${n.pinned ? '<div class="pinned-label"><i class="fas fa-thumbtack" style="color:#EF4444;"></i> Pinned</div>' : ''}
       <div class="notice-top">
         <div class="notice-title">${esc(n.title)}</div>
         <span class="notice-badge ${badgeClass[n.type]||'badge-general'}">${typeMap[n.type]||'General'}</span>
       </div>
       <div class="notice-body">${esc(n.body)}</div>
       <div class="notice-meta">
-        <span>📅 ${dateStr}</span>
-        ${n.target ? `<span class="notice-target">📢 ${esc(n.target)}</span>` : ''}
+        <span><i class="fas fa-calendar-alt" style="color:#8B5CF6;"></i> ${dateStr}</span>
+        ${n.target ? `<span class="notice-target"><i class="fas fa-bullhorn" style="color:#3B82F6;"></i> ${esc(n.target)}</span>` : ''}
       </div>
     </div>`;
   }).join('');

@@ -256,10 +256,10 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
       </div>
       <div class="footer-col">
         <h4>Contact</h4>
-        <div class="contact-item" id="footer-phone1">📞 <span>+8801884570279</span></div>
-        <div class="contact-item" id="footer-phone2">📞 <span>+8801572938979</span></div>
-        <div class="contact-item" id="footer-email">✉️ <span>rahatmathcare@gmail.com</span></div>
-        <div class="contact-item" id="footer-address">📍 <span>Jorpukur par,Joydebpur Road,Gazipur-1700</span></div>
+        <div class="contact-item" id="footer-phone1"><i class="fas fa-phone-alt"></i> <span>+8801884570279</span></div>
+        <div class="contact-item" id="footer-phone2"><i class="fas fa-phone-alt"></i> <span>+8801572938979</span></div>
+        <div class="contact-item" id="footer-email"><i class="fas fa-envelope"></i> <span>rahatmathcare@gmail.com</span></div>
+        <div class="contact-item" id="footer-address"><i class="fas fa-map-marker-alt"></i> <span>Jorpukur par,Joydebpur Road,Gazipur-1700</span></div>
       </div>
     </div>
     <div class="footer-bottom">
@@ -275,7 +275,7 @@ let sb;
 (function(){
   const cfg = window.EXAM_CONFIG;
   if(!cfg || cfg.supabaseUrl==='YOUR_SUPABASE_URL') {
-    document.getElementById('loading').innerHTML = '<p style="color:var(--red)">❌ Database not configured. Please check config.js</p>';
+    document.getElementById('loading').innerHTML = '<p style="color:var(--red)"><i class="fas fa-circle-exclamation" style="color:var(--red);"></i> Database not configured. Please check config.js</p>';
     return;
   }
   sb = supabase.createClient(cfg.supabaseUrl, cfg.supabaseKey);
@@ -319,9 +319,9 @@ async function loadSchedules(){
               <div style="color:var(--muted);font-size:.87rem;margin-top:6px;">${escapeHtml(schedule.subtitle || '')}</div>
             </div>
             <div class="batch-meta">
-              <div class="bmeta-item">📅 <span>Classes: <strong>${days.join(', ')}</strong></span></div>
-              <div class="bmeta-item">⏰ <span>Time: <strong>${escapeHtml(schedule.class_time || '')}</strong></span></div>
-              <div class="bmeta-item">📍 <span>Venue: <strong>${escapeHtml(schedule.venue || '')}</strong></span></div>
+              <div class="bmeta-item"><i class="fas fa-calendar-days" style="color:#8B5CF6;"></i> <span>Classes: <strong>${days.join(', ')}</strong></span></div>
+              <div class="bmeta-item"><i class="fas fa-clock" style="color:#F59E0B;"></i> <span>Time: <strong>${escapeHtml(schedule.class_time || '')}</strong></span></div>
+              <div class="bmeta-item"><i class="fas fa-map-marker-alt" style="color:#10B981;"></i> <span>Venue: <strong>${escapeHtml(schedule.venue || '')}</strong></span></div>
             </div>
           </div>
 
@@ -335,7 +335,7 @@ async function loadSchedules(){
 
           ${schedule.note ? `
             <div class="notice-box">
-              <div class="notice-icon">📌</div>
+              <div class="notice-icon"><i class="fas fa-thumbtack" style="color:#EF4444;"></i></div>
               <p><strong>Note:</strong> ${escapeHtml(schedule.note)}</p>
             </div>
           ` : ''}
@@ -348,7 +348,7 @@ async function loadSchedules(){
     
   } catch(err) {
     console.error('Error loading schedules:', err);
-    document.getElementById('loading').innerHTML = '<p style="color:var(--red)">❌ Failed to load schedules.</p>';
+    document.getElementById('loading').innerHTML = '<p style="color:var(--red)"><i class="fas fa-circle-exclamation" style="color:var(--red);"></i> Failed to load schedules.</p>';
   }
 }
 
@@ -357,10 +357,10 @@ async function loadContactInfo(){
     const {data} = await sb.from('site_contact').select('*').limit(1);
     if(data && data.length > 0){
       const c = data[0];
-      if(c.phone1) document.getElementById('footer-phone1').innerHTML = `📞 <span>${c.phone1}</span>`;
-      if(c.phone2) document.getElementById('footer-phone2').innerHTML = `📞 <span>${c.phone2}</span>`;
-      if(c.email) document.getElementById('footer-email').innerHTML = `✉️ <span>${c.email}</span>`;
-      if(c.address) document.getElementById('footer-address').innerHTML = `📍 <span>${c.address}</span>`;
+      if(c.phone1) document.getElementById('footer-phone1').innerHTML = `<i class="fas fa-phone-alt"></i> <span>${c.phone1}</span>`;
+      if(c.phone2) document.getElementById('footer-phone2').innerHTML = `<i class="fas fa-phone-alt"></i> <span>${c.phone2}</span>`;
+      if(c.email) document.getElementById('footer-email').innerHTML = `<i class="fas fa-envelope"></i> <span>${c.email}</span>`;
+      if(c.address) document.getElementById('footer-address').innerHTML = `<i class="fas fa-map-marker-alt"></i> <span>${c.address}</span>`;
     }
   } catch(err) {
     console.warn('Could not load contact info:', err);

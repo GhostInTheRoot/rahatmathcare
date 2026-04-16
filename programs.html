@@ -278,7 +278,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 <!-- Enrollment Modal - Updated with Telegram integration -->
 <div class="modal-overlay" id="enrollModal">
   <div class="modal">
-    <button class="close-btn" onclick="closeModal()">✕</button>
+    <button class="close-btn" onclick="closeModal()"><i class="fas fa-times" style="color:#6B7280;"></i></button>
     <div id="formContent">
       <h3>Enrollment Form</h3>
       <p class="modal-sub">Fill in your details and we'll contact you shortly.</p>
@@ -314,7 +314,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
       <button class="submit-btn" id="enroll-submit-btn" onclick="submitEnrollment()">Submit Enrollment</button>
     </div>
     <div class="success-msg" id="successMsg">
-      <div class="sicon">🎉</div>
+      <div class="sicon"><i class="fas fa-circle-check" style="color:#34D399;font-size:3rem;margin-bottom:12px;"></i></div>
       <h4>Enrollment Request Sent!</h4>
       <p>Thank you! We'll contact you at your phone number within 24 hours to confirm your enrollment.</p>
     </div>
@@ -344,10 +344,10 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
       </div>
       <div class="footer-col">
         <h4>Contact</h4>
-        <div class="contact-item" id="footer-phone1">📞 <span>+8801884570279</span></div>
-        <div class="contact-item" id="footer-phone2">📞 <span>+8801572938979</span></div>
-        <div class="contact-item" id="footer-email">✉️ <span>rahatmathcare@gmail.com</span></div>
-        <div class="contact-item" id="footer-address">📍 <span>Jorpukur par,Joydebpur Road,Gazipur-1700</span></div>
+        <div class="contact-item" id="footer-phone1"><i class="fas fa-phone-alt"></i> <span>+8801884570279</span></div>
+        <div class="contact-item" id="footer-phone2"><i class="fas fa-phone-alt"></i> <span>+8801572938979</span></div>
+        <div class="contact-item" id="footer-email"><i class="fas fa-envelope"></i> <span>rahatmathcare@gmail.com</span></div>
+        <div class="contact-item" id="footer-address"><i class="fas fa-map-marker-alt"></i> <span>Jorpukur par,Joydebpur Road,Gazipur-1700</span></div>
       </div>
     </div>
     <div class="footer-bottom">
@@ -363,7 +363,7 @@ let sb;
 (function(){
   const cfg = window.EXAM_CONFIG;
   if(!cfg || cfg.supabaseUrl==='YOUR_SUPABASE_URL') {
-    document.getElementById('loading').innerHTML = '<p style="color:var(--red)">❌ Database not configured. Please check config.js</p>';
+    document.getElementById('loading').innerHTML = '<p style="color:var(--red)"><i class="fas fa-circle-exclamation"></i> Database not configured. Please check config.js</p>';
     return;
   }
   sb = supabase.createClient(cfg.supabaseUrl, cfg.supabaseKey);
@@ -390,7 +390,7 @@ async function loadPrograms(){
     
   } catch(err) {
     console.error('Error loading programs:', err);
-    document.getElementById('loading').innerHTML = '<p style="color:var(--red)">❌ Failed to load programs.</p>';
+    document.getElementById('loading').innerHTML = '<p style="color:var(--red)"><i class="fas fa-circle-exclamation"></i> Failed to load programs.</p>';
   }
 }
 
@@ -411,7 +411,7 @@ function buildProgramCard(p){
   
   return `<div class="prog-card ${featuredClass}">
     ${p.featured ? '<div class="feat-label">New Batch</div>' : ''}
-    <span class="prog-badge ${badgeClass}">${p.badge || (p.badge_type === 'free' ? '✦ Free Admission' : 'Premium')}</span>
+    <span class="prog-badge ${badgeClass}">${p.badge || (p.badge_type === 'free' ? '<i class="fas fa-star" style="color:#34D399;"></i> Free Admission' : 'Premium')}</span>
     <h2>${escapeHtml(p.name)}</h2>
     <div class="prog-subtitle">${escapeHtml(p.subtitle || '')}</div>
     <p class="prog-desc">${escapeHtml(p.description || '')}</p>
@@ -428,7 +428,7 @@ function buildProgramCard(p){
     <ul class="prog-features">
       ${features.map(f => `<li>${escapeHtml(f)}</li>`).join('')}
     </ul>
-    <button class="${enrollBtnClass}" onclick='openModal(${JSON.stringify(String(p.name || ""))})'>📝 Enroll Now</button>
+    <button class="${enrollBtnClass}" onclick='openModal(${JSON.stringify(String(p.name || ""))})'><i class="fas fa-clipboard-list" style="color:#fff;"></i> Enroll Now</button>
   </div>`;
 }
 
@@ -437,10 +437,10 @@ async function loadContactInfo(){
     const {data} = await sb.from('site_contact').select('*').limit(1);
     if(data && data.length > 0){
       const c = data[0];
-      if(c.phone1) document.getElementById('footer-phone1').innerHTML = `📞 <span>${c.phone1}</span>`;
-      if(c.phone2) document.getElementById('footer-phone2').innerHTML = `📞 <span>${c.phone2}</span>`;
-      if(c.email) document.getElementById('footer-email').innerHTML = `✉️ <span>${c.email}</span>`;
-      if(c.address) document.getElementById('footer-address').innerHTML = `📍 <span>${c.address}</span>`;
+      if(c.phone1) document.getElementById('footer-phone1').innerHTML = `<i class="fas fa-phone-alt"></i> <span>${c.phone1}</span>`;
+      if(c.phone2) document.getElementById('footer-phone2').innerHTML = `<i class="fas fa-phone-alt"></i> <span>${c.phone2}</span>`;
+      if(c.email) document.getElementById('footer-email').innerHTML = `<i class="fas fa-envelope"></i> <span>${c.email}</span>`;
+      if(c.address) document.getElementById('footer-address').innerHTML = `<i class="fas fa-map-marker-alt"></i> <span>${c.address}</span>`;
     }
   } catch(err) {
     console.warn('Could not load contact info:', err);
@@ -495,14 +495,14 @@ async function submitEnrollment() {
   
   // Format message for Telegram
   const telegramMessage = 
-    `📝 New Enrollment Request\n\n` +
-    `🎓 Program: ${program}\n` +
-    `👤 Name: ${name}\n` +
-    `📞 Phone: ${phone}\n` +
-    `📚 Class: ${classVal}\n` +
-    `🏫 School/College: ${school}\n` +
-    `💬 Message: ${message}\n\n` +
-    `⏰ Time: ${new Date().toLocaleString()}`;
+    `📋 *New Enrollment Request*\n\n` +
+    `*Program:* ${program}\n` +
+    `*Name:* ${name}\n` +
+    `*Phone:* ${phone}\n` +
+    `*Class:* ${classVal}\n` +
+    `*School/College:* ${school}\n` +
+    `*Message:* ${message}\n\n` +
+    `*Time:* ${new Date().toLocaleString()}`;
   
   try {
     const cfg = window.EXAM_CONFIG;
