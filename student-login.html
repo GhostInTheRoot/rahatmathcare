@@ -520,17 +520,17 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:999999;w
         <div class="pw-wrap">
           <input class="fi" type="password" id="pw-new" placeholder="Min 6 characters" autocomplete="new-password"
                  oninput="chkStr(this.value,'sbar','sfill','slbl')" onkeydown="if(event.key==='Enter')go2a()">
-          <button class="pw-eye" type="button" onclick="eyeT('pw-new',this)">&#128065;</button>
+          <button class="pw-eye" type="button" onclick="eyeT('pw-new',this)"><i class="fas fa-eye"></i></button>
         </div>
         <div class="str-wrap" id="sbar"><div class="str-bar"><div class="str-fill" id="sfill"></div></div><div class="str-lbl" id="slbl"></div></div>
       </div>
       <div class="fg"><label class="fl">Confirm Password</label>
         <div class="pw-wrap">
           <input class="fi" type="password" id="pw-c1" placeholder="Repeat your password" autocomplete="new-password" onkeydown="if(event.key==='Enter')go2a()">
-          <button class="pw-eye" type="button" onclick="eyeT('pw-c1',this)">&#128065;</button>
+          <button class="pw-eye" type="button" onclick="eyeT('pw-c1',this)"><i class="fas fa-eye"></i></button>
         </div>
       </div>
-      <button class="act-btn" id="btn2a" onclick="go2a()"><span id="btn2at">&#128274; Set Password &amp; Login</span></button>
+      <button class="act-btn" id="btn2a" onclick="go2a()"><span id="btn2at"><i class="fas fa-lock"></i> Set Password &amp; Login</span></button>
       <div class="err" id="err2a"></div>
       <div class="link-row"><a onclick="back()">Different roll</a></div>
     </div>
@@ -546,14 +546,14 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:999999;w
       <div class="auth-h">Welcome Back!</div>
       <div class="auth-sub">Enter your password to access your dashboard.</div>
       <div class="stu-chip" id="chip-pw"></div>
-      <div class="admin-hint-box" id="admin-hint">&#128737;&#65039; Admin: use your <strong>superAdminPassword</strong> from config.js to view any student dashboard without their password.</div>
+      <div class="admin-hint-box" id="admin-hint"><i class="fas fa-shield-alt" style="color: #3B82F6;"></i> Admin: use your <strong>superAdminPassword</strong> from config.js to view any student dashboard without their password.</div>
       <div class="fg"><label class="fl">Password</label>
         <div class="pw-wrap">
           <input class="fi" type="password" id="l-pw" placeholder="Your password" autocomplete="current-password" onkeydown="if(event.key==='Enter')go2b()">
-          <button class="pw-eye" type="button" onclick="eyeT('l-pw',this)">&#128065;</button>
+          <button class="pw-eye" type="button" onclick="eyeT('l-pw',this)"><i class="fas fa-eye"></i></button>
         </div>
       </div>
-      <button class="act-btn" id="btn2b" onclick="go2b()"><span id="btn2bt">&#127891; Login to Dashboard</span></button>
+      <button class="act-btn" id="btn2b" onclick="go2b()"><span id="btn2bt"><i class="fas fa-graduation-cap"></i> Login to Dashboard</span></button>
       <div class="err" id="err2b"></div>
       <div class="link-row"><a onclick="back()">Different roll</a><a onclick="goForgot()">Forgot password?</a><a onclick="toggleHint()">Admin</a></div>
     </div>
@@ -619,17 +619,17 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:999999;w
         <div class="pw-wrap">
           <input class="fi" type="password" id="np-pw" placeholder="Min 6 characters" autocomplete="new-password"
                  oninput="chkStr(this.value,'np-sbar','np-sfill','np-slbl')" onkeydown="if(event.key==='Enter')setNewPw()">
-          <button class="pw-eye" type="button" onclick="eyeT('np-pw',this)">&#128065;</button>
+          <button class="pw-eye" type="button" onclick="eyeT('np-pw',this)"><i class="fas fa-eye"></i></button>
         </div>
         <div class="str-wrap" id="np-sbar"><div class="str-bar"><div class="str-fill" id="np-sfill"></div></div><div class="str-lbl" id="np-slbl"></div></div>
       </div>
       <div class="fg"><label class="fl">Confirm Password</label>
         <div class="pw-wrap">
           <input class="fi" type="password" id="np-c" placeholder="Repeat new password" autocomplete="new-password" onkeydown="if(event.key==='Enter')setNewPw()">
-          <button class="pw-eye" type="button" onclick="eyeT('np-c',this)">&#128065;</button>
+          <button class="pw-eye" type="button" onclick="eyeT('np-c',this)"><i class="fas fa-eye"></i></button>
         </div>
       </div>
-      <button class="act-btn" id="fp-btn3" onclick="setNewPw()"><span id="fp-btn3-t">&#128274; Save New Password</span></button>
+      <button class="act-btn" id="fp-btn3" onclick="setNewPw()"><span id="fp-btn3-t"><i class="fas fa-lock"></i> Save New Password</span></button>
       <div class="err" id="fp-err3"></div>
     </div>
   </div>
@@ -639,51 +639,51 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:999999;w
 <div id="dash">
   <div class="dw">
     <div class="admin-banner" id="adminBanner" style="display:none;">
-      <span style="font-size:1.3rem;">&#128737;&#65039;</span>
+      <span style="font-size:1.3rem; color: #3B82F6;"><i class="fas fa-shield-alt"></i></span>
       <div class="ab-txt"><strong>Admin View Mode</strong>Viewing this dashboard as admin. The student cannot see you.</div>
       <button class="exit-btn" onclick="exitAdmin()">Exit &#8594; Admin Panel</button>
     </div>
     <div class="dash-hdr">
-      <div><h1 id="dhello"><span class="wave-icon">👋</span> Welcome back!</h1><p id="dsub">Performance overview.</p></div>
+      <div><h1 id="dhello"><span class="wave-icon"><i class="fas fa-hand-sparkles" style="color: #3B82F6;"></i></span> Welcome back!</h1><p id="dsub">Performance overview.</p></div>
       <div class="dash-acts">
-        <button class="dbtn b" id="editPbtn" onclick="openEditProfile()">&#9999;&#65039; Edit Profile</button>
-        <button class="dbtn y" id="chPwbtn" onclick="openChangePw()">&#128273; Change Password</button>
-        <button class="dbtn r" id="logoutbtn" onclick="doLogout()">Logout</button>
+        <button class="dbtn b" id="editPbtn" onclick="openEditProfile()"><i class="fas fa-user-edit"></i> Edit Profile</button>
+        <button class="dbtn y" id="chPwbtn" onclick="openChangePw()"><i class="fas fa-lock"></i> Change Password</button>
+        <button class="dbtn r" id="logoutbtn" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
       </div>
     </div>
     <div class="dg">
       <aside>
         <div class="pcard">
-          <div class="pcard-header"><div class="ptitle">&#128100; Student Profile</div></div>
+          <div class="pcard-header"><div class="ptitle"><i class="fas fa-user" style="color: #3B82F6;"></i> Student Profile</div></div>
           <div class="pcard-body">
             <input type="file" id="pav-file" accept="image/*" onchange="uploadAvatar(this)">
             <div class="pav-wrap">
               <div class="pav" id="pav" onclick="if(!adminView)document.getElementById('pav-file').click()">
                 <span id="pav-txt">?</span>
-                <div class="pav-overlay">&#128247;<br>Change</div>
+                <div class="pav-overlay"><i class="fas fa-camera"></i><br>Change</div>
               </div>
-              <span class="pav-upload-hint" onclick="if(!adminView)document.getElementById('pav-file').click()" id="pav-hint">&#128247; Upload photo</span>
+              <span class="pav-upload-hint" onclick="if(!adminView)document.getElementById('pav-file').click()" id="pav-hint"><i class="fas fa-camera"></i> Upload photo</span>
             </div>
             <div class="pname" id="pname">&#8212;</div>
             <div class="proll" id="proll">Roll &#8212;</div>
             <div class="pdiv"></div>
-            <div class="pf"><span class="pf-ic ic-clg">&#127979;</span><div><div class="pf-lbl">College</div><div class="pf-v" id="pf-clg">&#8212;</div></div></div>
-            <div class="pf"><span class="pf-ic ic-ph">&#128222;</span><div><div class="pf-lbl">Phone</div><div class="pf-v" id="pf-ph">&#8212;</div></div></div>
-            <div class="pf"><span class="pf-ic ic-wa">&#128172;</span><div><div class="pf-lbl">WhatsApp</div><div class="pf-v" id="pf-wa">&#8212;</div></div></div>
-            <div class="pf"><span class="pf-ic ic-addr">&#128205;</span><div><div class="pf-lbl">Address</div><div class="pf-v" id="pf-addr">&#8212;</div></div></div>
-            <div class="pf"><span class="pf-ic ic-bio">&#128221;</span><div><div class="pf-lbl">Bio</div><div class="pf-v" id="pf-bio">&#8212;</div></div></div>
+            <div class="pf"><span class="pf-ic ic-clg"><i class="fas fa-graduation-cap"></i></span><div><div class="pf-lbl">College</div><div class="pf-v" id="pf-clg">&#8212;</div></div></div>
+            <div class="pf"><span class="pf-ic ic-ph"><i class="fas fa-phone"></i></span><div><div class="pf-lbl">Phone</div><div class="pf-v" id="pf-ph">&#8212;</div></div></div>
+            <div class="pf"><span class="pf-ic ic-wa"><i class="fab fa-whatsapp"></i></span><div><div class="pf-lbl">WhatsApp</div><div class="pf-v" id="pf-wa">&#8212;</div></div></div>
+            <div class="pf"><span class="pf-ic ic-addr"><i class="fas fa-map-marker-alt"></i></span><div><div class="pf-lbl">Address</div><div class="pf-v" id="pf-addr">&#8212;</div></div></div>
+            <div class="pf"><span class="pf-ic ic-bio"><i class="fas fa-file-alt"></i></span><div><div class="pf-lbl">Bio</div><div class="pf-v" id="pf-bio">&#8212;</div></div></div>
           </div>
         </div>
       </aside>
       <div>
         <div class="srow">
-          <div class="sc sc-mcq"><div class="sc-icon">&#9989;</div><div class="sn" id="st-mcq">0</div><div class="sl">MCQ Taken</div></div>
-          <div class="sc sc-wr"><div class="sc-icon">&#128221;</div><div class="sn" id="st-wr">0</div><div class="sl">Written Submitted</div></div>
-          <div class="sc sc-avg"><div class="sc-icon">&#128200;</div><div class="sn" id="st-avg">&#8212;</div><div class="sl">Avg MCQ Score</div></div>
+          <div class="sc sc-mcq"><div class="sc-icon"><i class="fas fa-check"></i></div><div class="sn" id="st-mcq">0</div><div class="sl">MCQ Taken</div></div>
+          <div class="sc sc-wr"><div class="sc-icon"><i class="fas fa-file-alt"></i></div><div class="sn" id="st-wr">0</div><div class="sl">Written Submitted</div></div>
+          <div class="sc sc-avg"><div class="sc-icon"><i class="fas fa-chart-line"></i></div><div class="sn" id="st-avg">&#8212;</div><div class="sl">Avg MCQ Score</div></div>
         </div>
         <div class="panel" id="chartPanel" style="display:none;margin-bottom:16px;padding:0;overflow:hidden;border-radius:20px;">
           <div class="chart-header">
-            <div class="ptitle">&#128200; MCQ Score History</div>
+            <div class="ptitle"><i class="fas fa-chart-line" style="color: #3B82F6;"></i> MCQ Score History</div>
             <div class="chart-stats">
               <div class="cstat"><span class="cstat-val cs-latest" id="cs-latest">—</span><span class="cstat-lbl">Latest</span></div>
               <div class="cstat"><span class="cstat-val cs-best" id="cs-best">—</span><span class="cstat-lbl">Best</span></div>
@@ -701,12 +701,12 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:999999;w
         </div>
         <div class="panel results-card">
           <div class="results-header">
-            <div class="ptitle">&#128203; Exam Results</div>
+            <div class="ptitle"><i class="fas fa-clipboard-list" style="color: #3B82F6;"></i> Exam Results</div>
           </div>
           <div class="tabs">
-            <button class="tb active" onclick="switchTab('mcq',this)"><span class="tb-icon">&#9989;</span> MCQ <span class="tb-count" id="mcq-count">0</span></button>
-            <button class="tb" onclick="switchTab('wr',this)"><span class="tb-icon">&#128221;</span> Written <span class="tb-count" id="wr-count">0</span></button>
-            <button class="tb" onclick="switchTab('compare',this)"><span class="tb-icon">&#128202;</span> Similar <span class="tb-count" id="compare-count">0</span></button>
+            <button class="tb active" onclick="switchTab('mcq',this)"><span class="tb-icon"><i class="fas fa-check"></i></span> MCQ <span class="tb-count" id="mcq-count">0</span></button>
+            <button class="tb" onclick="switchTab('wr',this)"><span class="tb-icon"><i class="fas fa-file-alt"></i></span> Written <span class="tb-count" id="wr-count">0</span></button>
+            <button class="tb" onclick="switchTab('compare',this)"><span class="tb-icon"><i class="fas fa-chart-bar"></i></span> Similar <span class="tb-count" id="compare-count">0</span></button>
           </div>
           <div class="results-body">
             <div class="tc active" id="tc-mcq"><div id="mcqList"><div class="empty">Loading&#8230;</div></div></div>
@@ -722,7 +722,7 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:999999;w
 <!-- Edit Profile Modal -->
 <div class="mo" id="editModal" onclick="if(event.target===this)this.classList.remove('open')">
   <div class="mb">
-    <div class="mh"><h3>Edit Profile</h3><button class="mc-btn" onclick="document.getElementById('editModal').classList.remove('open')">&#10005;</button></div>
+    <div class="mh"><h3>Edit Profile</h3><button class="mc-btn" onclick="document.getElementById('editModal').classList.remove('open')"><i class="fas fa-times"></i></button></div>
     <div class="mbody">
       <div class="mfg"><label class="mfl">College / Institution</label><input class="mfi" id="ep-clg" placeholder="e.g. Gazipur College"></div>
       <div class="mfg"><label class="mfl">WhatsApp Number</label><input class="mfi" id="ep-wa" placeholder="01XXXXXXXXX" type="tel"></div>
@@ -736,21 +736,21 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:999999;w
 <!-- Change Password Modal -->
 <div class="mo" id="cpwModal" onclick="if(event.target===this)this.classList.remove('open')">
   <div class="mb">
-    <div class="mh"><h3>Change Password</h3><button class="mc-btn" onclick="document.getElementById('cpwModal').classList.remove('open')">&#10005;</button></div>
+    <div class="mh"><h3>Change Password</h3><button class="mc-btn" onclick="document.getElementById('cpwModal').classList.remove('open')"><i class="fas fa-times"></i></button></div>
     <div class="mbody">
       <div class="cpw-note">Your new password will be required the next time you log in.</div>
       <div class="mfg"><label class="mfl">Current Password</label>
         <div class="pw-wrap"><input class="mfi" type="password" id="cpw-cur" placeholder="Current password" style="padding-right:44px;">
-        <button class="pw-eye" type="button" onclick="eyeT('cpw-cur',this)">&#128065;</button></div>
+        <button class="pw-eye" type="button" onclick="eyeT('cpw-cur',this)"><i class="fas fa-eye"></i></button></div>
       </div>
       <div class="mfg"><label class="mfl">New Password</label>
         <div class="pw-wrap"><input class="mfi" type="password" id="cpw-new" placeholder="New password (min 6)" style="padding-right:44px;" oninput="chkStr(this.value,'cs-bar','cs-fill','cs-lbl')">
-        <button class="pw-eye" type="button" onclick="eyeT('cpw-new',this)">&#128065;</button></div>
+        <button class="pw-eye" type="button" onclick="eyeT('cpw-new',this)"><i class="fas fa-eye"></i></button></div>
         <div class="str-wrap" id="cs-bar"><div class="str-bar"><div class="str-fill" id="cs-fill"></div></div><div class="str-lbl" id="cs-lbl"></div></div>
       </div>
       <div class="mfg"><label class="mfl">Confirm New Password</label>
         <div class="pw-wrap"><input class="mfi" type="password" id="cpw-cnf" placeholder="Repeat new password" style="padding-right:44px;">
-        <button class="pw-eye" type="button" onclick="eyeT('cpw-cnf',this)">&#128065;</button></div>
+        <button class="pw-eye" type="button" onclick="eyeT('cpw-cnf',this)"><i class="fas fa-eye"></i></button></div>
       </div>
       <div class="merr" id="cpw-err"></div>
       <button class="sbtn" id="cpw-btn" onclick="doChangePw()">Update Password</button>
@@ -802,7 +802,7 @@ window.addEventListener('load',()=>{
   const cfg=window.EXAM_CONFIG;
   if(!cfg||!cfg.supabaseUrl||cfg.supabaseUrl==='YOUR_SUPABASE_URL'){
     const warn=document.getElementById('err1');
-    if(warn){warn.textContent='⚠️ Config not set — open config.js and add your Supabase URL and key before using student login.';warn.classList.add('show');}
+    if(warn){warn.innerHTML='<i class="fas fa-triangle-exclamation" style="color: #F59E0B;"></i> Config not set — open config.js and add your Supabase URL and key before using student login.';warn.classList.add('show');}
   }
 });
 
@@ -820,7 +820,7 @@ async function go1(){
   const sb=getSB();
   if(!sb){
     btn.disabled=false;txt.textContent='Continue';
-    sErr(err,'⚠️ Database not configured — open config.js and fill in your Supabase URL and key.');
+    sErr(err,'<i class="fas fa-triangle-exclamation" style="color: #F59E0B;"></i> Database not configured — open config.js and fill in your Supabase URL and key.');
     return;
   }
 
@@ -1063,12 +1063,12 @@ function openDash(){
     g('adminBanner').style.display='flex';
     g('editPbtn').style.display='none';g('chPwbtn').style.display='none';
     g('pav-hint').style.display='none';
-    g('logoutbtn').textContent='Exit Admin View';g('logoutbtn').className='dbtn y';g('logoutbtn').onclick=exitAdmin;
+    g('logoutbtn').innerHTML='<i class="fas fa-sign-out-alt"></i> Exit Admin View';g('logoutbtn').className='dbtn y';g('logoutbtn').onclick=exitAdmin;
   }else{
     g('adminBanner').style.display='none';
     g('editPbtn').style.display='';g('chPwbtn').style.display='';
     g('pav-hint').style.display='';
-    g('logoutbtn').textContent='Logout';g('logoutbtn').className='dbtn r';g('logoutbtn').onclick=doLogout;
+    g('logoutbtn').innerHTML='<i class="fas fa-sign-out-alt"></i> Logout';g('logoutbtn').className='dbtn r';g('logoutbtn').onclick=doLogout;
   }
   renderProfile();
   const sb=getSB();if(sb)loadResults(sb);
@@ -1111,13 +1111,13 @@ function renderProfile(){
   const ini=name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2)||'S';
   const pav=g('pav');
   if(s.avatar){
-    pav.innerHTML=`<img src="${s.avatar}" alt="${esc(name)}"><div class="pav-overlay">&#128247;<br>Change</div>`;
+    pav.innerHTML=`<img src="${s.avatar}" alt="${esc(name)}"><div class="pav-overlay"><i class="fas fa-camera"></i><br>Change</div>`;
   }else{
-    pav.innerHTML=`<span id="pav-txt">${ini}</span><div class="pav-overlay">&#128247;<br>Upload</div>`;
+    pav.innerHTML=`<span id="pav-txt">${ini}</span><div class="pav-overlay"><i class="fas fa-camera"></i><br>Upload</div>`;
   }
   g('pname').textContent=name;
   g('proll').textContent='Roll: '+(s.roll_no||'—')+(s.class_name?' · '+s.class_name:'');
-  g('dhello').innerHTML='<span class="wave-icon">👋</span> <span class="dash-name">'+(adminView?'Viewing: ':'')+name.split(' ')[0]+(adminView?"'s Dashboard":'! Welcome back')+'</span>';
+  g('dhello').innerHTML='<span class="wave-icon"><i class="fas fa-hand-sparkles" style="color: #3B82F6;"></i></span> <span class="dash-name">'+(adminView?'Viewing: ':'')+name.split(' ')[0]+(adminView?"'s Dashboard":'! Welcome back')+'</span>';
   g('dsub').textContent='Class: '+(s.class_name||'—')+' · Roll: '+(s.roll_no||'—')+(adminView?' (Admin View)':'');
   g('pf-clg').textContent=s.college||'—';g('pf-ph').textContent=s.phone||'—';
   g('pf-wa').textContent=s.whatsapp||'—';g('pf-addr').textContent=s.address||'—';g('pf-bio').textContent=s.bio||'—';
@@ -1144,7 +1144,7 @@ function renderMCQ(){
   d.innerHTML=[...myMCQ].reverse().map(r=>{
     const p=r.pct||Math.round((r.correct||0)/(r.total||1)*100),c=p>=70?'h':p>=40?'m':'l';
     const dt=fD(r.submitted_at);
-    return '<div class="ri"><div class="ri-top"><div><div class="ri-t">'+esc(r.exam_title||'MCQ Exam')+'</div><div class="ri-d">'+dt+'</div></div><span class="sp sp-'+c+'">'+p+'%</span></div><div class="sbr"><div class="sbf f'+c+'" style="width:'+p+'%"></div></div><div class="ris" style="gap:8px;margin-top:10px;"><span style="background:rgba(16,185,129,0.12);color:#059669;border:1px solid rgba(16,185,129,0.25);border-radius:20px;padding:5px 14px;font-size:.8rem;font-weight:600;">&#9989; Correct <strong>'+(r.correct||0)+'</strong></span><span style="background:rgba(239,68,68,0.1);color:#dc2626;border:1px solid rgba(239,68,68,0.2);border-radius:20px;padding:5px 14px;font-size:.8rem;font-weight:600;">&#10060; Wrong <strong>'+(r.wrong||0)+'</strong></span><span style="background:rgba(245,158,11,0.12);color:#d97706;border:1px solid rgba(245,158,11,0.25);border-radius:20px;padding:5px 14px;font-size:.8rem;font-weight:600;">&#128683; Skipped <strong>'+(r.skipped||0)+'</strong></span></div></div>';
+    return '<div class="ri"><div class="ri-top"><div><div class="ri-t">'+esc(r.exam_title||'MCQ Exam')+'</div><div class="ri-d">'+dt+'</div></div><span class="sp sp-'+c+'">'+p+'%</span></div><div class="sbr"><div class="sbf f'+c+'" style="width:'+p+'%"></div></div><div class="ris" style="gap:8px;margin-top:10px;"><span style="background:rgba(16,185,129,0.12);color:#059669;border:1px solid rgba(16,185,129,0.25);border-radius:20px;padding:5px 14px;font-size:.8rem;font-weight:600;"><i class="fas fa-check" style="margin-right:4px;"></i> Correct <strong>'+(r.correct||0)+'</strong></span><span style="background:rgba(239,68,68,0.1);color:#dc2626;border:1px solid rgba(239,68,68,0.2);border-radius:20px;padding:5px 14px;font-size:.8rem;font-weight:600;"><i class="fas fa-times" style="margin-right:4px;"></i> Wrong <strong>'+(r.wrong||0)+'</strong></span><span style="background:rgba(245,158,11,0.12);color:#d97706;border:1px solid rgba(245,158,11,0.25);border-radius:20px;padding:5px 14px;font-size:.8rem;font-weight:600;"><i class="fas fa-minus-circle" style="margin-right:4px;"></i> Skipped <strong>'+(r.skipped||0)+'</strong></span></div></div>';
   }).join('');
 }
 
@@ -1172,9 +1172,9 @@ function renderWr(){
       +barHTML
       +remarkHTML
       +(checked.length?('<div class="ris" style="background:rgba(37,99,235,0.08);border:1px solid rgba(37,99,235,0.2);border-radius:12px;padding:12px 16px;display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-top:12px;">'
-        +'<span style="color:#2563eb;font-weight:700;font-size:.88rem;">&#128203; Checked paper:</span>'
+        +'<span style="color:#2563eb;font-weight:700;font-size:.88rem;"><i class="fas fa-clipboard-check" style="margin-right:4px;"></i> Checked paper:</span>'
         +checked.map((u,i)=>'<a href="'+u+'" target="_blank" style="background:var(--surf);border:1px solid rgba(37,99,235,0.3);border-radius:8px;padding:5px 12px;font-size:.82rem;color:#2563eb;text-decoration:none;font-weight:600;margin-left:4px;transition:all .2s;">View'+(checked.length>1?(' '+(i+1)):'')+'</a>').join('')
-        +(hasMarks?'<span style="margin-left:auto;background:'+(pct>=70?'linear-gradient(135deg,#10b981,#34d399)':pct>=40?'linear-gradient(135deg,#f59e0b,#fbbf24)':'linear-gradient(135deg,#ef4444,#f87171)')+';border-radius:20px;padding:6px 16px;font-size:.88rem;font-weight:800;color:#fff;box-shadow:0 2px 8px rgba'+(pct>=70?'(16,185,129,0.3)':pct>=40?'(245,158,11,0.3)':'(239,68,68,0.3)')+';">&#127942; Score: '+pct+'%</span>':'')
+        +(hasMarks?'<span style="margin-left:auto;background:'+(pct>=70?'linear-gradient(135deg,#10b981,#34d399)':pct>=40?'linear-gradient(135deg,#f59e0b,#fbbf24)':'linear-gradient(135deg,#ef4444,#f87171)')+';border-radius:20px;padding:6px 16px;font-size:.88rem;font-weight:800;color:#fff;box-shadow:0 2px 8px rgba'+(pct>=70?'(16,185,129,0.3)':pct>=40?'(245,158,11,0.3)':'(239,68,68,0.3)')+';"><i class="fas fa-trophy" style="margin-right:4px;"></i> Score: '+pct+'%</span>':'')
         +'</div>'):'')
       // Photos count commented out - photos converted to PDF and sent to Telegram
       // +'<div class="rit">Photos <strong>'+photos.length+'</strong></div>'
@@ -1266,7 +1266,7 @@ function renderCompare(){
   }).join('<hr style="border:none;border-top:1px solid var(--bord);margin:20px 0;">');
 
   // Wrap in panel
-  d.innerHTML='<div class="compare-panel"><div class="compare-title">&#128202; Exam Retake Comparison</div>'+d.innerHTML+'</div>';
+  d.innerHTML='<div class="compare-panel"><div class="compare-title"><i class="fas fa-chart-bar" style="color: #3B82F6; margin-right: 6px;"></i> Exam Retake Comparison</div>'+d.innerHTML+'</div>';
 }
 
 // ── CHART (LINE + BAR) ───────────────────────────────────────────────────
@@ -1402,7 +1402,7 @@ function chkStr(pw,barId,fillId,lblId){
   const lvl=[{w:'20%',bg:'#ef4444',t:'Very weak'},{w:'40%',bg:'#f97316',t:'Weak'},{w:'60%',bg:'#f59e0b',t:'Fair'},{w:'80%',bg:'#84cc16',t:'Strong'},{w:'100%',bg:'#3b82f6',t:'Very strong'}];
   const l=lvl[Math.min(sc,4)];fill.style.width=l.w;fill.style.background=l.bg;lbl.textContent=l.t;lbl.style.color=l.bg;
 }
-function eyeT(id,btn){const i=g(id);i.type=i.type==='password'?'text':'password';btn.innerHTML=i.type==='password'?'&#128065;':'&#128584;';}
+function eyeT(id,btn){const i=g(id);i.type=i.type==='password'?'text':'password';btn.innerHTML=i.type==='password'?'<i class="fas fa-eye"></i>':'<i class="fas fa-eye-slash"></i>';}
 function chipH(s){const n=s.student_name||'Student',i=n.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2)||'S';return'<div class="chip-av">'+i+'</div><div><div class="chip-name">'+esc(n)+'</div><div class="chip-sub">Roll: '+esc(s.roll_no)+' · '+esc(s.class_name||'')+'</div></div>';}
 function sErr(el,msg){el.textContent=msg;el.classList.add('show');}
 function sErr2(el,msg){el.textContent=msg;el.style.display='block';}

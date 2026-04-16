@@ -663,30 +663,6 @@ const countObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.3 });
 countUpElements.forEach(el => countObserver.observe(el));
 
-// ── 3D TILT EFFECT FOR CARDS ──
-document.querySelectorAll('.ecard, .why-card, .prog-card, .testi-card').forEach(card => {
-  if(card.querySelector('.tilt-glare')) return;
-  card.classList.add('tilt-card');
-  const glare = document.createElement('div');
-  glare.className = 'tilt-glare';
-  card.appendChild(glare);
-  
-  card.addEventListener('mousemove', (e) => {
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const rotateX = (y - centerY) / 10;
-    const rotateY = (centerX - x) / 10;
-    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
-  });
-  
-  card.addEventListener('mouseleave', () => {
-    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
-  });
-});
-
 // ── SCROLL INDICATOR HIDE ON SCROLL ──
 let scrollIndicator = document.querySelector('.scroll-indicator');
 if(scrollIndicator){

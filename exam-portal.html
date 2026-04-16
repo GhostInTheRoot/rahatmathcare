@@ -184,9 +184,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 .gradient-animate{background:linear-gradient(135deg,#3B82F6,#34D399,#10B981,#3B82F6);background-size:300% 300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:gradientFlow 4s ease infinite;}
 @keyframes gradientFlow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 
-.tilt-card{transform-style:preserve-3d;transition:transform .4s ease;position:relative;}
-.tilt-card .tilt-glare{position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(135deg,rgba(255,255,255,.3) 0%,transparent 50%);opacity:0;transition:opacity .3s;pointer-events:none;border-radius:inherit;}
-.tilt-card:hover .tilt-glare{opacity:1;}
+
 
 .why-card{background:#FFFFFF;border:1px solid #E5E7EB;border-radius:20px;padding:28px 24px;transition:all .35s cubic-bezier(.23,1,.32,1);box-shadow:var(--shadow-sm);position:relative;overflow:hidden;}
 .why-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--acc),var(--acc2));transform:scaleX(0);transition:transform .35s;}
@@ -260,7 +258,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
     <div class="exam-cards stagger">
       <a href="written-exam.html" class="ecard blue">
         <div class="etag">PDF Based</div>
-        <div class="eicon">📝</div>
+        <div class="eicon" style="color: #3B82F6;"><i class="fas fa-pen-nib"></i></div>
         <div class="etitle">Written Exam</div>
         <p class="edesc">View the question paper, write answers on paper, then upload photos of your anwser sheet before time runs out. Results reviewed by teacher.</p>
         <!--<div class="earrow">Start Written Exam →</div>-->
@@ -268,7 +266,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
       </a>
       <a href="mcq-exam.html?type=full" class="ecard green">
         <div class="etag">Full Questions</div>
-        <div class="eicon">✅</div>
+        <div class="eicon" style="color: #10B981;"><i class="fas fa-check-double"></i></div>
         <div class="etitle">MCQ — Full Questions</div>
         <p class="edesc">Answer MCQs with complete question text and four detailed options. Get your score and answer review instantly on submit.</p>
         <!--<div class="earrow">Start MCQ Exam →</div>-->
@@ -276,7 +274,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
       </a>
       <a href="mcq-exam.html?type=key" class="ecard amber">
         <div class="etag">Answer Key Style</div>
-        <div class="eicon">🗂️</div>
+        <div class="eicon" style="color: #F59E0B;"><i class="fas fa-clipboard-check"></i></div>
         <div class="etitle">MCQ — Answer Key</div>
         <p class="edesc">Exam paper given separately. Select A/B/C/D for each question number. Get your score and answer review instantly on submit.</p>
         <!--<div class="earrow">Start MCQ Exam →</div>-->
@@ -285,9 +283,9 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
     </div>
 
     <div class="feats-row stagger">
-      <div class="feat"><div class="feat-icon">⏱️</div><h3>Timed Exams</h3><p>Set countdown timer — exam automatically submits when time runs out.</p></div>
-      <div class="feat"><div class="feat-icon">📊</div><h3>Instant Scoring</h3><p>MCQ results are calculated and displayed immediately after submission.</p></div>
-      <div class="feat"><div class="feat-icon">🧑‍🎓</div><h3>Web Based Result</h3><p>The submitted paper is delivered directly to the student dashboard after evaluation.</p></div>
+      <div class="feat"><div class="feat-icon" style="color: #8B5CF6;"><i class="fas fa-stopwatch"></i></div><h3>Timed Exams</h3><p>Set countdown timer — exam automatically submits when time runs out.</p></div>
+      <div class="feat"><div class="feat-icon" style="color: #10B981;"><i class="fas fa-bolt"></i></div><h3>Instant Scoring</h3><p>MCQ results are calculated and displayed immediately after submission.</p></div>
+      <div class="feat"><div class="feat-icon" style="color: #3B82F6;"><i class="fas fa-laptop"></i></div><h3>Web Based Result</h3><p>The submitted paper is delivered directly to the student dashboard after evaluation.</p></div>
       <!--<div class="feat"><div class="feat-icon">☁️</div><h3>Cloud Storage</h3><p>All submissions stored securely in Supabase database, accessible anytime.</p></div>
       <div class="feat"><div class="feat-icon">📄</div><h3>PDF Questions</h3><p>Question papers served via Google Drive — easy to update and manage.</p></div>
       <div class="feat"><div class="feat-icon">🔐</div><h3>Secure System</h3><p>Password-protected admin panel. Students can only access assigned exams.</p></div>-->
@@ -304,16 +302,16 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
       <button class="htab" onclick="switchHow('mcq',this)">MCQ Exam</button>
     </div>
     <div class="how-content active" id="written">
-      <div class="step-card"><div class="step-num">01</div><div class="step-icon">📋</div><h4>Select Exam</h4><p>Choose your class and the written exam from the dropdown list.</p></div>
-      <div class="step-card"><div class="step-num">02</div><div class="step-icon">📄</div><h4>View Questions</h4><p>The question paper PDF opens directly in your browser.</p></div>
-      <div class="step-card"><div class="step-num">03</div><div class="step-icon">✍️</div><h4>Write Answers</h4><p>Write your answers on paper while the timer counts down.</p></div>
-      <div class="step-card"><div class="step-num">04</div><div class="step-icon">📸</div><h4>Upload Photo</h4><p>Take a photo of your answer sheet and upload before time expires.</p></div>
+      <div class="step-card"><div class="step-num">01</div><div class="step-icon" style="color: #3B82F6;"><i class="fas fa-list-check"></i></div><h4>Select Exam</h4><p>Choose your class and the written exam from the dropdown list.</p></div>
+      <div class="step-card"><div class="step-num">02</div><div class="step-icon" style="color: #EF4444;"><i class="fas fa-file-pdf"></i></div><h4>View Questions</h4><p>The question paper PDF opens directly in your browser.</p></div>
+      <div class="step-card"><div class="step-num">03</div><div class="step-icon" style="color: #8B5CF6;"><i class="fas fa-pen"></i></div><h4>Write Answers</h4><p>Write your answers on paper while the timer counts down.</p></div>
+      <div class="step-card"><div class="step-num">04</div><div class="step-icon" style="color: #F59E0B;"><i class="fas fa-camera"></i></div><h4>Upload Photo</h4><p>Take a photo of your answer sheet and upload before time expires.</p></div>
     </div>
     <div class="how-content" id="mcq">
-      <div class="step-card"><div class="step-num">01</div><div class="step-icon">📋</div><h4>Select Exam</h4><p>Choose the MCQ exam type (Full Questions or Answer Key style).</p></div>
-      <div class="step-card"><div class="step-num">02</div><div class="step-icon">👀</div><h4>Read Questions</h4><p>Each question is displayed with 4 answer options to choose from.</p></div>
-      <div class="step-card"><div class="step-num">03</div><div class="step-icon">☑️</div><h4>Select Answers</h4><p>Click your chosen option — change anytime before the timer ends.</p></div>
-      <div class="step-card"><div class="step-num">04</div><div class="step-icon">🏆</div><h4>Get Results</h4><p>Instant score with correct/wrong breakdown and answer review.</p></div>
+      <div class="step-card"><div class="step-num">01</div><div class="step-icon" style="color: #3B82F6;"><i class="fas fa-list-check"></i></div><h4>Select Exam</h4><p>Choose the MCQ exam type (Full Questions or Answer Key style).</p></div>
+      <div class="step-card"><div class="step-num">02</div><div class="step-icon" style="color: #EC4899;"><i class="fas fa-eye"></i></div><h4>Read Questions</h4><p>Each question is displayed with 4 answer options to choose from.</p></div>
+      <div class="step-card"><div class="step-num">03</div><div class="step-icon" style="color: #10B981;"><i class="fas fa-check-circle"></i></div><h4>Select Answers</h4><p>Click your chosen option — change anytime before the timer ends.</p></div>
+      <div class="step-card"><div class="step-num">04</div><div class="step-icon" style="color: #F59E0B;"><i class="fas fa-trophy"></i></div><h4>Get Results</h4><p>Instant score with correct/wrong breakdown and answer review.</p></div>
     </div>
   </div>
 </div>
@@ -341,10 +339,10 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
       </div>
       <div class="footer-col">
         <h4>Contact</h4>
-        <div class="contact-item">📞 <span>+8801884570279</span></div>
-        <div class="contact-item">📞 <span>+8801572938979</span></div>
-        <div class="contact-item">✉️ <span>rahatmathcare@gmail.com</span></div>
-        <div class="contact-item">📍 <span>Jor Pukur Par,Joydebpur Road,Gazipur-1700</span></div>
+        <div class="contact-item"><i class="fas fa-phone" style="margin-right: 8px; color: #3B82F6;"></i> <span>+8801884570279</span></div>
+        <div class="contact-item"><i class="fas fa-phone" style="margin-right: 8px; color: #3B82F6;"></i> <span>+8801572938979</span></div>
+        <div class="contact-item"><i class="fas fa-envelope" style="margin-right: 8px; color: #EA580C;"></i> <span>rahatmathcare@gmail.com</span></div>
+        <div class="contact-item"><i class="fas fa-map-marker-alt" style="margin-right: 8px; color: #34D399;"></i> <span>Jor Pukur Par,Joydebpur Road,Gazipur-1700</span></div>
       </div>
     </div>
     <div class="footer-bottom">
@@ -434,36 +432,7 @@ window.addEventListener('scroll', () => {
   if(progressBar) progressBar.style.width = scrolled + '%';
 });
 
-// ── 3D TILT EFFECT FOR CARDS ──
-function initTiltCards() {
-  document.querySelectorAll('.ecard, .why-card, .exam-card, .cta-wrap, .step-card').forEach(card => {
-    if(card.querySelector('.tilt-glare')) return;
-    card.classList.add('tilt-card');
-    card.style.transformStyle = 'preserve-3d';
-    const glare = document.createElement('div');
-    glare.className = 'tilt-glare';
-    glare.style.pointerEvents = 'none';
-    card.appendChild(glare);
-    
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      const rotateX = (y - centerY) / 12;
-      const rotateY = (centerX - x) / 12;
-      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px) scale3d(1.02,1.02,1.02)`;
-    });
-    
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0) scale3d(1,1,1)';
-    });
-  });
-}
 
-// Initialize tilt after a short delay
-setTimeout(initTiltCards, 100);
 </script>
 </body>
 </html>

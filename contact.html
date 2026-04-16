@@ -314,7 +314,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
         </div>
         <button class="submit-btn" id="submit-btn" onclick="submitContact()">Send Message</button>
         <div class="success-banner" id="successBanner">
-          <div class="sicon">✅</div>
+          <div class="sicon"><i class="fas fa-check-circle" style="color: #34D399; font-size: 1.8rem;"></i></div>
           <h4>Message Sent!</h4>
           <p>We'll get back to you within 24 hours.</p>
         </div>
@@ -359,10 +359,10 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
       </div>
       <div class="footer-col">
         <h4>Contact</h4>
-        <div class="contact-item" id="footer-phone1">📞 <span>Loading...</span></div>
-        <div class="contact-item" id="footer-phone2">📞 <span>Loading...</span></div>
-        <div class="contact-item" id="footer-email">✉️ <span>Loading...</span></div>
-        <div class="contact-item" id="footer-address">📍 <span>Loading...</span></div>
+        <div class="contact-item" id="footer-phone1"><i class="fas fa-phone" style="margin-right: 8px;"></i> <span>Loading...</span></div>
+        <div class="contact-item" id="footer-phone2"><i class="fas fa-phone" style="margin-right: 8px;"></i> <span>Loading...</span></div>
+        <div class="contact-item" id="footer-email"><i class="fas fa-envelope" style="margin-right: 8px;"></i> <span>Loading...</span></div>
+        <div class="contact-item" id="footer-address"><i class="fas fa-map-marker-alt" style="margin-right: 8px;"></i> <span>Loading...</span></div>
       </div>
     </div>
     <div class="footer-bottom">
@@ -378,7 +378,7 @@ let sb;
 (function(){
   const cfg = window.EXAM_CONFIG;
   if(!cfg || cfg.supabaseUrl==='YOUR_SUPABASE_URL') {
-    document.getElementById('contact-loading').innerHTML = '<p style="color:var(--red)">❌ Database not configured.</p>';
+    document.getElementById('contact-loading').innerHTML = '<p style="color:var(--red)"><i class="fas fa-times-circle"></i> Database not configured.</p>';
     return;
   }
   sb = supabase.createClient(cfg.supabaseUrl, cfg.supabaseKey);
@@ -396,17 +396,17 @@ async function loadContactInfo(){
       const c = data[0];
       
       // Update footer
-      if(c.phone1) document.getElementById('footer-phone1').innerHTML = `📞 <span>${escapeHtml(c.phone1)}</span>`;
-      if(c.phone2) document.getElementById('footer-phone2').innerHTML = `📞 <span>${escapeHtml(c.phone2)}</span>`;
-      if(c.email) document.getElementById('footer-email').innerHTML = `✉️ <span>${escapeHtml(c.email)}</span>`;
-      if(c.address) document.getElementById('footer-address').innerHTML = `📍 <span>${escapeHtml(c.address)}</span>`;
+      if(c.phone1) document.getElementById('footer-phone1').innerHTML = `<i class="fas fa-phone" style="margin-right:8px;"></i> <span>${escapeHtml(c.phone1)}</span>`;
+      if(c.phone2) document.getElementById('footer-phone2').innerHTML = `<i class="fas fa-phone" style="margin-right:8px;"></i> <span>${escapeHtml(c.phone2)}</span>`;
+      if(c.email) document.getElementById('footer-email').innerHTML = `<i class="fas fa-envelope" style="margin-right:8px;"></i> <span>${escapeHtml(c.email)}</span>`;
+      if(c.address) document.getElementById('footer-address').innerHTML = `<i class="fas fa-map-marker-alt" style="margin-right:8px;"></i> <span>${escapeHtml(c.address)}</span>`;
       
       // Build contact info cards
       let html = '';
       
       if(c.phone1 || c.phone2){
         html += `<div class="info-card">
-          <div class="info-icon">📞</div>
+          <div class="info-icon" style="background: rgba(37, 99, 235, 0.1); color: #2563EB;"><i class="fas fa-phone"></i></div>
           <div class="info-text">
             <h4>Phone / WhatsApp</h4>
             ${c.phone1 ? `<p><a href="tel:${c.phone1}">${escapeHtml(c.phone1)}</a></p>` : ''}
@@ -417,7 +417,7 @@ async function loadContactInfo(){
       
       if(c.email){
         html += `<div class="info-card">
-          <div class="info-icon">✉️</div>
+          <div class="info-icon" style="background: rgba(234, 88, 12, 0.1); color: #EA580C;"><i class="fas fa-envelope"></i></div>
           <div class="info-text">
             <h4>Email</h4>
             <p><a href="mailto:${c.email}">${escapeHtml(c.email)}</a></p>
@@ -427,7 +427,7 @@ async function loadContactInfo(){
       
       if(c.address){
         html += `<div class="info-card">
-          <div class="info-icon">📍</div>
+          <div class="info-icon" style="background: rgba(52, 211, 153, 0.1); color: #34D399;"><i class="fas fa-map-marker-alt"></i></div>
           <div class="info-text">
             <span class="branch-pill main">Main Branch</span>
             <h4>Main Campus</h4>
@@ -438,7 +438,7 @@ async function loadContactInfo(){
       
       // Second branch (static)
       html += `<div class="info-card">
-        <div class="info-icon">📍</div>
+        <div class="info-icon" style="background: rgba(168, 85, 247, 0.1); color: #A855F7;"><i class="fas fa-map-marker-alt"></i></div>
         <div class="info-text">
           <span class="branch-pill second">Second Branch</span>
           <h4>College Para, Gazipur</h4>
@@ -448,7 +448,7 @@ async function loadContactInfo(){
       
       if(c.hours1 || c.hours2){
         html += `<div class="info-card">
-          <div class="info-icon">⏰</div>
+          <div class="info-icon" style="background: rgba(245, 158, 11, 0.1); color: #F59E0B;"><i class="fas fa-clock"></i></div>
           <div class="info-text">
             <h4>Class Hours</h4>
             ${c.hours1 ? `<p>${escapeHtml(c.hours1)}</p>` : ''}
@@ -464,7 +464,7 @@ async function loadContactInfo(){
     }
   } catch(err) {
     console.warn('Could not load contact info:', err);
-    document.getElementById('contact-loading').innerHTML = '<p style="color:var(--red)">❌ Failed to load contact info.</p>';
+    document.getElementById('contact-loading').innerHTML = '<p style="color:var(--red)"><i class="fas fa-times-circle"></i> Failed to load contact info.</p>';
   }
 }
 
@@ -481,7 +481,7 @@ function loadMaps(){
           <p>Near Somaponi Coaching Center, Science House, Jor Pukur Par, Joydebpur Road, Gazipur 1700</p>
         </div>
         <a class="dir-btn" href="https://www.google.com/maps/search/Jor+Pokur+Gazipur+Bangladesh" target="_blank" rel="noopener">
-          📌 Directions
+          <i class="fas fa-directions"></i> Directions
         </a>
       </div>
       <div class="map-embed">
@@ -492,7 +492,7 @@ function loadMaps(){
           referrerpolicy="no-referrer-when-downgrade"
           title="Main Branch — Jor Pukur Par, Gazipur">
         </iframe>
-        <div class="map-label">📍 Jor Pukur Par, Gazipur 1700</div>
+        <div class="map-label"><i class="fas fa-map-marker-alt"></i> Jor Pukur Par, Gazipur 1700</div>
       </div>
     </div>
 
@@ -505,7 +505,7 @@ function loadMaps(){
           <p>College Para, Taltola Road, Mustard market, Gazipur 1702 — Behind Sazbati Fashion</p>
         </div>
         <a class="dir-btn" href="https://www.google.com/maps/search/Bhawal+Badre+Alam+Government+College+Gazipur+Bangladesh" target="_blank" rel="noopener">
-          📌 Directions
+          <i class="fas fa-directions"></i> Directions
         </a>
       </div>
       <div class="map-embed">
@@ -516,7 +516,7 @@ function loadMaps(){
           referrerpolicy="no-referrer-when-downgrade"
           title="Second Branch — College Para, Gazipur">
         </iframe>
-        <div class="map-label">📍 College Para, Behind Sazbati Fashion</div>
+        <div class="map-label"><i class="fas fa-map-marker-alt"></i> College Para, Behind Sazbati Fashion</div>
       </div>
     </div>
   `;
@@ -544,15 +544,15 @@ async function submitContact(){
   
   // Format message for Telegram
   const telegramMessage = 
-    `📬 New Contact Form Message\n\n` +
-    `👤 Name: ${name}\n` +
-    `📞 Phone: ${phone}\n` +
-    `🎓 Class: ${classVal}\n` +
-    `📋 Subject: ${subject}\n` +
-    `🏫 School: ${school}\n` +
-    `📚 College: ${college}\n` +
-    `💬 Message:\n${message}\n\n` +
-    `⏰ Time: ${new Date().toLocaleString()}`;
+    `📨 New Contact Form Message\n\n` +
+    `Name: ${name}\n` +
+    `Phone: ${phone}\n` +
+    `Class: ${classVal}\n` +
+    `Subject: ${subject}\n` +
+    `School: ${school}\n` +
+    `College: ${college}\n` +
+    `Message:\n${message}\n\n` +
+    `Time: ${new Date().toLocaleString()}`;
   
   try {
     const cfg = window.EXAM_CONFIG;
