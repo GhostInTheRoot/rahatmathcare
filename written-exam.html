@@ -157,29 +157,33 @@ select.fi option{background:var(--surf2);}
 .success h2{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;margin-bottom:8px;color:var(--acc2);}
 .success p{color:var(--muted);line-height:1.6;max-width:340px;margin:0 auto 20px;font-size:.9rem;}
 
-/* ORIGINAL warning style - kept exactly as you had it */
-#alertmod{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:998;align-items:center;justify-content:center;padding:24px;}
-.al-card{background:var(--surf);border:2px solid #ffd700;border-radius:18px;padding:32px;max-width:400px;text-align:center;animation:shake .5s ease;}
+/* Alert modal */
+#alertmod{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:998;align-items:center;justify-content:center;padding:24px;}
+.al-card{background:var(--surf);border:2px solid #ffd700;border-radius:20px;padding:32px;max-width:400px;text-align:center;animation:modalFadeIn .3s ease;box-shadow:0 20px 50px rgba(0,0,0,.2);}
+@keyframes modalFadeIn{from{opacity:0;transform:scale(.95);}to{opacity:1;transform:scale(1);}}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
 .al-card h3{font-family:'Syne',sans-serif;color:#ffd700;font-size:1.4rem;font-weight:800;margin-bottom:8px;}
-.al-card p{color:var(--muted);margin-bottom:18px;font-size:.9rem;}
-.al-card .btn-ghost{background:var(--surf2);color:var(--txt);border:1px solid var(--bord);padding:9px 22px;font-size:.88rem;}
+.al-card p{color:var(--muted);margin-bottom:18px;font-size:.9rem;line-height:1.5;}
+.al-card .btn-ghost{background:var(--surf2);color:var(--txt);border:1px solid var(--bord);padding:10px 24px;font-size:.88rem;font-weight:600;transition:all .3s;}
+.al-card .btn-ghost:hover{background:#ffd700;color:#fff;border-color:#ffd700;}
 
-/* ORIGINAL timeup style */
-#timeup{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:999;align-items:center;justify-content:center;padding:24px;}
-.tu-card{background:var(--surf);border:2px solid var(--acc2);border-radius:22px;padding:44px;max-width:460px;text-align:center;}
+/* Timeup modal */
+#timeup{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:999;align-items:center;justify-content:center;padding:24px;}
+.tu-card{background:var(--surf);border:2px solid var(--acc2);border-radius:22px;padding:44px;max-width:460px;text-align:center;animation:modalFadeIn .3s ease;box-shadow:0 20px 50px rgba(0,0,0,.2);}
 @media(max-width:480px){.tu-card{padding:30px 20px;}}
 .tu-icon{font-size:3.8rem;margin-bottom:18px;}
 .tu-title{font-family:'Syne',sans-serif;font-size:1.9rem;font-weight:800;color:var(--acc2);margin-bottom:10px;}
 @media(max-width:480px){.tu-title{font-size:1.5rem;}}
 .tu-sub{color:var(--muted);line-height:1.7;margin-bottom:22px;}
-.tu-card .btn-ghost{background:var(--surf2);color:var(--txt);border:1px solid var(--bord);}
+.tu-card .btn-ghost{background:var(--surf2);color:var(--txt);border:1px solid var(--bord);padding:10px 24px;font-weight:600;transition:all .3s;}
+.tu-card .btn-ghost:hover{background:var(--acc2);color:#fff;}
 
-/* Toast */
-.toast{position:fixed;bottom:20px;right:20px;background:var(--surf2);border:1px solid var(--bord);border-radius:11px;padding:10px 14px;font-size:.8rem;z-index:9999;transform:translateY(18px);opacity:0;transition:all .3s;max-width:260px;}
+/* Toast notifications */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--surf);border:1px solid var(--bord);border-radius:12px;padding:14px 18px;font-size:.88rem;z-index:9999;transform:translateY(20px);opacity:0;transition:all .3s;max-width:300px;box-shadow:0 8px 24px rgba(0,0,0,.12);}
 .toast.show{transform:translateY(0);opacity:1;}
-.ts{border-color:var(--acc3);color:var(--acc3);}
-.te{border-color:var(--acc2);color:var(--acc2);}
+.toast.ts{border-color:var(--acc3);color:var(--acc3);}
+.toast.te{border-color:#f87171;color:#f87171;}
+.toast.ty{border-color:var(--acc);color:var(--acc);}
 
 /* Exam Card Grid */
 .exam-search{margin-bottom:24px;}
@@ -547,7 +551,7 @@ async function checkResult(examId, examTitle, className) {
 async function fetchWrittenResult(examId, examTitle) {
   const roll = document.getElementById('result-roll-input').value.trim();
   if (!roll) {
-    alert('Please enter your roll number');
+    toast('Please enter your roll number','e');
     return;
   }
   
@@ -594,7 +598,7 @@ async function showRanking(examId, examTitle, examType) {
   const {data} = await sb.from('written_results').select('*').eq('exam_id', examId).not('marks_obtained', 'is', null).order('marks_obtained', {ascending: false}).limit(10);
   
   if (!data || data.length === 0) {
-    alert('No ranked results yet. Results will appear after teacher marks the papers.');
+    toast('No ranked results yet. Results will appear after teacher marks the papers.','e');
     return;
   }
   

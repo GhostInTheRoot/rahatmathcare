@@ -204,20 +204,26 @@ body.key-mode .ans-count strong{color:#f59e0b;}
 .kr-opt.ua-sel{border:1.5px solid rgba(255,101,132,.5);}
 
 /* MODALS */
-#timeup{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:999;align-items:center;justify-content:center;padding:24px;}
-.tu-card{background:var(--surf);border:2px solid #f59e0b;border-radius:22px;padding:40px;max-width:440px;text-align:center;}
+#timeup{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:999;align-items:center;justify-content:center;padding:24px;}
+.tu-card{background:var(--surf);border:2px solid #f59e0b;border-radius:22px;padding:40px;max-width:440px;text-align:center;animation:modalFadeIn .3s ease;box-shadow:0 20px 50px rgba(0,0,0,.2);}
+@keyframes modalFadeIn{from{opacity:0;transform:scale(.95);}to{opacity:1;transform:scale(1);}}
 .tu-icon{font-size:3.5rem;margin-bottom:16px;}
 .tu-title{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:#f59e0b;margin-bottom:10px;}
 .tu-sub{color:var(--muted);margin-bottom:20px;line-height:1.7;}
-#alertmod{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:998;align-items:center;justify-content:center;padding:24px;}
-.al-card{background:var(--surf);border:2px solid #ffd700;border-radius:16px;padding:30px;max-width:380px;text-align:center;animation:shake .5s;}
+.tu-card .btn-ghost{background:var(--surf2);color:var(--txt);border:1px solid var(--bord);padding:10px 24px;font-weight:600;transition:all .3s;}
+.tu-card .btn-ghost:hover{background:#f59e0b;color:#fff;}
+#alertmod{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:998;align-items:center;justify-content:center;padding:24px;}
+.al-card{background:var(--surf);border:2px solid #ffd700;border-radius:20px;padding:30px;max-width:380px;text-align:center;animation:modalFadeIn .3s ease;box-shadow:0 20px 50px rgba(0,0,0,.2);}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
 .al-card h3{font-family:'Syne',sans-serif;color:#ffd700;font-size:1.3rem;font-weight:800;margin-bottom:7px;}
-.al-card p{color:var(--muted);margin-bottom:16px;font-size:.88rem;}
-.toast{position:fixed;bottom:20px;right:20px;background:var(--surf2);border:1px solid var(--bord);border-radius:11px;padding:12px 17px;font-size:.86rem;z-index:9999;transform:translateY(18px);opacity:0;transition:all .3s;max-width:290px;}
+.al-card p{color:var(--muted);margin-bottom:16px;font-size:.88rem;line-height:1.5;}
+.al-card .btn-ghost{background:var(--surf2);color:var(--txt);border:1px solid var(--bord);padding:10px 24px;font-weight:600;transition:all .3s;}
+.al-card .btn-ghost:hover{background:#ffd700;color:#fff;border-color:#ffd700;}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--surf);border:1px solid var(--bord);border-radius:12px;padding:14px 18px;font-size:.88rem;z-index:9999;transform:translateY(20px);opacity:0;transition:all .3s;max-width:300px;box-shadow:0 8px 24px rgba(0,0,0,.12);}
 .toast.show{transform:translateY(0);opacity:1;}
-.ts{border-color:#10b981;color:#10b981;}
-.te{border-color:#ef4444;color:#ef4444;}
+.toast.ts{border-color:#10b981;color:#10b981;}
+.toast.te{border-color:#ef4444;color:#ef4444;}
+.toast.ty{border-color:var(--acc);color:var(--acc);}
 
 /* Exam Card Grid */
 .exam-search{margin-bottom:24px;}
@@ -676,7 +682,7 @@ async function checkResult(examId, examTitle, className) {
 async function fetchMcqResult(examId, examTitle) {
   const roll = document.getElementById('result-roll-input').value.trim();
   if (!roll) {
-    alert('Please enter your roll number');
+    toast('Please enter your roll number','e');
     return;
   }
   
@@ -728,7 +734,7 @@ async function showRanking(examId, examTitle, examType) {
   const {data} = await sb.from('mcq_results').select('*').eq('exam_id', examId).order('submitted_at', {ascending: true});
   
   if (!data || data.length === 0) {
-    alert('No rankings yet. Be the first to take this exam!');
+    toast('No rankings yet. Be the first to take this exam!','e');
     return;
   }
   

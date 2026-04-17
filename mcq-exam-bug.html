@@ -673,7 +673,7 @@ async function checkResult(examId, examTitle, className) {
 async function fetchMcqResult(examId, examTitle) {
   const roll = document.getElementById('result-roll-input').value.trim();
   if (!roll) {
-    alert('Please enter your roll number');
+    toast('Please enter your roll number','e');
     return;
   }
   
@@ -725,7 +725,7 @@ async function showRanking(examId, examTitle, examType) {
   const {data} = await sb.from('mcq_results').select('*').eq('exam_id', examId).order('submitted_at', {ascending: true});
   
   if (!data || data.length === 0) {
-    alert('No rankings yet. Be the first to take this exam!');
+    toast('No rankings yet. Be the first to take this exam!','e');
     return;
   }
   

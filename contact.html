@@ -196,10 +196,34 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 .why-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--acc),var(--acc2));transform:scaleX(0);transition:transform .35s;}
 .why-card:hover{border-color:rgba(59,130,246,.35);transform:translateY(-6px);box-shadow:var(--shadow-md);}
 .why-card:hover::after{transform:scaleX(1);}
+
+/* Alert Modal */
+.alert-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:9999;align-items:center;justify-content:center;padding:24px;}
+.alert-modal-overlay.open{display:flex;animation:fadeIn .3s ease;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.alert-modal{background:#fff;border-radius:20px;padding:32px;max-width:400px;width:100%;text-align:center;animation:scaleIn .3s ease;box-shadow:0 20px 50px rgba(0,0,0,.2);}
+@keyframes scaleIn{from{opacity:0;transform:scale(.95);}to{opacity:1;transform:scale(1);}}
+.alert-modal.error{border:2px solid #ef4444;}
+.alert-modal.success{border:2px solid #10b981;}
+.alert-modal-icon{font-size:3rem;margin-bottom:16px;}
+.alert-modal.error .alert-modal-icon{color:#ef4444;}
+.alert-modal.success .alert-modal-icon{color:#10b981;}
+.alert-modal h3{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:700;margin-bottom:10px;color:#111827;}
+.alert-modal p{color:#6B7280;margin-bottom:22px;line-height:1.5;}
+.alert-modal-btn{background:linear-gradient(135deg,#3B82F6,#2563EB);color:#fff;border:none;padding:12px 28px;border-radius:10px;font-size:.95rem;font-weight:600;cursor:pointer;transition:all .3s;}
+.alert-modal-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(59,130,246,.4);}
 </style>
 </head>
 <body>
 <div class="scroll-progress" id="scrollProgress"></div>
+<div class="alert-modal-overlay" id="alertModal">
+  <div class="alert-modal" id="alertModalContent">
+    <div class="alert-modal-icon" id="alertModalIcon"></div>
+    <h3 id="alertModalTitle"></h3>
+    <p id="alertModalMsg"></p>
+    <button class="alert-modal-btn" id="alertModalBtn" onclick="closeAlertModal()">OK</button>
+  </div>
+</div>
 <nav>
   <div class="nav-inner">
     <a class="logo" href="index.html">
@@ -528,7 +552,7 @@ async function submitContact(){
   const message = document.getElementById('fmessage').value.trim();
   
   if(!name || !phone || !message){
-    alert('Please fill in your name, phone number, and message.');
+    showAlertModal('error', 'Missing Information', 'Please fill in your name, phone number, and message.');
     return;
   }
   
@@ -607,12 +631,31 @@ async function submitContact(){
       throw new Error(result.description || result.error || 'Telegram error');
     }
   } catch(err) {
-    alert('Failed to send message. Please try again or contact via phone.');
+    showAlertModal('error', 'Send Failed', 'Failed to send message. Please try again or contact via phone.');
     console.error('Contact form error:', err);
   } finally {
     btn.textContent = originalText;
     btn.disabled = false;
   }
+}
+
+function showAlertModal(type, title, message){
+  const overlay = document.getElementById('alertModal');
+  const content = document.getElementById('alertModalContent');
+  const icon = document.getElementById('alertModalIcon');
+  const titleEl = document.getElementById('alertModalTitle');
+  const msgEl = document.getElementById('alertModalMsg');
+  
+  content.className = 'alert-modal ' + type;
+  icon.textContent = type === 'error' ? '⚠️' : '✅';
+  titleEl.textContent = title;
+  msgEl.textContent = message;
+  
+  overlay.classList.add('open');
+}
+
+function closeAlertModal(){
+  document.getElementById('alertModal').classList.remove('open');
 }
 
 function escapeHtml(unsafe){

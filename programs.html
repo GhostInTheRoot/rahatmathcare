@@ -128,13 +128,16 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:999999;w
 .enroll-btn.amber:hover{box-shadow:0 12px 32px rgba(52,211,153,.5);}
 
 /* MODAL - Updated for Telegram */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center;padding:24px;}
-.modal-overlay.open{display:flex;}
-.modal{background:#FFFFFF;border:1px solid #E5E7EB;border-radius:24px;padding:40px;width:100%;max-width:480px;position:relative;box-shadow:0 20px 50px rgba(0,0,0,.15);}@media(max-width:480px){.modal{padding:24px 18px;border-radius:18px;}}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:9999;align-items:center;justify-content:center;padding:24px;}
+.modal-overlay.open{display:flex;animation:fadeIn .3s ease;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.modal{background:#FFFFFF;border:1px solid #E5E7EB;border-radius:24px;padding:40px;width:100%;max-width:480px;position:relative;box-shadow:0 20px 50px rgba(0,0,0,.15);animation:scaleIn .3s ease;}
+@keyframes scaleIn{from{opacity:0;transform:scale(.95);}to{opacity:1;transform:scale(1);}}
+@media(max-width:480px){.modal{padding:24px 18px;border-radius:18px;}}
 .modal h3{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;margin-bottom:6px;}
 .modal-sub{color:#6B7280;font-size:.88rem;margin-bottom:28px;}
-.close-btn{position:absolute;top:16px;right:16px;background:#F3F4F6;border:none;color:#111827;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;}
-.close-btn:hover{background:#E5E7EB;}
+.close-btn{position:absolute;top:16px;right:16px;background:#F3F4F6;border:none;color:#111827;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .3s;}
+.close-btn:hover{background:#ef4444;color:#fff;transform:scale(1.1);}
 .fgroup{margin-bottom:16px;}
 .fgroup label{display:block;font-size:.83rem;color:#6B7280;font-weight:600;margin-bottom:7px;}
 .fgroup input,.fgroup select,.fgroup textarea{width:100%;background:#F8FAFC;border:1.5px solid #E5E7EB;border-radius:10px;padding:12px 14px;color:#111827;font-size:.92rem;font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:border-color .2s;}
@@ -150,6 +153,20 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:999999;w
 .success-msg .sicon{font-size:3rem;margin-bottom:12px;}
 .success-msg h4{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:700;margin-bottom:8px;color:#34D399;}
 .success-msg p{color:#6B7280;font-size:.9rem;}
+
+/* Alert Modal */
+.alert-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:9999;align-items:center;justify-content:center;padding:24px;}
+.alert-modal-overlay.open{display:flex;animation:fadeIn .3s ease;}
+.alert-modal{background:#fff;border-radius:20px;padding:32px;max-width:400px;width:100%;text-align:center;animation:scaleIn .3s ease;box-shadow:0 20px 50px rgba(0,0,0,.2);}
+.alert-modal.error{border:2px solid #ef4444;}
+.alert-modal.success{border:2px solid #10b981;}
+.alert-modal-icon{font-size:3rem;margin-bottom:16px;}
+.alert-modal.error .alert-modal-icon{color:#ef4444;}
+.alert-modal.success .alert-modal-icon{color:#10b981;}
+.alert-modal h4{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:700;margin-bottom:10px;color:#111827;}
+.alert-modal p{color:#6B7280;margin-bottom:22px;line-height:1.5;}
+.alert-modal-btn{background:linear-gradient(135deg,#3B82F6,#2563EB);color:#fff;border:none;padding:12px 28px;border-radius:10px;font-size:.95rem;font-weight:600;cursor:pointer;transition:all .3s;}
+.alert-modal-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(59,130,246,.4);}
 
 /* info section */
 .info-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:48px;}
@@ -357,6 +374,16 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   </div>
 </footer>
 
+<!-- Alert Modal -->
+<div class="alert-modal-overlay" id="alertModal">
+  <div class="alert-modal" id="alertModalContent">
+    <div class="alert-modal-icon" id="alertModalIcon"></div>
+    <h4 id="alertModalTitle"></h4>
+    <p id="alertModalMsg"></p>
+    <button class="alert-modal-btn" id="alertModalBtn" onclick="closeAlertModal()">OK</button>
+  </div>
+</div>
+
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 let sb;
 
@@ -484,7 +511,7 @@ async function submitEnrollment() {
   const message = document.getElementById('message').value.trim() || 'No additional message';
   
   if(!name || !phone) {
-    alert('Please fill in your name and phone number.');
+    showAlertModal('error', 'Missing Information', 'Please fill in your name and phone number.');
     return;
   }
   
@@ -547,11 +574,30 @@ async function submitEnrollment() {
       throw new Error(result.description || result.error || 'Telegram error');
     }
   } catch(err) {
-    alert('Failed to send enrollment request. Please try again or contact via phone.');
+    showAlertModal('error', 'Send Failed', 'Failed to send enrollment request. Please try again or contact via phone.');
     console.error('Enrollment form error:', err);
     btn.textContent = originalText;
     btn.disabled = false;
   }
+}
+
+function showAlertModal(type, title, message){
+  const overlay = document.getElementById('alertModal');
+  const content = document.getElementById('alertModalContent');
+  const icon = document.getElementById('alertModalIcon');
+  const titleEl = document.getElementById('alertModalTitle');
+  const msgEl = document.getElementById('alertModalMsg');
+  
+  content.className = 'alert-modal ' + type;
+  icon.textContent = type === 'error' ? '⚠️' : '✅';
+  titleEl.textContent = title;
+  msgEl.textContent = message;
+  
+  overlay.classList.add('open');
+}
+
+function closeAlertModal(){
+  document.getElementById('alertModal').classList.remove('open');
 }
 
 var hamburgerOpen = false;

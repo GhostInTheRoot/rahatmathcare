@@ -300,6 +300,22 @@ textarea.fi{resize:vertical;min-height:80px;}
 .toast.ts{border-color:var(--acc2);color:var(--acc2);}
 .toast.te{border-color:#f87171;color:#f87171;}
 .toast.ty{border-color:var(--acc);color:var(--acc);}
+
+/* Confirm Modal */
+.confirm-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:9999;align-items:center;justify-content:center;padding:24px;}
+.confirm-modal-overlay.open{display:flex;animation:fadeIn .3s ease;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.confirm-modal{background:var(--surf);border:1px solid var(--bord);border-radius:var(--radius-xl);padding:28px;max-width:400px;width:100%;text-align:center;animation:scaleIn .3s ease;box-shadow:var(--shadow-lg);}
+@keyframes scaleIn{from{opacity:0;transform:scale(.95);}to{opacity:1;transform:scale(1);}}
+.confirm-modal-icon{font-size:2.5rem;margin-bottom:14px;color:#f87171;}
+.confirm-modal h3{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:700;margin-bottom:10px;color:var(--txt);}
+.confirm-modal p{color:var(--muted);margin-bottom:24px;line-height:1.5;font-size:.9rem;}
+.confirm-modal-btns{display:flex;gap:12px;justify-content:center;}
+.confirm-modal-btn{ padding:10px 24px;border-radius:var(--radius-md);font-size:.9rem;font-weight:600;cursor:pointer;transition:var(--transition);border:none;}
+.confirm-modal-btn.cancel{background:var(--surf2);color:var(--txt);border:1px solid var(--bord);}
+.confirm-modal-btn.cancel:hover{background:var(--bord);}
+.confirm-modal-btn.danger{background:#ef4444;color:#fff;}
+.confirm-modal-btn.danger:hover{background:#dc2626;box-shadow:0 4px 12px rgba(239,68,68,.4);}
 </style>
 </head>
 <body>
@@ -309,6 +325,19 @@ textarea.fi{resize:vertical;min-height:80px;}
     <h2>⚙️ Setup Required</h2>
     <p>Open <code>config.js</code> and fill in your Supabase credentials before using this panel. See <code>SETUP.md</code> for full instructions.</p>
     <p style="margin-top:12px;"><a href="SETUP.md">Read SETUP.md →</a></p>
+  </div>
+</div>
+
+<!-- Confirm Modal -->
+<div class="confirm-modal-overlay" id="confirmModal">
+  <div class="confirm-modal">
+    <div class="confirm-modal-icon" id="confirmModalIcon">⚠️</div>
+    <h3 id="confirmModalTitle">Confirm Action</h3>
+    <p id="confirmModalMsg">Are you sure you want to proceed?</p>
+    <div class="confirm-modal-btns">
+      <button class="confirm-modal-btn cancel" id="confirmModalCancel" onclick="closeConfirmModal()">Cancel</button>
+      <button class="confirm-modal-btn danger" id="confirmModalConfirm" onclick="confirmModalAction()">Delete</button>
+    </div>
   </div>
 </div>
 
@@ -1055,7 +1084,7 @@ async function saveWritten(){
   }catch(err){toast('Save failed: '+err.message,'e');}
   btn.textContent='Save Written Exam';btn.disabled=false;
 }
-async function delWritten(id){if(!confirm('Delete?'))return;try{await dbWrite('written_exams','delete',null,{id});}catch(e){toast('Error: '+e.message,'e');return;}toast('Deleted');await loadWritten();await loadStats();}
+async function delWritten(id){showConfirmModal('Delete Written Exam','Are you sure you want to delete this written exam? This action cannot be undone.',async ()=>{try{await dbWrite('written_exams','delete',null,{id});}catch(e){toast('Error: '+e.message,'e');return;}toast('Deleted');await loadWritten();await loadStats();},'🗑️');}
 
 // ── MCQ ───────────────────────────────────────────────────────
 let currentMCQMode='full';
@@ -1197,7 +1226,7 @@ async function loadMCQ(){
     return `<div class="eitem"><div><div class="eitem-title">${esc(e.title)} ${typeBadge}</div><div class="eitem-sub">${esc(e.class_name)} | ${e.duration} min | ${qs.length} Qs | ${startStr} - ${endStr}</div></div><div class="eitem-acts"><button onclick="viewMCQResults('${e.id}','${esc(e.title)}')" class="bsm bg">Results</button><button onclick="delMCQ('${e.id}')" class="bsm bd">Delete</button></div></div>`;
   }).join('');
 }
-async function delMCQ(id){if(!confirm('Delete?'))return;try{await dbWrite('mcq_exams','delete',null,{id});}catch(e){toast('Error: '+e.message,'e');return;}toast('Deleted');await loadMCQ();await loadStats();}
+async function delMCQ(id){showConfirmModal('Delete MCQ Exam','Are you sure you want to delete this MCQ exam? This action cannot be undone.',async ()=>{try{await dbWrite('mcq_exams','delete',null,{id});}catch(e){toast('Error: '+e.message,'e');return;}toast('Deleted');await loadMCQ();await loadStats();},'🗑️');}
 async function viewMCQResults(examId,title){
   const {data}=await sb.from('mcq_results').select('*').eq('exam_id',examId).order('submitted_at',{ascending:false});
   document.getElementById('modal-title').textContent=title+' — Results';
@@ -1311,7 +1340,7 @@ async function saveProgram(){
   }catch(err){toast('Save failed: '+err.message,'e');}
   btn.textContent='Save Program';btn.disabled=false;
 }
-async function delProgram(id){if(!confirm('Delete this program?'))return;try{await dbWrite('site_programs','delete',null,{id});}catch(e){toast('Error: '+e.message,'e');return;}toast('Deleted');await loadPrograms();}
+async function delProgram(id){showConfirmModal('Delete Program','Are you sure you want to delete this program?',async ()=>{try{await dbWrite('site_programs','delete',null,{id});}catch(e){toast('Error: '+e.message,'e');return;}toast('Deleted');await loadPrograms();},'🗑️');}
 function resetProgForm(){
   ['prog-edit-id','prog-name','prog-subtitle','prog-admission','prog-monthly','prog-badge','prog-desc','prog-features'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('prog-badge-type').value='free';document.getElementById('prog-featured').value='0';document.getElementById('prog-status').value='active';
@@ -1355,7 +1384,7 @@ async function saveSchedule(){
   }catch(err){toast('Save failed: '+err.message,'e');}
   btn.textContent='Save Schedule';btn.disabled=false;
 }
-async function delSchedule(id){if(!confirm('Delete?'))return;try{await dbWrite('site_schedules','delete',null,{id});}catch(e){toast('Error: '+e.message,'e');return;}toast('Deleted');await loadSchedules();}
+async function delSchedule(id){showConfirmModal('Delete Schedule','Are you sure you want to delete this schedule?',async ()=>{try{await dbWrite('site_schedules','delete',null,{id});}catch(e){toast('Error: '+e.message,'e');return;}toast('Deleted');await loadSchedules();},'🗑️');}
 function resetSchForm(){
   ['sch-edit-id','sch-batch','sch-subtitle','sch-time','sch-venue','sch-note'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('sch-status').value='active';selectedDays=[];document.querySelectorAll('.day-toggle').forEach(el=>el.classList.remove('active'));
@@ -1496,10 +1525,7 @@ function resetGalForm() {
 }
 
 async function delGallery(id) {
-  if (!confirm('Remove this photo?')) return;
-  await dbWrite('site_gallery','delete',null,{id});
-  toast('Removed');
-  await loadGallery();
+  showConfirmModal('Remove Photo','Are you sure you want to remove this photo?',async ()=>{await dbWrite('site_gallery','delete',null,{id});toast('Removed');await loadGallery();},'🗑️');
 }
 
 // ── CONTACT ───────────────────────────────────────────────────
@@ -1623,7 +1649,7 @@ async function loadNotices(){
     </div>`;
   }).join('');
 }
-async function delNotice(id){if(!confirm('Delete this notice?'))return;await dbWrite('site_notices','delete',null,{id});toast('Deleted');await loadNotices();}
+async function delNotice(id){showConfirmModal('Delete Notice','Are you sure you want to delete this notice?',async ()=>{await dbWrite('site_notices','delete',null,{id});toast('Deleted');await loadNotices();},'🗑️');}
 
 // ── STUDENTS ──────────────────────────────────────────────────
 async function saveStudent(){
@@ -1674,7 +1700,7 @@ async function loadStudentEdit(id){
   document.getElementById('st-editing-id').value=id;
   document.getElementById('st-save-btn').textContent='Update Student';
 }
-async function delStudent(id){if(!confirm('Delete this student? They will lose dashboard access.'))return;await dbWrite('students','delete',null,{id});toast('Student deleted');await loadStudents();await loadStudentsForSelect();}
+async function delStudent(id){showConfirmModal('Delete Student','Are you sure you want to delete this student? They will lose dashboard access.',async ()=>{await dbWrite('students','delete',null,{id});toast('Student deleted');await loadStudents();await loadStudentsForSelect();},'🗑️');}
 function resetStudentForm(){
   ['st-name','st-roll','st-phone','st-class','st-editing-id'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('st-status').value='active';
@@ -1819,6 +1845,25 @@ function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;'
 function toast(msg,type='s'){
   const t=document.createElement('div');t.className=`toast t${type}`;t.textContent=msg;document.body.appendChild(t);
   setTimeout(()=>t.classList.add('show'),10);setTimeout(()=>{t.classList.remove('show');setTimeout(()=>t.remove(),400);},3200);
+}
+
+let confirmCallback = null;
+function showConfirmModal(title, message, callback, icon = '⚠️') {
+  document.getElementById('confirmModalTitle').textContent = title;
+  document.getElementById('confirmModalMsg').textContent = message;
+  document.getElementById('confirmModalIcon').textContent = icon;
+  confirmCallback = callback;
+  document.getElementById('confirmModal').classList.add('open');
+}
+function closeConfirmModal() {
+  document.getElementById('confirmModal').classList.remove('open');
+  confirmCallback = null;
+}
+function confirmModalAction() {
+  if (confirmCallback) {
+    confirmCallback();
+  }
+  closeConfirmModal();
 }
 </script>
 </body>

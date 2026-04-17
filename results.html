@@ -195,10 +195,15 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 .result-card:hover::after{transform:scaleX(1);}
 
 /* Photo modal */
-.photo-modal{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:9999;display:none;align-items:center;justify-content:center;padding:24px;}
+.photo-modal{position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:9999;display:none;align-items:center;justify-content:center;padding:24px;animation:fadeIn .3s ease;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
 .photo-modal.open{display:flex;}
-.photo-modal img{max-width:90vw;max-height:85vh;border-radius:12px;object-fit:contain;}
-.photo-close{position:absolute;top:18px;right:22px;background:rgba(255,255,255,.1);border:none;color:#fff;font-size:1.4rem;cursor:pointer;border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;}
+.photo-modal-card{background:#fff;border-radius:20px;max-width:90vw;max-height:90vh;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4);position:relative;animation:scaleIn .3s ease;}
+@keyframes scaleIn{from{opacity:0;transform:scale(.95);}to{opacity:1;transform:scale(1);}}
+.photo-modal-header{position:absolute;top:12px;right:12px;z-index:10;}
+.photo-close{background:rgba(255,255,255,.95);border:none;color:#111827;font-size:1.2rem;cursor:pointer;border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;transition:all .3s;box-shadow:0 2px 10px rgba(0,0,0,.1);}
+.photo-close:hover{background:#ef4444;color:#fff;transform:scale(1.1);}
+.photo-modal img{max-width:100%;max-height:85vh;border-radius:20px;object-fit:contain;display:block;}
 </style>
 </head>
 <body>
@@ -248,9 +253,13 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   </div>
 </div>
 
-<div class="photo-modal" id="photoModal" onclick="this.classList.remove('open')">
-  <button class="photo-close" onclick="document.getElementById('photoModal').classList.remove('open')"><i class="fas fa-times" style="color:#6B7280;"></i></button>
-  <img id="photoModalImg" src="" alt="Answer sheet">
+<div class="photo-modal" id="photoModal" onclick="closePhotoModal(event)">
+  <div class="photo-modal-card" onclick="event.stopPropagation()">
+    <div class="photo-modal-header">
+      <button class="photo-close" onclick="document.getElementById('photoModal').classList.remove('open')"><i class="fas fa-times"></i></button>
+    </div>
+    <img id="photoModalImg" src="" alt="Answer sheet">
+  </div>
 </div>
 
 <main>

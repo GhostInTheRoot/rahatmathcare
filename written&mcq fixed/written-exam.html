@@ -547,7 +547,7 @@ async function checkResult(examId, examTitle, className) {
 async function fetchWrittenResult(examId, examTitle) {
   const roll = document.getElementById('result-roll-input').value.trim();
   if (!roll) {
-    alert('Please enter your roll number');
+    toast('Please enter your roll number','e');
     return;
   }
   
@@ -594,7 +594,7 @@ async function showRanking(examId, examTitle, examType) {
   const {data} = await sb.from('written_results').select('*').eq('exam_id', examId).not('marks_obtained', 'is', null).order('marks_obtained', {ascending: false}).limit(10);
   
   if (!data || data.length === 0) {
-    alert('No ranked results yet. Results will appear after teacher marks the papers.');
+    toast('No ranked results yet. Results will appear after teacher marks the papers.','e');
     return;
   }
   
