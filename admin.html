@@ -360,7 +360,7 @@ textarea.fi{resize:vertical;min-height:80px;}
 
 <div id="setup-notice">
   <div class="setup-card">
-    <h2>⚙️ Setup Required</h2>
+    <h2><i class="fas fa-cog"></i> Setup Required</h2>
     <p>Open <code>config.js</code> and fill in your Supabase credentials before using this panel. See <code>SETUP.md</code> for full instructions.</p>
     <p style="margin-top:12px;"><a href="SETUP.md">Read SETUP.md →</a></p>
   </div>
@@ -369,7 +369,7 @@ textarea.fi{resize:vertical;min-height:80px;}
 <!-- Confirm Modal -->
 <div class="confirm-modal-overlay" id="confirmModal">
   <div class="confirm-modal">
-    <div class="confirm-modal-icon" id="confirmModalIcon">⚠️</div>
+    <div class="confirm-modal-icon" id="confirmModalIcon"><i class="fas fa-exclamation-triangle"></i></div>
     <h3 id="confirmModalTitle">Confirm Action</h3>
     <p id="confirmModalMsg">Are you sure you want to proceed?</p>
     <div class="confirm-modal-btns">
@@ -683,7 +683,7 @@ textarea.fi{resize:vertical;min-height:80px;}
     <div class="tab" id="tab-gallery">
       <div class="sc">
         <div class="info-hint">
-          <strong>📸 New: Direct Image Upload</strong><br>
+          <strong><i class="fas fa-camera"></i> New: Direct Image Upload</strong><br>
           Now you can upload images directly instead of using URLs. Just click "Choose File" and select an image from your computer. Maximum size: 5MB.
         </div>
         <div class="sc-title"><i class="fas fa-image"></i> Add Gallery Photo</div>
@@ -709,7 +709,7 @@ textarea.fi{resize:vertical;min-height:80px;}
               <div id="gallery-upload-preview" style="display:none; margin-bottom:10px;">
                 <img id="gallery-preview-img" src="" alt="Preview" style="max-height:150px; border-radius:8px; border:1px solid var(--bord);">
               </div>
-              <div id="gallery-upload-icon" style="font-size:2rem; margin-bottom:8px;">📸</div>
+              <div id="gallery-upload-icon" style="font-size:2rem; margin-bottom:8px;"><i class="fas fa-camera"></i></div>
               <div id="gallery-upload-text" style="color:var(--muted);">Click to select an image from your computer</div>
               <div id="gallery-file-name" style="font-size:.8rem; color:var(--acc3); margin-top:5px;"></div>
             </div>
@@ -741,10 +741,10 @@ textarea.fi{resize:vertical;min-height:80px;}
           <div class="fg">
             <label class="fl">Priority</label>
             <select class="fi" id="n-type">
-              <option value="general">🟢 General</option>
-              <option value="info">🔵 Info</option>
-              <option value="important">🟡 Important</option>
-              <option value="urgent">🔴 Urgent</option>
+              <option value="general">General</option>
+              <option value="info">Info</option>
+              <option value="important">Important</option>
+              <option value="urgent">Urgent</option>
             </select>
           </div>
           <div class="fg">
@@ -760,7 +760,7 @@ textarea.fi{resize:vertical;min-height:80px;}
           </div>
           <div class="fg full"><label class="fl">Notice Body</label><textarea class="fi" id="n-body" rows="5" placeholder="Write your notice here…" style="resize:vertical;"></textarea></div>
         </div>
-        <button class="btn btn-p" id="n-save-btn" onclick="saveNotice()">📌 Post Notice</button>
+        <button class="btn btn-p" id="n-save-btn" onclick="saveNotice()"><i class="fas fa-thumbtack"></i> Post Notice</button>
       </div>
       <div class="sc">
         <div class="sc-title"><i class="fas fa-bell"></i> All Notices</div>
@@ -834,7 +834,7 @@ textarea.fi{resize:vertical;min-height:80px;}
           <div class="fg"><label class="fl">HSC 27 Class Hours</label><input class="fi" id="ct-hours2" placeholder="Sat, Mon, Wed — 3:00–5:00 PM"></div>
           <div class="fg full"><label class="fl">Google Maps Embed URL (optional)</label><input class="fi" id="ct-mapurl" placeholder="Paste Google Maps embed iframe src URL…"></div>
         </div>
-        <button class="btn btn-p" id="ct-save-btn" onclick="saveContact()">💾 Save Contact Info</button>
+        <button class="btn btn-p" id="ct-save-btn" onclick="saveContact()"><i class="fas fa-save"></i> Save Contact Info</button>
       </div>
       <div class="sc" id="ct-preview-card" style="display:none;">
         <div class="sc-title"><i class="fas fa-eye"></i> Saved Info Preview</div>
@@ -1123,7 +1123,7 @@ async function saveWritten(){
   }catch(err){toast('Save failed: '+err.message,'e');}
   btn.textContent='Save Written Exam';btn.disabled=false;
 }
-async function delWritten(id){showConfirmModal('Delete Written Exam','Are you sure you want to delete this written exam? This action cannot be undone.',async ()=>{try{await dbWrite('written_exams','delete',null,{id});}catch(e){toast('Error: '+e.message,'e');return;}toast('Deleted');await loadWritten();await loadStats();},'🗑️');}
+async function delWritten(id){showConfirmModal('Delete Written Exam','Are you sure you want to delete this written exam? This action cannot be undone.',async ()=>{try{await dbWrite('written_exams','delete',null,{id});}catch(e){toast('Error: '+e.message,'e');return;}toast('Deleted');await loadWritten();await loadStats();},'fa-trash');}
 
 // ── MCQ ───────────────────────────────────────────────────────
 let currentMCQMode='full';
@@ -1145,22 +1145,22 @@ function addQ(){
 }
 function appendQBlock(i){
   const q=questions[i];const div=document.createElement('div');div.className='qblock';div.id=`qb${i}`;
-  div.innerHTML=`<div class="qhead"><span class="qnum">Q${i+1}</span><button type="button" class="bsm bd" data-remove="${i}">✕ Remove</button></div>
+  div.innerHTML=`<div class="qhead"><span class="qnum">Q${i+1}</span><button type="button" class="bsm bd" data-remove="${i}"><i class="fas fa-times"></i> Remove</button></div>
     <input class="qtext-input q-text" data-qi="${i}" value="${esc(q.text)}" placeholder="Question text…">
     <div class="img-upload-zone ${q.image?'has-img':''}" id="qimg-zone${i}">
-      <label class="img-upload-label"><input type="file" accept="image/*" data-qi="${i}" class="q-img-file">${q.image?`<img class="img-thumb" src="${q.image}"><span id="qimg-label${i}">🖼️ Image attached</span>`:`<span id="qimg-label${i}">🖼️ Add question image (optional)</span>`}</label>
-      ${q.image?`<button type="button" class="img-remove" data-qi="${i}" data-clear="q">✕ Remove</button>`:''}
+      <label class="img-upload-label"><input type="file" accept="image/*" data-qi="${i}" class="q-img-file">${q.image?`<img class="img-thumb" src="${q.image}"><span id="qimg-label${i}"><i class="fas fa-image"></i> Image attached</span>`:`<span id="qimg-label${i}"><i class="fas fa-image"></i> Add question image (optional)</span>`}</label>
+      ${q.image?`<button type="button" class="img-remove" data-qi="${i}" data-clear="q"><i class="fas fa-times"></i> Remove</button>`:''}
     </div>
     <div class="opt-rows">${['A','B','C','D'].map((l,j)=>`
       <div class="opt-row"><span class="opt-ltr">${l}</span>
         <div style="flex:1;display:flex;flex-direction:column;gap:4px;">
           <input class="opt-input q-opt" data-qi="${i}" data-oi="${j}" value="${esc(q.options[j])}" placeholder="Option ${l}">
           <div class="opt-img-zone ${q.optImages&&q.optImages[j]?'has-img':''}" id="oimg-zone${i}_${j}">
-            <label class="opt-img-label"><input type="file" accept="image/*" data-qi="${i}" data-oi="${j}" class="opt-img-file">${q.optImages&&q.optImages[j]?`<img class="opt-img-thumb" src="${q.optImages[j]}" id="oimg-thumb${i}_${j}"><span>Image</span>`:`<span>📷 Add image</span><img class="opt-img-thumb" id="oimg-thumb${i}_${j}" style="display:none">`}</label>
-            <button type="button" class="opt-img-remove" data-qi="${i}" data-oi="${j}" data-clear="o" style="${q.optImages&&q.optImages[j]?'':'display:none'}">✕</button>
+            <label class="opt-img-label"><input type="file" accept="image/*" data-qi="${i}" data-oi="${j}" class="opt-img-file">${q.optImages&&q.optImages[j]?`<img class="opt-img-thumb" src="${q.optImages[j]}" id="oimg-thumb${i}_${j}"><span>Image</span>`:`<span><i class="fas fa-camera"></i> Add image</span><img class="opt-img-thumb" id="oimg-thumb${i}_${j}" style="display:none">`}</label>
+            <button type="button" class="opt-img-remove" data-qi="${i}" data-oi="${j}" data-clear="o" style="${q.optImages&&q.optImages[j]?'':'display:none'}"><i class="fas fa-times"></i></button>
           </div>
         </div>
-        <label class="ans-lbl ${q.answer===j?'sel':''}" id="anslbl${i}_${j}"><input type="radio" class="q-ans" name="ans_${i}" data-qi="${i}" value="${j}" ${q.answer===j?'checked':''}>✓ Correct</label>
+        <label class="ans-lbl ${q.answer===j?'sel':''}" id="anslbl${i}_${j}"><input type="radio" class="q-ans" name="ans_${i}" data-qi="${i}" value="${j}" ${q.answer===j?'checked':''}><i class="fas fa-check"></i> Correct</label>
       </div>`).join('')}</div>`;
   document.getElementById('q-builder').appendChild(div);
 }
@@ -1181,7 +1181,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     }else if(e.target.classList.contains('q-img-file')&&e.target.files[0]){
       const b64=await fileToBase64(e.target.files[0]);questions[idx].image=b64;
       const zone=document.getElementById(`qimg-zone${idx}`);const lbl=document.getElementById(`qimg-label${idx}`);
-      if(zone)zone.classList.add('has-img');if(lbl)lbl.textContent='🖼️ Image attached';rebuildAll();
+      if(zone)zone.classList.add('has-img');if(lbl)lbl.innerHTML='<i class="fas fa-image"></i> Image attached';rebuildAll();
     }else if(e.target.classList.contains('opt-img-file')&&e.target.files[0]){
       const oi=parseInt(e.target.dataset.oi);const b64=await fileToBase64(e.target.files[0]);
       if(!questions[idx].optImages)questions[idx].optImages=['','','',''];questions[idx].optImages[oi]=b64;
@@ -1259,13 +1259,13 @@ async function loadMCQ(){
   const el=document.getElementById('m-list');
   if(error||!data?.length){el.innerHTML='<p class="empty">No MCQ exams yet.</p>';return;}
   el.innerHTML=data.map(e=>{const qs=safeJsonArray(e.questions);const isKey=qs.length>0&&qs[0].keyMode===true;
-    const typeBadge=isKey?'<span class="eitem-type key">🗂️ Key Mode</span>':'<span class="eitem-type full">✅ Full Questions</span>';
+    const typeBadge=isKey?'<span class="eitem-type key"><i class="fas fa-key"></i> Key Mode</span>':'<span class="eitem-type full"><i class="fas fa-check-circle"></i> Full Questions</span>';
     const startStr=e.exam_start?new Date(e.exam_start).toLocaleString('en-IN',{date:'short',time:'short'}):'Any time';
     const endStr=e.exam_end?new Date(e.exam_end).toLocaleString('en-IN',{date:'short',time:'short'}):'No limit';
     return `<div class="eitem"><div><div class="eitem-title">${esc(e.title)} ${typeBadge}</div><div class="eitem-sub">${esc(e.class_name)} | ${e.duration} min | ${qs.length} Qs | ${startStr} - ${endStr}</div></div><div class="eitem-acts"><button onclick="viewMCQResults('${e.id}','${esc(e.title)}')" class="bsm bg">Results</button><button onclick="delMCQ('${e.id}')" class="bsm bd">Delete</button></div></div>`;
   }).join('');
 }
-async function delMCQ(id){showConfirmModal('Delete MCQ Exam','Are you sure you want to delete this MCQ exam? This action cannot be undone.',async ()=>{try{await dbWrite('mcq_exams','delete',null,{id});}catch(e){toast('Error: '+e.message,'e');return;}toast('Deleted');await loadMCQ();await loadStats();},'🗑️');}
+async function delMCQ(id){showConfirmModal('Delete MCQ Exam','Are you sure you want to delete this MCQ exam? This action cannot be undone.',async ()=>{try{await dbWrite('mcq_exams','delete',null,{id});}catch(e){toast('Error: '+e.message,'e');return;}toast('Deleted');await loadMCQ();await loadStats();},'fa-trash');}
 async function viewMCQResults(examId,title){
   const {data}=await sb.from('mcq_results').select('*').eq('exam_id',examId).order('submitted_at',{ascending:false});
   document.getElementById('modal-title').textContent=title+' — Results';
@@ -1309,7 +1309,7 @@ async function loadSubs(){
         <span class="mark-lbl">Remarks:</span>
         <input class="mark-inp wide" type="text" placeholder="Optional note…" id="mr_${r.id}" value="${r.remarks?esc(r.remarks):''}">
         <button class="btn btn-p" onclick="saveMark('${r.id}')" id="msb_${r.id}" style="margin-top:0;">Save Marks</button>
-        <span class="mark-saved-badge" id="msd_${r.id}">✓ Saved</span>
+        <span class="mark-saved-badge" id="msd_${r.id}"><i class="fas fa-check"></i> Saved</span>
       </div>
       <div class="mark-form" style="margin-top:10px;gap:8px;flex-wrap:wrap;">
         <span class="mark-lbl">Checked link:</span>
@@ -1379,7 +1379,7 @@ async function saveProgram(){
   }catch(err){toast('Save failed: '+err.message,'e');}
   btn.textContent='Save Program';btn.disabled=false;
 }
-async function delProgram(id){showConfirmModal('Delete Program','Are you sure you want to delete this program?',async ()=>{try{await dbWrite('site_programs','delete',null,{id});}catch(e){toast('Error: '+e.message,'e');return;}toast('Deleted');await loadPrograms();},'🗑️');}
+async function delProgram(id){showConfirmModal('Delete Program','Are you sure you want to delete this program?',async ()=>{try{await dbWrite('site_programs','delete',null,{id});}catch(e){toast('Error: '+e.message,'e');return;}toast('Deleted');await loadPrograms();},'fa-trash');}
 function resetProgForm(){
   ['prog-edit-id','prog-name','prog-subtitle','prog-admission','prog-monthly','prog-badge','prog-desc','prog-features'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('prog-badge-type').value='free';document.getElementById('prog-featured').value='0';document.getElementById('prog-status').value='active';
@@ -1423,7 +1423,7 @@ async function saveSchedule(){
   }catch(err){toast('Save failed: '+err.message,'e');}
   btn.textContent='Save Schedule';btn.disabled=false;
 }
-async function delSchedule(id){showConfirmModal('Delete Schedule','Are you sure you want to delete this schedule?',async ()=>{try{await dbWrite('site_schedules','delete',null,{id});}catch(e){toast('Error: '+e.message,'e');return;}toast('Deleted');await loadSchedules();},'🗑️');}
+async function delSchedule(id){showConfirmModal('Delete Schedule','Are you sure you want to delete this schedule?',async ()=>{try{await dbWrite('site_schedules','delete',null,{id});}catch(e){toast('Error: '+e.message,'e');return;}toast('Deleted');await loadSchedules();},'fa-trash');}
 function resetSchForm(){
   ['sch-edit-id','sch-batch','sch-subtitle','sch-time','sch-venue','sch-note'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('sch-status').value='active';selectedDays=[];document.querySelectorAll('.day-toggle').forEach(el=>el.classList.remove('active'));
@@ -1458,7 +1458,7 @@ function handleGalleryImageUpload(event) {
     preview.src = currentGalleryImageBase64;
     document.getElementById('gallery-upload-preview').style.display = 'block';
     document.getElementById('gallery-upload-icon').style.display = 'none';
-    document.getElementById('gallery-upload-text').innerHTML = 'Image selected ✓';
+    document.getElementById('gallery-upload-text').innerHTML = '<i class="fas fa-check"></i> Image selected';
     document.getElementById('gallery-file-name').innerHTML = file.name;
   };
   reader.readAsDataURL(file);
@@ -1536,12 +1536,12 @@ async function loadGallery() {
         ? `<img src="${esc(imageSrc)}" alt="${esc(g.title)}" style="width:100%; aspect-ratio:4/3; object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">` 
         : ''
       }
-      <div class="gal-no-img" style="${hasImage ? 'display:none' : 'display:flex'}">📸</div>
+      <div class="gal-no-img" style="${hasImage ? 'display:none' : 'display:flex'}"><i class="fas fa-camera"></i></div>
       <div class="gal-thumb-info">
         <div class="gal-thumb-title">${esc(g.title)}</div>
         <div style="font-size:.7rem;color:var(--muted);">${esc(g.category || '')}</div>
       </div>
-      <button class="gal-thumb-del" onclick="delGallery('${g.id}')">✕</button>
+      <button class="gal-thumb-del" onclick="delGallery('${g.id}')"><i class="fas fa-times"></i></button>
     </div>`;
   }).join('');
 }
@@ -1564,7 +1564,7 @@ function resetGalForm() {
 }
 
 async function delGallery(id) {
-  showConfirmModal('Remove Photo','Are you sure you want to remove this photo?',async ()=>{await dbWrite('site_gallery','delete',null,{id});toast('Removed');await loadGallery();},'🗑️');
+  showConfirmModal('Remove Photo','Are you sure you want to remove this photo?',async ()=>{await dbWrite('site_gallery','delete',null,{id});toast('Removed');await loadGallery();},'fa-trash');
 }
 
 // ── CONTACT ───────────────────────────────────────────────────
@@ -1580,9 +1580,9 @@ async function loadContact(){
 function renderContactPreview(c){
   const card=document.getElementById('ct-preview-card');const preview=document.getElementById('ct-preview');card.style.display='block';
   preview.innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-    <div style="background:var(--surf2);border:1px solid var(--bord);border-radius:10px;padding:14px;"><div style="font-size:1.1rem;margin-bottom:6px;">📞</div><div style="font-weight:600;font-size:.9rem;margin-bottom:4px;">Phone</div><div style="color:var(--muted);font-size:.84rem;">${esc(c.phone1||'—')}<br>${esc(c.phone2||'')}</div></div>
-    <div style="background:var(--surf2);border:1px solid var(--bord);border-radius:10px;padding:14px;"><div style="font-size:1.1rem;margin-bottom:6px;">✉️</div><div style="font-weight:600;font-size:.9rem;margin-bottom:4px;">Email</div><div style="color:var(--muted);font-size:.84rem;">${esc(c.email||'—')}</div></div>
-    <div style="background:var(--surf2);border:1px solid var(--bord);border-radius:10px;padding:14px;"><div style="font-size:1.1rem;margin-bottom:6px;">📍</div><div style="font-weight:600;font-size:.9rem;margin-bottom:4px;">Address</div><div style="color:var(--muted);font-size:.84rem;">${esc(c.address||'—')}</div></div>
+    <div style="background:var(--surf2);border:1px solid var(--bord);border-radius:10px;padding:14px;"><div style="font-size:1.1rem;margin-bottom:6px;"><i class="fas fa-phone"></i></div><div style="font-weight:600;font-size:.9rem;margin-bottom:4px;">Phone</div><div style="color:var(--muted);font-size:.84rem;">${esc(c.phone1||'—')}<br>${esc(c.phone2||'')}</div></div>
+    <div style="background:var(--surf2);border:1px solid var(--bord);border-radius:10px;padding:14px;"><div style="font-size:1.1rem;margin-bottom:6px;"><i class="fas fa-envelope"></i></div><div style="font-weight:600;font-size:.9rem;margin-bottom:4px;">Email</div><div style="color:var(--muted);font-size:.84rem;">${esc(c.email||'—')}</div></div>
+    <div style="background:var(--surf2);border:1px solid var(--bord);border-radius:10px;padding:14px;"><div style="font-size:1.1rem;margin-bottom:6px;"><i class="fas fa-map-marker-alt"></i></div><div style="font-weight:600;font-size:.9rem;margin-bottom:4px;">Address</div><div style="color:var(--muted);font-size:.84rem;">${esc(c.address||'—')}</div></div>
     <div style="background:var(--surf2);border:1px solid var(--bord);border-radius:10px;padding:14px;"><div style="font-size:1.1rem;margin-bottom:6px;">⏰</div><div style="font-weight:600;font-size:.9rem;margin-bottom:4px;">Hours</div><div style="color:var(--muted);font-size:.84rem;">${esc(c.hours1||'—')}<br>${esc(c.hours2||'')}</div></div>
   </div>`;
 }
@@ -1599,7 +1599,7 @@ async function saveContact(){
     if(error)throw error;
     toast('Contact info saved! <i class="fas fa-check"></i>');renderContactPreview(payload);
   }catch(err){toast('Save failed: '+err.message,'e');}
-  btn.textContent='💾 Save Contact Info';btn.disabled=false;
+  btn.innerHTML='<i class="fas fa-save"></i> Save Contact Info';btn.disabled=false;
 }
 
 // ── APP DOWNLOAD ───────────────────────────────────────────────
@@ -1637,7 +1637,7 @@ async function saveAppLink(){
     toast('App link saved! <i class="fas fa-check"></i>');
     renderAppPreview(app_download_link);
   }catch(err){toast('Save failed: '+err.message,'e');}
-  btn.textContent='💾 Save App Link';btn.disabled=false;
+  btn.innerHTML='<i class="fas fa-save"></i> Save App Link';btn.disabled=false;
 }
 
 // ── HELPERS ───────────────────────────────────────────────────
@@ -1665,21 +1665,21 @@ async function saveNotice(){
   const btn=document.getElementById('n-save-btn');btn.disabled=true;btn.textContent='Posting…';
   try{
     await dbWrite('site_notices','insert',{title,body,type,target,pinned,created_at:new Date().toISOString()});
-    toast('Notice posted! 📌');
+    toast('Notice posted! <i class="fas fa-thumbtack"></i>');
     document.getElementById('n-title').value='';document.getElementById('n-body').value='';document.getElementById('n-target').value='';document.getElementById('n-pinned').value='false';document.getElementById('n-type').value='general';
     await loadNotices();
   }catch(e){toast('Error: '+e.message,'e');}
-  btn.disabled=false;btn.textContent='📌 Post Notice';
+  btn.disabled=false;btn.innerHTML='<i class="fas fa-thumbtack"></i> Post Notice';
 }
 async function loadNotices(){
   const div=document.getElementById('n-list');div.innerHTML='<p class="empty">Loading…</p>';
   const {data,error}=await sb.from('site_notices').select('*').order('pinned',{ascending:false}).order('created_at',{ascending:false});
   if(error||!data||data.length===0){div.innerHTML='<p class="empty">No notices yet.</p>';return;}
-  const typeMap={urgent:'🔴 Urgent',important:'🟡 Important',info:'🔵 Info',general:'🟢 General'};
+  const typeMap={urgent:'Urgent',important:'Important',info:'Info',general:'General'};
   div.innerHTML=data.map(n=>{
     const dt=new Date(n.created_at).toLocaleDateString('en-BD',{day:'numeric',month:'short',year:'numeric'});
     return `<div class="eitem">
-      <div><div class="eitem-title">${esc(n.title)} ${n.pinned?'<span style="font-size:.7rem;color:var(--acc2);">📌 Pinned</span>':''}</div>
+      <div><div class="eitem-title">${esc(n.title)} ${n.pinned?'<span style="font-size:.7rem;color:var(--acc2);"><i class="fas fa-thumbtack"></i> Pinned</span>':''}</div>
       <div class="eitem-sub">${typeMap[n.type]||'General'} · ${n.target?esc(n.target)+' · ':''} ${dt}</div>
       <div class="eitem-sub" style="margin-top:4px;max-width:400px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(n.body)}</div></div>
       <div class="eitem-acts">
@@ -1688,7 +1688,7 @@ async function loadNotices(){
     </div>`;
   }).join('');
 }
-async function delNotice(id){showConfirmModal('Delete Notice','Are you sure you want to delete this notice?',async ()=>{await dbWrite('site_notices','delete',null,{id});toast('Deleted');await loadNotices();},'🗑️');}
+async function delNotice(id){showConfirmModal('Delete Notice','Are you sure you want to delete this notice?',async ()=>{await dbWrite('site_notices','delete',null,{id});toast('Deleted');await loadNotices();},'fa-trash');}
 
 // ── STUDENTS ──────────────────────────────────────────────────
 async function saveStudent(){
@@ -1714,7 +1714,7 @@ async function loadStudents(){
     <div class="eitem">
       <div>
         <div class="eitem-title">${esc(s.student_name)} <span class="eitem-type ${s.status==='active'?'full':'key'}">${s.status||'active'}</span></div>
-        <div class="eitem-sub">Roll: ${esc(s.roll_no)} · ${esc(s.class_name||'')} · 📞 ${esc(s.phone)}</div>
+        <div class="eitem-sub">Roll: ${esc(s.roll_no)} · ${esc(s.class_name||'')} · <i class="fas fa-phone"></i> ${esc(s.phone)}</div>
       </div>
       <div class="eitem-acts">
         <button class="bsm be" onclick="loadStudentEdit('${s.id}')">Edit</button>
@@ -1739,7 +1739,7 @@ async function loadStudentEdit(id){
   document.getElementById('st-editing-id').value=id;
   document.getElementById('st-save-btn').textContent='Update Student';
 }
-async function delStudent(id){showConfirmModal('Delete Student','Are you sure you want to delete this student? They will lose dashboard access.',async ()=>{await dbWrite('students','delete',null,{id});toast('Student deleted');await loadStudents();await loadStudentsForSelect();},'🗑️');}
+async function delStudent(id){showConfirmModal('Delete Student','Are you sure you want to delete this student? They will lose dashboard access.',async ()=>{await dbWrite('students','delete',null,{id});toast('Student deleted');await loadStudents();await loadStudentsForSelect();},'fa-trash');}
 function resetStudentForm(){
   ['st-name','st-roll','st-phone','st-class','st-editing-id'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('st-status').value='active';
@@ -1806,7 +1806,7 @@ function renderMonitorGrid(students, mcqMap, wrMap) {
     const name = s.student_name || 'Student';
     const ini = name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2) || 'S';
     const barColor = avg === null ? 'var(--bord)' : avg >= 70 ? '#10b981' : avg >= 40 ? '#f59e0b' : '#ef4444';
-    const hasPassword = s.password_hash ? '🔒 Password set' : '🔓 No password yet';
+    const hasPassword = s.password_hash ? '<i class="fas fa-lock"></i> Password set' : '<i class="fas fa-unlock"></i> No password yet';
     const pwColor = s.password_hash ? 'var(--acc3)' : 'var(--acc2)';
 
     return `<div class="mon-card" onclick="viewStudentDash('${s.id}')">
@@ -1819,13 +1819,13 @@ function renderMonitorGrid(students, mcqMap, wrMap) {
         <span class="mon-status ${s.status === 'active' ? 'ms-active' : 'ms-inactive'}">${s.status || 'active'}</span>
       </div>
       <div class="mon-stats">
-        <div class="mon-stat">✅ MCQ <strong>${mcqArr.length}</strong></div>
-        <div class="mon-stat">📝 Written <strong>${wrCount}</strong></div>
-        <div class="mon-stat">📊 Avg <strong>${avg !== null ? avg + '%' : '—'}</strong></div>
+        <div class="mon-stat"><i class="fas fa-check-circle"></i> MCQ <strong>${mcqArr.length}</strong></div>
+        <div class="mon-stat"><i class="fas fa-pen"></i> Written <strong>${wrCount}</strong></div>
+        <div class="mon-stat"><i class="fas fa-chart-bar"></i> Avg <strong>${avg !== null ? avg + '%' : '—'}</strong></div>
       </div>
       ${avg !== null ? `<div class="mon-bar"><div class="mon-bar-fill" style="width:${avg}%;background:${barColor};"></div></div>` : ''}
       <div style="font-size:.72rem;color:${pwColor};margin-top:2px;">${hasPassword}</div>
-      <button class="mon-view-btn" onclick="event.stopPropagation();viewStudentDash('${s.id}')">👁️ View Dashboard</button>
+      <button class="mon-view-btn" onclick="event.stopPropagation();viewStudentDash('${s.id}')"><i class="fas fa-eye"></i> View Dashboard</button>
     </div>`;
   }).join('');
 }
@@ -1887,10 +1887,10 @@ function toast(msg,type='s'){
 }
 
 let confirmCallback = null;
-function showConfirmModal(title, message, callback, icon = '⚠️') {
+function showConfirmModal(title, message, callback, icon = 'fa-exclamation-triangle') {
   document.getElementById('confirmModalTitle').textContent = title;
   document.getElementById('confirmModalMsg').textContent = message;
-  document.getElementById('confirmModalIcon').textContent = icon;
+  document.getElementById('confirmModalIcon').innerHTML = '<i class="fas ' + icon + '"></i>';
   confirmCallback = callback;
   document.getElementById('confirmModal').classList.add('open');
 }
